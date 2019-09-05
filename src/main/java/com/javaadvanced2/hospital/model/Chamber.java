@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-// my test coment
+// my test coment2
 @Data
 @NoArgsConstructor
 @Entity
