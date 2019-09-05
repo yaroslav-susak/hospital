@@ -10,9 +10,10 @@ import javax.persistence.Id;
 @Data
 @NoArgsConstructor
 @Entity
-public class Specialization {
+public class Address {
     @Id()
     @GeneratedValue
-    private Long id;
-    private String specialization;
+    Long id;
+    String city;
+    String address;
 }
