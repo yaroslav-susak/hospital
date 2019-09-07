@@ -14,32 +14,32 @@ public class Controller {
     DoctorService doctorService;
 
     @GetMapping("{id}")
-    public Doctor getOne(@PathVariable Long id){
-        return doctorService.getOne(id);
+    public Doctor findById(@PathVariable Long id){
+        return doctorService.findById(id);
     }
 
     @GetMapping("department/{department}")
     public List<Doctor> getByDepartment(@PathVariable String department){
-        return doctorService.getByDepartment(department);
+        return doctorService.findByDepartment(department);
     }
 
     @PostMapping
     public Doctor save(@RequestBody Doctor doctor){
-        return doctorService.create(doctor);
+        return doctorService.save(doctor);
     }
 
     @GetMapping("qualification/{qualificationLevel}")
-    public List<Doctor> getByQualificationLevel(@PathVariable String qualificationLevel){
-        return doctorService.getByQualificationLevel(qualificationLevel);
+    public List<Doctor> findByQualificationLevel(@PathVariable String qualificationLevel){
+        return doctorService.findByQualificationLevel(qualificationLevel);
     }
 
     @DeleteMapping("{id}")
-    public void deleteById(@PathVariable Long id){
+    public void delete(@PathVariable Long id){
         doctorService.delete(id);
     }
 
     @GetMapping("all")
-    public List<Doctor> getAll(){
+    public List<Doctor> findAll(){
         return doctorService.findAll();
     }
     }

@@ -15,11 +15,11 @@ public class DoctorService {
     @Autowired
     DoctorRepository doctorRepository;
 
-    public Doctor getOne(Long id) {
+    public Doctor findById(Long id) {
         return doctorRepository.findById(id).orElse(null);
     }
 
-    public List<Doctor> getByDepartment(String department){
+    public List<Doctor> findByDepartment(String department){
         return doctorRepository.findByDepartment(department);
     }
 
@@ -27,11 +27,11 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public Doctor create(Doctor doctor){
+    public Doctor save(Doctor doctor){
         return doctorRepository.save(doctor);
     }
 
-    public List<Doctor> getByQualificationLevel(String qualificationLevel){
+    public List<Doctor> findByQualificationLevel(String qualificationLevel){
         return doctorRepository.findByQualificationLevel(qualificationLevel);
     }
 
