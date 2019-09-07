@@ -14,6 +14,7 @@ public class Doctor {
     private Long id;
     private String department;
     private String name;
+    private String middleName;
     private String surname;
     private String specialization;
     private String qualificationLevel;
