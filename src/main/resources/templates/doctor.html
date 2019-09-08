@@ -2,41 +2,53 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Інформація про лікаря</title>
+    <title th:text="${doctor.surname}+' '+${doctor.name}+' '+${doctor.middleName}"></title>
     <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
 <header>
-    <img id = "logo" src="/images/logo.png">
-    <nav>
-        <table id="nav-table">
-            <tr>
-                <td>
-                    <a class="nav-link" href="/">Головна</a>
-                </td>
-            </tr>
-        </table>
-    </nav>
+    <div align="center">
+        <img id = "logo" src="/images/logo.png">
+        <nav>
+            <table id="nav-table">
+                <tr>
+                    <td>
+                        <a class="nav-link" href="/">Головна</a>
+                    </td>
+                </tr>
+            </table>
+        </nav>
+    </div>
 </header>
 <main>
-    <p>
-        <b>Ім'я</b>: <span th:text="${doctor.name}"></span>
-    </p>
-    <p>
-        <b>По батькові</b>: <span th:text="${doctor.middleName}"></span>
-    </p>
-    <p>
-        <b>Прізвище</b>: <span th:text="${doctor.surname}"></span>
-    </p>
-    <p>
-        <b>Відділення</b>: <span th:text="${doctor.department}"></span>
-    </p>
-    <p>
-        <b>Спеціалізація</b>: <span th:text="${doctor.specialization}"></span>
-    </p>
-    <p>
-        <b>Рівень кваліфікції</b>: <span th:text="${doctor.qualificationLevel}"></span>
-    </p>
+    <div class="container page-container">
+        <div class="container-item left-side">
+            <a class="side-link" href="/"><b>Історія лікарні</b></a>
+        </div>
+        <div class="container-item center">
+            <p>
+                <b>Ім'я</b>: <span th:text="${doctor.name}"></span>
+            </p>
+            <p>
+                <b>По батькові</b>: <span th:text="${doctor.middleName}"></span>
+            </p>
+            <p>
+                <b>Прізвище</b>: <span th:text="${doctor.surname}"></span>
+            </p>
+            <p>
+                <b>Відділення</b>: <span th:text="${doctor.department}"></span>
+            </p>
+            <p>
+                <b>Спеціалізація</b>: <span th:text="${doctor.specialization}"></span>
+            </p>
+            <p>
+                <b>Рівень кваліфікції</b>: <span th:text="${doctor.qualificationLevel}"></span>
+            </p>
+        </div>
+        <div class="container-item right-side">
+            <div align="center">Тут буде авторизація користувача</div>
+        </div>
+    </div>
 </main>
 <footer>
 

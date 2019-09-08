@@ -1,48 +1,88 @@
 body {
-    background: radial-gradient(at top center,white,burlywood);
+    background: radial-gradient(at top center,white,lightslategray);
     height:100%;
     margin:0;
     font-size: 14pt;
-    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 html {
     min-height: 100%;
 }
-header {
-    padding-top:10px;
-    text-align: center;
-}
 
 #logo {
     width:150px;
     height: 150px;
+    display: block;
+    margin-bottom: 30px;
+}
+
+.container {
+    overflow:hidden;
+}
+
+.container-item {
+    float:left;
 }
 
 #nav-table {
-    border-collapse: collapse;
-}
-
-#nav-table td {
-    border: 1pt solid darkgoldenrod;
+    border-spacing: 0;
 }
 
 .nav-link {
-    display: block;
-    color:blue;
     text-decoration: none;
-    font-size: 25px;
-    padding: 10px;
+    display: block;
+    font-size: 20pt;
+    padding: 5px;
+    color: deepskyblue;
+    background: black;
 }
 
 .nav-link:hover {
-    background: chartreuse;
+    color: blue;
+    background: gold;
 }
 
-nav {
-    margin-left: 100px;
+.left-side {
+    width:10%;
+}
+
+.right-side {
+    width:15%;
+}
+
+.center {
+    width:70%;
+    border-left:1pt solid black;
+    border-right:1pt solid black;
+    padding: 30px;
+}
+
+footer {
+    border-top: 1pt solid black;
 }
 
 main {
-    margin: 30px 0 0 30px;
+    border-top: 1pt solid black;
+    margin-top:10px;
+}
+
+header {
+    margin-top: 20px;
+}
+
+.side-link {
+    display: block;
+    border: 1pt solid black;
+    border-radius: 10px;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 18pt;
+    text-align:center;
+    color:black;
+    margin:10px;
+}
+
+.side-link:hover {
+    background: black;
+    color:white;
 }
