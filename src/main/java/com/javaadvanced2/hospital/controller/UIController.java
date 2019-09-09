@@ -26,4 +26,11 @@ public class UIController {
         model.addAttribute("doctor", doctor);
         return "doctor";
     }
+
+    @GetMapping("/staff")
+    public String getStaff(Model model){
+        List<Doctor> allDoctors = doctorService.findAll();
+        model.addAttribute("doctors", allDoctors);
+        return "staff";
+    }
 }

@@ -18,4 +18,5 @@ public class Doctor {
     private String surname;
     private String specialization;
     private String qualificationLevel;
+    private String photoName;
 }

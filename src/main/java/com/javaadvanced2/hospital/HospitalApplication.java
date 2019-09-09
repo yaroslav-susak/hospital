@@ -24,6 +24,7 @@ public class HospitalApplication {
             doctor.setDepartment("Хірургія");
             doctor.setQualificationLevel("Вища");
             doctor.setSpecialization("Нейрохірург");
+            doctor.setPhotoName("kz1pqa.jpg");
             doctorService.save(doctor);
 
             doctor = new Doctor();
@@ -33,6 +34,27 @@ public class HospitalApplication {
             doctor.setDepartment("Анестезіологія");
             doctor.setQualificationLevel("Перша");
             doctor.setSpecialization("Анестезіолог");
+            doctor.setPhotoName("ce1kz8.jpg");
+            doctorService.save(doctor);
+
+            doctor = new Doctor();
+            doctor.setName("Ярослав");
+            doctor.setMiddleName("Львович");
+            doctor.setSurname("Криштафович");
+            doctor.setDepartment("Неврологія");
+            doctor.setQualificationLevel("Вища");
+            doctor.setSpecialization("Невролог");
+            doctor.setPhotoName("h56caz.jpg");
+            doctorService.save(doctor);
+
+            doctor = new Doctor();
+            doctor.setName("Тарас");
+            doctor.setMiddleName("Михайлович");
+            doctor.setSurname("Величко");
+            doctor.setDepartment("Педіатрія");
+            doctor.setQualificationLevel("Перша");
+            doctor.setSpecialization("Педіатр");
+            doctor.setPhotoName("c34tqa.jpg");
             doctorService.save(doctor);
         };
     }
