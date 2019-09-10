@@ -1,5 +1,6 @@
 package com.javaadvanced2.hospital.service;
 
+import com.javaadvanced2.hospital.model.Department;
 import com.javaadvanced2.hospital.model.Doctor;
 import com.javaadvanced2.hospital.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class DoctorService {
         return doctorRepository.findById(id).orElse(null);
     }
 
-    public List<Doctor> findByDepartment(String department){
+    public List<Doctor> findByDepartment(Department department){
         return doctorRepository.findByDepartment(department);
     }
 

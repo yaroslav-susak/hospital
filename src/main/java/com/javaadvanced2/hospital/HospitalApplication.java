@@ -1,5 +1,6 @@
 package com.javaadvanced2.hospital;
 
+import com.javaadvanced2.hospital.model.Department;
 import com.javaadvanced2.hospital.model.Doctor;
 import com.javaadvanced2.hospital.repository.DoctorRepository;
 import com.javaadvanced2.hospital.service.DoctorService;
@@ -21,7 +22,10 @@ public class HospitalApplication {
             doctor.setName("Ярослав");
             doctor.setMiddleName("Васильович");
             doctor.setSurname("Лупуляк");
-            doctor.setDepartment("Хірургія");
+            Department department = new Department();
+            department.setName("Неврологія");
+            department.setDescription("опис");
+            doctor.setDepartment(department);
             doctor.setQualificationLevel("Вища");
             doctor.setSpecialization("Нейрохірург");
             doctor.setPhotoName("kz1pqa.jpg");
@@ -31,7 +35,10 @@ public class HospitalApplication {
             doctor.setName("Тарас");
             doctor.setMiddleName("Васильович");
             doctor.setSurname("Мельник");
-            doctor.setDepartment("Анестезіологія");
+            department = new Department();
+            department.setName("Анестезіологія");
+            department.setDescription("опис");
+            doctor.setDepartment(department);
             doctor.setQualificationLevel("Перша");
             doctor.setSpecialization("Анестезіолог");
             doctor.setPhotoName("ce1kz8.jpg");
@@ -41,7 +48,10 @@ public class HospitalApplication {
             doctor.setName("Ярослав");
             doctor.setMiddleName("Львович");
             doctor.setSurname("Криштафович");
-            doctor.setDepartment("Неврологія");
+            department = new Department();
+            department.setName("Неврологія");
+            department.setDescription("опис");
+            doctor.setDepartment(department);
             doctor.setQualificationLevel("Вища");
             doctor.setSpecialization("Невролог");
             doctor.setPhotoName("h56caz.jpg");
@@ -51,7 +61,10 @@ public class HospitalApplication {
             doctor.setName("Тарас");
             doctor.setMiddleName("Михайлович");
             doctor.setSurname("Величко");
-            doctor.setDepartment("Педіатрія");
+            department = new Department();
+            department.setName("Педіатрія");
+            department.setDescription("опис");
+            doctor.setDepartment(department);
             doctor.setQualificationLevel("Перша");
             doctor.setSpecialization("Педіатр");
             doctor.setPhotoName("c34tqa.jpg");

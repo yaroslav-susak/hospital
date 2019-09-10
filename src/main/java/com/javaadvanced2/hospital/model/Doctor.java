@@ -12,7 +12,9 @@ public class Doctor {
     @Id()
     @GeneratedValue
     private Long id;
-    private String department;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name="department_id", nullable = false)
+    private Department department;
     private String name;
     private String middleName;
     private String surname;

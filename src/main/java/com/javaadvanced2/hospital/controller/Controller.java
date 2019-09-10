@@ -1,5 +1,6 @@
 package com.javaadvanced2.hospital.controller;
 
+import com.javaadvanced2.hospital.model.Department;
 import com.javaadvanced2.hospital.model.Doctor;
 import com.javaadvanced2.hospital.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class Controller {
     }
 
     @GetMapping("department/{department}")
-    public List<Doctor> getByDepartment(@PathVariable String department){
+    public List<Doctor> getByDepartment(@PathVariable Department department){
         return doctorService.findByDepartment(department);
     }
 
