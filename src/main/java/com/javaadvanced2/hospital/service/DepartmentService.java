@@ -14,8 +14,6 @@ public class DepartmentService {
     @Autowired
     DoctorRepository doctorRepository;
 
-    int abc;
-
     @Autowired
     DepartmentRepository departmentRepository;
 
