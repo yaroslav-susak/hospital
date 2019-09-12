@@ -3,6 +3,7 @@ package com.javaadvanced2.hospital;
 import com.javaadvanced2.hospital.model.Department;
 import com.javaadvanced2.hospital.model.Doctor;
 import com.javaadvanced2.hospital.repository.DoctorRepository;
+import com.javaadvanced2.hospital.service.DepartmentService;
 import com.javaadvanced2.hospital.service.DoctorService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,7 +17,7 @@ public class HospitalApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(DoctorService doctorService) {
+    public CommandLineRunner demo(DoctorService doctorService, DepartmentService departmentService) {
         return (args) -> {
             Doctor doctor = new Doctor();
             doctor.setName("Ярослав");
@@ -25,10 +26,21 @@ public class HospitalApplication {
             Department department = new Department();
             department.setName("Неврологія");
             department.setDescription("опис");
+            departmentService.save(department);
             doctor.setDepartment(department);
             doctor.setQualificationLevel("Вища");
             doctor.setSpecialization("Нейрохірург");
             doctor.setPhotoName("kz1pqa.jpg");
+            doctorService.save(doctor);
+
+            doctor = new Doctor();
+            doctor.setName("Ярослав");
+            doctor.setMiddleName("Львович");
+            doctor.setSurname("Криштафович");
+            doctor.setDepartment(department);
+            doctor.setQualificationLevel("Вища");
+            doctor.setSpecialization("Невролог");
+            doctor.setPhotoName("h56caz.jpg");
             doctorService.save(doctor);
 
             doctor = new Doctor();
@@ -38,23 +50,11 @@ public class HospitalApplication {
             department = new Department();
             department.setName("Анестезіологія");
             department.setDescription("опис");
+            departmentService.save(department);
             doctor.setDepartment(department);
             doctor.setQualificationLevel("Перша");
             doctor.setSpecialization("Анестезіолог");
             doctor.setPhotoName("ce1kz8.jpg");
-            doctorService.save(doctor);
-
-            doctor = new Doctor();
-            doctor.setName("Ярослав");
-            doctor.setMiddleName("Львович");
-            doctor.setSurname("Криштафович");
-            department = new Department();
-            department.setName("Неврологія");
-            department.setDescription("опис");
-            doctor.setDepartment(department);
-            doctor.setQualificationLevel("Вища");
-            doctor.setSpecialization("Невролог");
-            doctor.setPhotoName("h56caz.jpg");
             doctorService.save(doctor);
 
             doctor = new Doctor();
@@ -64,6 +64,7 @@ public class HospitalApplication {
             department = new Department();
             department.setName("Педіатрія");
             department.setDescription("опис");
+            departmentService.save(department);
             doctor.setDepartment(department);
             doctor.setQualificationLevel("Перша");
             doctor.setSpecialization("Педіатр");

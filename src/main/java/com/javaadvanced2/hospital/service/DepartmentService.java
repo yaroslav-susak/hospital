@@ -24,4 +24,12 @@ public class DepartmentService {
     public Department findByName(String name){
         return departmentRepository.findByName(name);
     }
+
+    public Department save(Department department) {
+        return departmentRepository.save(department);
+    }
+
+    public Department findById(Long id){
+        return departmentRepository.findById(id).orElse(null);
+    }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></title>
+    <title th:text="${department.name}"></title>
     <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
@@ -29,27 +29,13 @@
             <a class="side-link" href="/"><b>Історія лікарні</b></a>
         </div>
         <div class="container-item center">
-            <div align="center">
-                <img id="doctor-big-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}">
+            <div th:each="doctor: ${thisDepartmentDoctors}" class="staff-container">
+                <div class="fixed"></div>
+                <a th:href="@{${'/doctor-info/'+doctor.id}}" class = "staff-container-item">
+                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}">
+                    <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
+                </a>
             </div>
-            <p>
-                <b>Ім'я</b>: <span th:text="${doctor.name}"></span>
-            </p>
-            <p>
-                <b>По батькові</b>: <span th:text="${doctor.middleName}"></span>
-            </p>
-            <p>
-                <b>Прізвище</b>: <span th:text="${doctor.surname}"></span>
-            </p>
-            <p>
-                <b>Відділення</b>: <a th:href="@{${'/department/'+doctor.department.id}}" th:text="${doctor.department.name}"></a>
-            </p>
-            <p>
-                <b>Спеціалізація</b>: <span th:text="${doctor.specialization}"></span>
-            </p>
-            <p>
-                <b>Рівень кваліфікції</b>: <span th:text="${doctor.qualificationLevel}"></span>
-            </p>
         </div>
         <div class="container-item right-side">
             <div align="center">Тут буде авторизація користувача</div>

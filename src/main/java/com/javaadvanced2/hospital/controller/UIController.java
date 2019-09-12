@@ -1,6 +1,8 @@
 package com.javaadvanced2.hospital.controller;
 
+import com.javaadvanced2.hospital.model.Department;
 import com.javaadvanced2.hospital.model.Doctor;
+import com.javaadvanced2.hospital.service.DepartmentService;
 import com.javaadvanced2.hospital.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,9 @@ import java.util.List;
 public class UIController {
     @Autowired
     DoctorService doctorService;
+
+    @Autowired
+    DepartmentService departmentService;
 
     @GetMapping("/")
     public String homePage(){
@@ -32,5 +37,14 @@ public class UIController {
         List<Doctor> allDoctors = doctorService.findAll();
         model.addAttribute("doctors", allDoctors);
         return "staff";
+    }
+
+    @GetMapping("/department/{id}")
+    public String getDepartment(Model model, @PathVariable Long id){
+        Department department = departmentService.findById(id);
+        List<Doctor> thisDepartmentDoctors = doctorService.findByDepartment(department);
+        model.addAttribute("thisDepartmentDoctors",thisDepartmentDoctors);
+        model.addAttribute("department",department);
+        return "department";
     }
 }
