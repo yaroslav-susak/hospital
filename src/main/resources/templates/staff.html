@@ -6,44 +6,19 @@
     <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div align="center">
-        <img id = "logo" src="/images/logo.png">
-        <nav>
-            <table id="nav-table">
-                <tr>
-                    <td>
-                        <a class="nav-link" href="/">Головна</a>
-                    </td>
-                    <td>
-                        <a class="nav-link" href="/staff">Персонал</a>
-                    </td>
-                </tr>
-            </table>
-        </nav>
-    </div>
-</header>
+<header th:replace="homepage::header"></header>
 <main>
-    <div class="container">
-        <div class="container-item left-side">
-            <a class="side-link" href="/"><b>Історія лікарні</b></a>
-        </div>
-        <div class="container-item center">
-            <div th:each="doctor: ${doctors}" class="staff-container">
-                <div class="fixed"></div>
-                    <a th:href="@{${'/doctor-info/'+doctor.id}}" class = "staff-container-item">
+        <aside class="left-side" th:replace="homepage::left-side"></aside>
+        <div class="center">
+            <div th:each="doctor: ${doctors}">
+                <a th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">
                     <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}">
                     <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
-                    </a>
+                </a>
             </div>
         </div>
-        <div class="container-item right-side">
-            <div align="center">Тут буде авторизація користувача</div>
-        </div>
-    </div>
+        <aside class="right-side" th:replace="homepage::right-side"></aside>
 </main>
-<footer>
-
-</footer>
+<footer th:replace="homepage::footer"></footer>
 </body>
 </html>

@@ -6,37 +6,25 @@
     <link href="/css/styles.css" rel="stylesheet">
 </head>
 <body>
-<header>
-    <div align="center">
+<header th:fragment="header">
     <img id = "logo" src="/images/logo.png">
-        <nav>
-            <table id="nav-table">
-                <tr>
-                    <td>
-                        <a class="nav-link" href="/">Головна</a>
-                    </td>
-                    <td>
-                        <a class="nav-link" href="/staff">Персонал</a>
-                    </td>
-                </tr>
-            </table>
-        </nav>
-    </div>
+    <nav>
+            <a href="/">Головна</a>
+            <a href="/staff">Персонал</a>
+    </nav>
 </header>
 <main>
-    <div class="container">
-        <div class="container-item left-side">
-            <a class="side-link" href="/"><b>Історія лікарні</b></a>
-        </div>
-        <div class="container-item center">
+        <aside class="left-side" th:fragment="left-side">
+            <a class="side-link" href="/">Історія лікарні</a>
+        </aside>
+        <div class="center">
             Лікарня — це установа, яка надає медичні послуги для громади. Є юридичною особою, користується правом оперативного управління відносно закріпленого майна, має штамп, печатку, статут, який затверджуються згідно з чинним законодавством, поточні та інші рахунки у фінансових установах, здійснює бухгалтерський і первинний статистичний облік. Головний лікар, який управляє лікарнею, призначається на умовах контракту, в якому прописано: строк найму, права, обов'язки, відповідальність, умови його матеріального забезпечення, тощо.
         </div>
-        <div class="container-item right-side">
-            <div align="center">Тут буде авторизація користувача</div>
-        </div>
-    </div>
+        <aside class="right-side" th:fragment="right-side">
+            Тут буде авторизація користувача
+        </aside>
 </main>
-<footer>
+<footer th:fragment="footer">
 
 </footer>
 </body>

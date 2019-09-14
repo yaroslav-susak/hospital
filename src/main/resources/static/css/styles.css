@@ -13,37 +13,30 @@ html {
     width:150px;
     height: 150px;
     display: block;
-    margin-bottom: 30px;
+    margin: 0 auto 30px auto;
 }
 
-.container {
-    overflow:hidden;
-}
-
-.container-item {
-    float:left;
-}
-
-#nav-table {
-    border-spacing: 0;
-}
-
-.nav-link {
+nav a {
     text-decoration: none;
-    display: block;
+    display: inline;
     font-size: 20pt;
     padding: 5px;
     color: deepskyblue;
     background: black;
 }
 
-.nav-link:hover {
+nav a:hover {
     color: blue;
     background: gold;
 }
 
+nav {
+    text-align: center;
+}
+
 .left-side, .right-side {
     width:15%;
+    float:left;
 }
 
 .center {
@@ -51,6 +44,7 @@ html {
     border-left:1pt solid black;
     border-right:1pt solid black;
     padding: 30px;
+    float:left;
 }
 
 footer {
@@ -61,6 +55,7 @@ main {
     margin-top:10px;
     padding-left: 5%;
     border-top: 1pt solid black;
+    overflow:hidden;
 }
 
 header {
@@ -77,6 +72,7 @@ header {
     text-align:center;
     color:black;
     margin:10px;
+    font-weight: bold;
 }
 
 .side-link:hover {
@@ -85,10 +81,10 @@ header {
 }
 
 #doctor-big-photo {
-    margin-top:15px;
-    margin-bottom: 15px;
+    margin: 15px auto 15px auto;
     width: 180px;
     height:270px;
+    display: block;
 }
 
 .staff-container-item {
