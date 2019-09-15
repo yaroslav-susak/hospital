@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Відділення</title>
+    <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+<header th:replace="homepage::header"></header>
+<main>
+    <aside class="left-side" th:replace="homepage::left-side"></aside>
+    <div class="center">
+        <div th:each="department: ${departments}">
+            <a th:href="@{${'/department/' + department.id}}" th:text="${department.getName()}"></a>
+        </div>
+    </div>
+    <aside class="right-side" th:replace="homepage::right-side"></aside>
+</main>
+<footer th:replace="homepage::footer"></footer>
+</body>
+</html>

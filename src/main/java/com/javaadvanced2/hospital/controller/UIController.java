@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class UIController {
@@ -34,7 +35,7 @@ public class UIController {
 
     @GetMapping("/staff")
     public String getStaff(Model model){
-        List<Doctor> allDoctors = doctorService.findAll();
+        Set<Doctor> allDoctors = doctorService.findAll();
         model.addAttribute("doctors", allDoctors);
         return "staff";
     }
@@ -46,5 +47,12 @@ public class UIController {
         model.addAttribute("thisDepartmentDoctors",thisDepartmentDoctors);
         model.addAttribute("department",department);
         return "department";
+    }
+
+    @GetMapping("/departments")
+    public String getDepartmentsList(Model model){
+        Set<Department> departments = departmentService.findAll();
+        model.addAttribute("departments",departments);
+        return "departments";
     }
 }

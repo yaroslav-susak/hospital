@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("doctor")
@@ -40,7 +41,7 @@ public class Controller {
     }
 
     @GetMapping("all")
-    public List<Doctor> findAll(){
+    public Set<Doctor> findAll(){
         return doctorService.findAll();
     }
     }

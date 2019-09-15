@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.print.Doc;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -24,8 +25,8 @@ public class DoctorService {
         return doctorRepository.findByDepartment(department);
     }
 
-    public List<Doctor> findAll(){
-        return doctorRepository.findAll();
+    public Set<Doctor> findAll(){
+        return new HashSet<>(doctorRepository.findAll());
     }
 
     public Doctor save(Doctor doctor){

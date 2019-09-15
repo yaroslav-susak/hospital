@@ -5,9 +5,12 @@ import com.javaadvanced2.hospital.model.Doctor;
 import com.javaadvanced2.hospital.repository.DepartmentRepository;
 import com.javaadvanced2.hospital.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ScheduledExecutorTask;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DepartmentService {
@@ -31,5 +34,9 @@ public class DepartmentService {
 
     public Department findById(Long id){
         return departmentRepository.findById(id).orElse(null);
+    }
+
+    public Set<Department> findAll(){
+        return new HashSet<>(departmentRepository.findAll());
     }
 }

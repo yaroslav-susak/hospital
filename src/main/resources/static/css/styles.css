@@ -17,15 +17,16 @@ html {
 }
 
 nav a {
-    text-decoration: none;
     display: inline;
     font-size: 20pt;
     padding: 5px;
     color: deepskyblue;
     background: black;
+    text-decoration: none;
 }
 
 nav a:hover {
+    text-decoration: none;
     color: blue;
     background: gold;
 }
@@ -41,10 +42,11 @@ nav {
 
 .center {
     width:60%;
-    border-left:1pt solid black;
-    border-right:1pt solid black;
+    height: 100%;
     padding: 30px;
     float:left;
+    border-right: 1pt solid black;
+    border-left: 1pt solid black;
 }
 
 footer {
@@ -71,11 +73,12 @@ header {
     font-size: 18pt;
     text-align:center;
     color:black;
-    margin:10px;
+    margin: 10px;
     font-weight: bold;
 }
 
 .side-link:hover {
+    text-decoration: none;
     background: black;
     color:white;
 }
@@ -99,7 +102,7 @@ header {
     float:left;
 }
 
-.staff-container-item:hover {
+.staff-container-item:hover{
     text-decoration: underline;
 }
 
