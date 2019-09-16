@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<header th:replace="homepage::header"></header>
+<main>
+    <aside class="left-side" th:replace="homepage::left-side"></aside>
+    <div class="center">
+        <form autocomplete="off" action="#" th:action="@{/registration}"
+              th:object="${user}" method="post" role="form">
+            <h2>Реєстрація</h2>
+            <div>
+                <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></label>
+                <input type="text" th:field="*{firstName}" placeholder="Ім'я"/>
+            </div>
+
+            <div>
+                <label	th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></label>
+                <input type="text" th:field="*{lastName}" placeholder="Прізвище" />
+            </div>
+
+            <div>
+                <label	th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></label>
+                <input type="text" th:field="*{email}" placeholder="e-mail" />
+            </div>
+
+            <div>
+                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></label>
+                <input type="text" th:field="*{password}" placeholder="Пароль" />
+            </div>
+
+            <button type="submit">Зареєструвати</button>
+
+            <span th:utext="${successMessage}"></span>
+            <span th:utext="${usedEmail}"></span>
+        </form>
+    </div>
+    <aside class="right-side" th:replace="homepage::right-side"></aside>
+</main>
+<footer th:replace="homepage::footer"></footer>
+</body>
+</html>

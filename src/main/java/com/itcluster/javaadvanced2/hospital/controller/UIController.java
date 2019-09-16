@@ -1,9 +1,9 @@
-package com.javaadvanced2.hospital.controller;
+package com.itcluster.javaadvanced2.hospital.controller;
 
-import com.javaadvanced2.hospital.model.Department;
-import com.javaadvanced2.hospital.model.Doctor;
-import com.javaadvanced2.hospital.service.DepartmentService;
-import com.javaadvanced2.hospital.service.DoctorService;
+import com.itcluster.javaadvanced2.hospital.model.Department;
+import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.service.DepartmentService;
+import com.itcluster.javaadvanced2.hospital.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class UIController {
@@ -35,7 +34,7 @@ public class UIController {
 
     @GetMapping("/staff")
     public String getStaff(Model model){
-        Set<Doctor> allDoctors = doctorService.findAll();
+        List<Doctor> allDoctors = doctorService.findAll();
         model.addAttribute("doctors", allDoctors);
         return "staff";
     }
@@ -51,7 +50,7 @@ public class UIController {
 
     @GetMapping("/departments")
     public String getDepartmentsList(Model model){
-        Set<Department> departments = departmentService.findAll();
+        List<Department> departments = departmentService.findAll();
         model.addAttribute("departments",departments);
         return "departments";
     }

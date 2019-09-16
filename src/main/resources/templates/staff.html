@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Персонал</title>
-    <link href="/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
 <body>
 <header th:replace="homepage::header"></header>
@@ -12,7 +12,7 @@
         <div class="center">
             <div th:each="doctor: ${doctors}">
                 <a th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">
-                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}">
+                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
                     <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
                 </a>
             </div>

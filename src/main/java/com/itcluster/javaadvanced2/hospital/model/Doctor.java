@@ -1,4 +1,4 @@
-package com.javaadvanced2.hospital.model;
+package com.itcluster.javaadvanced2.hospital.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

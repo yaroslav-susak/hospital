@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <title>Лікарня</title>
-    <link href="/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
 <body>
 <header th:fragment="header">
@@ -26,7 +26,8 @@
             </article>
         </div>
         <aside class="right-side" th:fragment="right-side">
-            Тут буде авторизація користувача
+            <div sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> | <a th:href="@{/registration}">Зареєструватись</a></div>
+            <div sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
         </aside>
 </main>
 <footer th:fragment="footer">

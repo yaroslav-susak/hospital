@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${department.name}"></title>
-    <link href="/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
 <body>
 <header th:replace="homepage::header"></header>
 <main>
-        <aside class="left-side" th:replace="homepage::left-side"></aside>
+    <aside class="left-side" th:replace="homepage::left-side"></aside>
         <div class="center">
             <div th:each="doctor: ${thisDepartmentDoctors}">
                 <div class="fixed"></div>
                 <a th:href="@{${'/doctor-info/'+doctor.id}}" class = "staff-container-item">
-                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}">
+                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
                     <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
                 </a>
             </div>

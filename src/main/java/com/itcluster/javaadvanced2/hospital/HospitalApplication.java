@@ -1,14 +1,23 @@
-package com.javaadvanced2.hospital;
+package com.itcluster.javaadvanced2.hospital;
 
-import com.javaadvanced2.hospital.model.Department;
-import com.javaadvanced2.hospital.model.Doctor;
-import com.javaadvanced2.hospital.repository.DoctorRepository;
-import com.javaadvanced2.hospital.service.DepartmentService;
-import com.javaadvanced2.hospital.service.DoctorService;
+import com.itcluster.javaadvanced2.hospital.model.Department;
+import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.model.Role;
+import com.itcluster.javaadvanced2.hospital.model.User;
+import com.itcluster.javaadvanced2.hospital.repository.RoleRepository;
+import com.itcluster.javaadvanced2.hospital.repository.UserRepository;
+import com.itcluster.javaadvanced2.hospital.service.DepartmentService;
+import com.itcluster.javaadvanced2.hospital.service.DoctorService;
+import com.itcluster.javaadvanced2.hospital.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.undertow.UndertowServletWebServer;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringBootApplication
 public class HospitalApplication {
@@ -17,7 +26,7 @@ public class HospitalApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(DoctorService doctorService, DepartmentService departmentService) {
+    public CommandLineRunner demo(DoctorService doctorService, DepartmentService departmentService, RoleRepository roleRepository, UserService userService) {
         return (args) -> {
             Doctor doctor = new Doctor();
             doctor.setName("Ярослав");
@@ -70,6 +79,28 @@ public class HospitalApplication {
             doctor.setSpecialization("Педіатр");
             doctor.setPhotoName("c34tqa.jpg");
             doctorService.save(doctor);
+
+            Role admin = new Role();
+            admin.setName("ADMIN");
+            roleRepository.save(admin);
+            Role user = new Role();
+            user.setName("USER");
+            roleRepository.save(user);
+            Role author = new Role();
+            author.setName("AUTHOR");
+            roleRepository.save(author);
+
+            User firstAdmin = new User();
+            firstAdmin.setFirstName("Ярослав");
+            firstAdmin.setLastName("Сусак");
+            firstAdmin.setDateOfRegistration(new Date());
+            firstAdmin.setEmail("susak.slava@gmail.com");
+            Set<Role> adminAndAuthor = new HashSet<>();
+            adminAndAuthor.add(admin);
+            adminAndAuthor.add(author);
+            firstAdmin.setRoles(adminAndAuthor);
+            firstAdmin.setPassword("8!=40320");
+            userService.createUpdate(firstAdmin);
         };
     }
 }

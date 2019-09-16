@@ -1,16 +1,13 @@
-package com.javaadvanced2.hospital.service;
+package com.itcluster.javaadvanced2.hospital.service;
 
-import com.javaadvanced2.hospital.model.Department;
-import com.javaadvanced2.hospital.model.Doctor;
-import com.javaadvanced2.hospital.repository.DepartmentRepository;
-import com.javaadvanced2.hospital.repository.DoctorRepository;
+import com.itcluster.javaadvanced2.hospital.model.Department;
+import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.repository.DepartmentRepository;
+import com.itcluster.javaadvanced2.hospital.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.concurrent.ScheduledExecutorTask;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class DepartmentService {
@@ -36,7 +33,7 @@ public class DepartmentService {
         return departmentRepository.findById(id).orElse(null);
     }
 
-    public Set<Department> findAll(){
-        return new HashSet<>(departmentRepository.findAll());
+    public List<Department> findAll(){
+        return departmentRepository.findAll();
     }
 }

@@ -1,4 +1,4 @@
-package com.javaadvanced2.hospital;
+package com.itcluster.javaadvanced2.hospital;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

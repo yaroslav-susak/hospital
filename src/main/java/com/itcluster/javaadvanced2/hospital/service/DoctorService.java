@@ -1,16 +1,13 @@
-package com.javaadvanced2.hospital.service;
+package com.itcluster.javaadvanced2.hospital.service;
 
-import com.javaadvanced2.hospital.model.Department;
-import com.javaadvanced2.hospital.model.Doctor;
-import com.javaadvanced2.hospital.repository.DoctorRepository;
+import com.itcluster.javaadvanced2.hospital.model.Department;
+import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.Doc;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class DoctorService {
@@ -25,8 +22,8 @@ public class DoctorService {
         return doctorRepository.findByDepartment(department);
     }
 
-    public Set<Doctor> findAll(){
-        return new HashSet<>(doctorRepository.findAll());
+    public List<Doctor> findAll(){
+        return doctorRepository.findAll();
     }
 
     public Doctor save(Doctor doctor){

@@ -1,12 +1,11 @@
-package com.javaadvanced2.hospital.model;
+package com.itcluster.javaadvanced2.hospital.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -20,4 +19,8 @@ public class User {
     private String firstName;
     private String lastName;
     private Date dateOfRegistration;
+    private String photo;
+    @ManyToMany
+    @JoinTable(name = "user_role",  inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 }
