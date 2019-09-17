@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Персонал</title>
+    <title th:if="${status}=='all'">Персонал</title>
+    <title th:if="${status}=='department'" th:text="${department.name}"></title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
 <body>
@@ -10,8 +11,14 @@
 <main>
         <aside class="left-side" th:replace="homepage::left-side"></aside>
         <div class="center">
-            <div th:each="doctor: ${doctors}">
+            <div th:if="${status}=='all'" th:each="doctor: ${doctors}">
                 <a th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">
+                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
+                    <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
+                </a>
+            </div>
+            <div th:if="${status}=='department'" th:each="doctor: ${thisDepartmentDoctors}">
+                <a th:href="@{${'/doctor-info/'+doctor.id}}" class = "staff-container-item">
                     <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
                     <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
                 </a>

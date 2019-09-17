@@ -36,6 +36,7 @@ public class UIController {
     public String getStaff(Model model){
         List<Doctor> allDoctors = doctorService.findAll();
         model.addAttribute("doctors", allDoctors);
+        model.addAttribute("status","all");
         return "staff";
     }
 
@@ -45,7 +46,8 @@ public class UIController {
         List<Doctor> thisDepartmentDoctors = doctorService.findByDepartment(department);
         model.addAttribute("thisDepartmentDoctors",thisDepartmentDoctors);
         model.addAttribute("department",department);
-        return "department";
+        model.addAttribute("status","department");
+        return "staff";
     }
 
     @GetMapping("/departments")
