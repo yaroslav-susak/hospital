@@ -28,6 +28,7 @@ nav a {
 nav a:hover {
     color: black;
     background: deepskyblue;
+    text-decoration: none;
 }
 
 nav {
@@ -79,6 +80,7 @@ header {
 
 .side-link:hover {
     background: gold;
+    text-decoration: none;
 }
 
 #doctor-big-photo {
@@ -112,4 +114,9 @@ header {
 .department-list a {
     display: inline-block;
     margin-bottom: 30px;
+}
+
+.login-link {
+    margin-left: 20px;
+    margin-top: 20px;
 }

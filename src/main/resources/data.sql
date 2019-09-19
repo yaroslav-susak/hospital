@@ -14,3 +14,5 @@ INSERT INTO hospital.role (id, name) VALUES (3, 'AUTHOR');
 INSERT INTO hospital.user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (1, '2019-09-17 15:58:37.612000000', 'susak.slava@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy', null);
 
 INSERT INTO hospital.user_role (user_id, role_id) VALUES (1, 1);
+
+INSERT INTO hibernate_sequence (next_val) VALUE (100);

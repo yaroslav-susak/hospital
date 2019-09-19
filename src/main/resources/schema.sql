@@ -56,6 +56,6 @@ CREATE TABLE user_role
 CREATE TABLE hibernate_sequence
 (
     next_val INT
-) ENGINE=INNODB CHAR SET=utf8;
+) ENGINE=INNODB;
 
 
