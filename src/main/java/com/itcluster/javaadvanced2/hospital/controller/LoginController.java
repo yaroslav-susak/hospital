@@ -11,8 +11,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.Optional;
 
 @Controller
@@ -59,5 +63,28 @@ public class LoginController {
             bindingResult.rejectValue("email", "error.user", EMAIL_ALREADY_USED_MESSAGE);
         }
         return result;
+    }
+
+    @GetMapping("/cabinet")
+    public String userProfile() {
+        return "cabinet";
+    }
+
+    @PostMapping("uploadPhoto")
+    public String uploadPhoto(@RequestParam("file") MultipartFile file,
+                              @ModelAttribute("user") User user
+    ) {
+        String uploadName = file.getOriginalFilename();
+
+        try {
+            File transferFile = new File("/" + uploadName);
+            file.transferTo(transferFile);
+            user.setPhoto(uploadName);
+            userService.createUpdate(user);
+        } catch (IOException e) {
+            System.out.println("Error saving file");
+        }
+
+        return "redirect:/user/cabinet";
     }
 }
