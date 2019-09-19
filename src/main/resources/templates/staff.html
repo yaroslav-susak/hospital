@@ -7,25 +7,19 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
 <body>
-<header th:replace="homepage::header"></header>
+<header th:replace="layouts :: header"></header>
 <main>
-        <aside class="left-side" th:replace="homepage::left-side"></aside>
+        <aside class="left-side" th:replace="layouts :: left-side"></aside>
         <div class="center">
             <div th:if="${status}=='all'" th:each="doctor: ${doctors}">
-                <a th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">
-                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
-                    <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
-                </a>
+                <a th:replace="layouts :: doctor-link"></a>
             </div>
             <div th:if="${status}=='department'" th:each="doctor: ${thisDepartmentDoctors}">
-                <a th:href="@{${'/doctor-info/'+doctor.id}}" class = "staff-container-item">
-                    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
-                    <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
-                </a>
+                <a th:replace="layouts :: doctor-link"></a>
             </div>
         </div>
-        <aside class="right-side" th:replace="homepage::right-side"></aside>
+        <aside class="right-side" th:replace="layouts :: right-side"></aside>
 </main>
-<footer th:replace="homepage::footer"></footer>
+<footer th:replace="layouts :: footer"></footer>
 </body>
 </html>

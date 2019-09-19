@@ -6,9 +6,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
 <body>
-<header th:replace="homepage::header"></header>
+<header th:replace="layouts :: header"></header>
 <main>
-        <aside class="left-side" th:replace="homepage::left-side"></aside>
+        <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
         <div class="center">
             <img id="doctor-big-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
             <p>
@@ -30,8 +31,9 @@
                 <b>Рівень кваліфікції</b>: <span th:text="${doctor.qualificationLevel}"></span>
             </p>
         </div>
-        <aside class="right-side" th:replace="homepage::right-side"></aside>
+
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
 </main>
-<footer th:replace="homepage::footer"></footer>
+<footer th:replace="layouts :: footer"></footer>
 </body>
 </html>
