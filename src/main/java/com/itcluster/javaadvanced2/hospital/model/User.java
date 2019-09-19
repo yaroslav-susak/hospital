@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 import java.util.Set;
 
@@ -11,12 +13,17 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 public class User {
-    @Id()
+    @Id
     @GeneratedValue
     private Long id;
+    @NotBlank(message = "Має бути непорожнім")
+    @Email(message = "Неправильний email")
     private String email;
+    @NotBlank(message = "Має бути непорожнім")
     private String password;
+    @NotBlank(message = "Має бути непорожнім")
     private String firstName;
+    @NotBlank(message = "Має бути непорожнім")
     private String lastName;
     private Date dateOfRegistration;
     private String photo;

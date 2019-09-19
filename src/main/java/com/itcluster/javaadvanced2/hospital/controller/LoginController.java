@@ -29,6 +29,11 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @ModelAttribute("user")
+    public User activeUser(Authentication authentication) {
+        return new User();
+    }
+
     @GetMapping(value={"/login"})
     public String login() {
         return "login";
@@ -36,27 +41,28 @@ public class LoginController {
 
     @GetMapping("/registration")
     public String registration(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
         return "registration";
     }
 
     @PostMapping("/registration")
-    public String createNewUser(@Valid User user, Model model) {
-        Optional<User> userExists = userService.findUserByEmail(user.getEmail());
-        if (userExists.isPresent()) {
-            model.addAttribute("usedEmail", EMAIL_ALREADY_USED_MESSAGE);
+    public String createNewUser(@Valid User user,
+                                BindingResult bindingResult,
+                                Model model
+    ) {
+        if (bindingResult.hasErrors() || userExists(user, bindingResult))  {
             return "registration";
         }
+
         user = userService.createUpdate(user);
-        model.addAttribute("successMessage", SUCCESSFULLY_REGISTERED_MESSAGE);
-        model.addAttribute("user", user);
-        return "registration";
+        return "homepage";
     }
 
-    @ModelAttribute("user")
-    public User activeUser(Authentication authentication) {
-        return userService.findUserByEmail(authentication.getName()).get();
+    private boolean userExists(User user, BindingResult bindingResult) {
+        boolean result = userService.findUserByEmail(user.getEmail()).isPresent();
+        if (result) {
+            bindingResult.rejectValue("email", "error.user", EMAIL_ALREADY_USED_MESSAGE);
+        }
+        return result;
     }
 
     @GetMapping("user/cabinet")
