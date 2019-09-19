@@ -56,4 +56,5 @@ public class UIController {
         model.addAttribute("departments",departments);
         return "departments";
     }
+    
 }
