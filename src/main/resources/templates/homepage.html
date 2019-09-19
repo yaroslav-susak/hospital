@@ -5,33 +5,23 @@
     <title>Лікарня</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
+
 <body>
-<header th:fragment="header">
-    <img id = "logo" src="/images/logo.png">
-    <nav>
-            <a href="/">Головна</a>
-            <a href="/staff">Персонал</a>
-    </nav>
-</header>
+<header th:replace="layouts :: header"></header>
 <main>
-        <aside class="left-side" th:fragment="left-side">
-            <a class="side-link" href="/">Історія лікарні</a>
-            <a class="side-link" href="/departments">Відділення лікарні</a>
-        </aside>
-        <div class="center">
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
+    <div class="center">
             <article>
                 <section>
                     Лікарня — це установа, яка надає медичні послуги для громади. Є юридичною особою, користується правом оперативного управління відносно закріпленого майна, має штамп, печатку, статут, який затверджуються згідно з чинним законодавством, поточні та інші рахунки у фінансових установах, здійснює бухгалтерський і первинний статистичний облік. Головний лікар, який управляє лікарнею, призначається на умовах контракту, в якому прописано: строк найму, права, обов'язки, відповідальність, умови його матеріального забезпечення, тощо.
                 </section>
             </article>
-        </div>
-        <aside class="right-side" th:fragment="right-side">
-            <div sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> | <a th:href="@{/registration}">Зареєструватись</a></div>
-            <div sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
-        </aside>
-</main>
-<footer th:fragment="footer">
+    </div>
 
-</footer>
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts :: footer"></footer>
 </body>
+
 </html>

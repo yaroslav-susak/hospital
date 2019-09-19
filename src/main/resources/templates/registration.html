@@ -6,9 +6,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 </head>
 <body>
-<header th:replace="homepage::header"></header>
+<header th:replace="layouts :: header"></header>
 <main>
-    <aside class="left-side" th:replace="homepage::left-side"></aside>
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
     <div class="center">
         <form autocomplete="off" action="#" th:action="@{/registration}"
               th:object="${user}" method="post" role="form">
@@ -39,8 +40,9 @@
             <span th:utext="${usedEmail}"></span>
         </form>
     </div>
-    <aside class="right-side" th:replace="homepage::right-side"></aside>
+
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
 </main>
-<footer th:replace="homepage::footer"></footer>
+<footer th:replace="layouts :: footer"></footer>
 </body>
 </html>

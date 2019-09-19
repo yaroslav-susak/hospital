@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<body>
+
+<header th:fragment="header">
+    <img id = "logo" src="/images/logo.png">
+    <nav>
+        <a href="/">Головна</a>
+        <a href="/staff">Персонал</a>
+    </nav>
+</header>
+
+<aside class="left-side" th:fragment="left-side">
+        <a class="side-link" href="/">Історія лікарні</a>
+        <a class="side-link" href="/departments">Відділення лікарні</a>
+</aside>
+
+<aside class="right-side" th:fragment="right-side">
+        <div sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> | <a th:href="@{/registration}">Зареєструватись</a></div>
+        <div sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
+    </aside>
+
+<footer th:fragment="footer"></footer>
+
+<a th:fragment="doctor-link" th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">
+    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
+    <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
+</a>
+
+<div th:fragment="deparment-list" class="department-list" th:each="department: ${departments}">
+    <div>
+    <a th:href="@{${'/department/' + department.id}}" th:text="${department.getName()}"></a>
+    </div>
+</div>
+
+</body>
+</html>
