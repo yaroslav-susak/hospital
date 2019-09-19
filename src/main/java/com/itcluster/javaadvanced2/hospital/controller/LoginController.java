@@ -59,8 +59,8 @@ public class LoginController {
         return userService.findUserByEmail(authentication.getName()).get();
     }
 
-    @GetMapping("/cabinet")
-    public String userProfile() {
+    @GetMapping("user/cabinet")
+    public String userCabinet() {
         return "cabinet";
     }
 
