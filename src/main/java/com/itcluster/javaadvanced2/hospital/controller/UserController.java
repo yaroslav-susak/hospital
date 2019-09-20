@@ -18,12 +18,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("user/cabinet")
+    @GetMapping("/cabinet")
     public String userCabinet() {
         return "cabinet";
     }
 
-    @PostMapping("uploadPhoto")
+    @PostMapping("/uploadPhoto")
     public String uploadPhoto(@RequestParam("file") MultipartFile file,
                               @ModelAttribute("user") User user
     ) {
