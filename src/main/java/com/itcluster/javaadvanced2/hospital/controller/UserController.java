@@ -3,6 +3,7 @@ package com.itcluster.javaadvanced2.hospital.controller;
 import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,11 @@ public class UserController {
     @GetMapping("/cabinet")
     public String userCabinet() {
         return "cabinet";
+    }
+
+    @ModelAttribute("user")
+    public User activeUser(Authentication authentication) {
+        return userService.findUserByEmail(authentication.getName()).get();
     }
 
     @PostMapping("/uploadPhoto")

@@ -30,9 +30,9 @@ public class UIController {
         return "homepage";
     }
 
-    @GetMapping("/doctor-info")
-    public String doctorById(@RequestParam Long doctorId, Model model){
-        Doctor doctor = doctorService.findById(doctorId);
+    @GetMapping("/doctor-info/{id}")
+    public String doctorById(@PathVariable Long id, Model model){
+        Doctor doctor = doctorService.findById(id);
         model.addAttribute("doctor", doctor);
         return "doctor";
     }
@@ -45,9 +45,9 @@ public class UIController {
         return "staff";
     }
 
-    @GetMapping("/department/")
-    public String getDepartment(Model model, @RequestParam Long departmentId){
-        Department department = departmentService.findById(departmentId);
+    @GetMapping("/department/{id}")
+    public String getDepartment(Model model, @PathVariable Long id){
+        Department department = departmentService.findById(id);
         List<Doctor> thisDepartmentDoctors = doctorService.findByDepartment(department);
         model.addAttribute("doctors", thisDepartmentDoctors);
         model.addAttribute("department",department);

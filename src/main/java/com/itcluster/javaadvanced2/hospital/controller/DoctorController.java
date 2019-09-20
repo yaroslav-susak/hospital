@@ -26,8 +26,8 @@ public class DoctorController {
         return "search";
     }
 
-    @GetMapping("/search")
-    public String findDoctorsBySurname(@RequestParam String surname, Model model){
+    @GetMapping("/search/{surname}")
+    public String findDoctorsBySurname(@PathVariable String surname, Model model){
         List<Doctor> doctorsBySurname = doctorService.findBySurname(surname);
         model.addAttribute("doctors",doctorsBySurname);
         return "staff";
