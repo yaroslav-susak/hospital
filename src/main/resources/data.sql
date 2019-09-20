@@ -10,6 +10,8 @@ INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_le
 INSERT INTO hospital.role (id, name) VALUES (1, 'ADMIN');
 INSERT INTO hospital.role (id, name) VALUES (2, 'USER');
 INSERT INTO hospital.role (id, name) VALUES (3, 'AUTHOR');
+INSERT INTO hospital.role (id, name) VALUES (4, 'DOCTOR');
+INSERT INTO hospital.role (id, name) VALUES (5, 'PATIENT');
 
 INSERT INTO hospital.user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (1, '2019-09-17 15:58:37.612000000', 'susak.slava@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy', null);
 

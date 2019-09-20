@@ -33,6 +33,7 @@ public class UserService {
 
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName("user"));
+        roles.add(roleRepository.findByName("patient"));
         user.setRoles(roles);
         user.setDateOfRegistration(new Date());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));

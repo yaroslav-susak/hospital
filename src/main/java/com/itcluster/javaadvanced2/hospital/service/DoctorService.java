@@ -6,6 +6,7 @@ import com.itcluster.javaadvanced2.hospital.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,5 +40,9 @@ public class DoctorService {
         if (toDelete.isPresent()) {
             doctorRepository.delete(toDelete.get());
         }
+    }
+
+    public List<Doctor> findBySurname(String surname){
+        return doctorRepository.findBySurname(surname);
     }
 }

@@ -2,9 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title th:if="${status}=='all'">Персонал</title>
-    <title th:if="${status}=='department'" th:text="${department.name}"></title>
-    <title th:if="${status}=='search'">Пошук лікаря</title>
+    <title>Пошук лікаря</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -13,14 +11,11 @@
 <body>
 <header th:replace="layouts :: header"></header>
 <main>
-        <aside class="left-side" th:replace="layouts :: left-side"></aside>
-        <div class="center">
-            <a th:href="@{/doctor/search}">Пошук лікаря</a>
-            <div th:each="doctor: ${doctors}">
-                <a th:replace="layouts :: doctor-link"></a>
-            </div>
-        </div>
-        <aside class="right-side" th:replace="layouts :: right-side"></aside>
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+    <div class="center">
+
+    </div>
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
 </main>
 <footer th:replace="layouts :: footer"></footer>
 </body>

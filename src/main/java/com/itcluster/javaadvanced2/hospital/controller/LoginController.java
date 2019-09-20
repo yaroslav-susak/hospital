@@ -64,27 +64,4 @@ public class LoginController {
         }
         return result;
     }
-
-    @GetMapping("/cabinet")
-    public String userProfile() {
-        return "cabinet";
-    }
-
-    @PostMapping("uploadPhoto")
-    public String uploadPhoto(@RequestParam("file") MultipartFile file,
-                              @ModelAttribute("user") User user
-    ) {
-        String uploadName = file.getOriginalFilename();
-
-        try {
-            File transferFile = new File("/" + uploadName);
-            file.transferTo(transferFile);
-            user.setPhoto(uploadName);
-            userService.createUpdate(user);
-        } catch (IOException e) {
-            System.out.println("Error saving file");
-        }
-
-        return "redirect:/user/cabinet";
-    }
 }
