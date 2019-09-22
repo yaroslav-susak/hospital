@@ -1,8 +1,10 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.model.Schedule;
 import com.itcluster.javaadvanced2.hospital.repository.DoctorRepository;
 import com.itcluster.javaadvanced2.hospital.service.DoctorService;
+import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
 import org.hibernate.validator.constraints.EAN;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.print.Doc;
 import java.util.List;
 
 @Controller
@@ -20,6 +23,9 @@ public class DoctorController {
 
     @Autowired
     DoctorService doctorService;
+
+    @Autowired
+    ScheduleService scheduleService;
 
     @GetMapping("/search")
     public String getSearch(){
@@ -31,5 +37,14 @@ public class DoctorController {
         List<Doctor> doctorsBySurname = doctorService.findBySurname(surname);
         model.addAttribute("doctors",doctorsBySurname);
         return "staff";
+    }
+
+    @GetMapping("/{id}/timetable")
+    public String giveTimetable(@PathVariable Long id, Model model){
+        Doctor doctor = doctorService.findById(id);
+        List<Schedule> schedules = scheduleService.findActiveByDoctor(doctor);
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("schedules",schedules);
+        return "timetable";
     }
 }
