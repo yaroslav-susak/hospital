@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -37,18 +39,20 @@ public class UIController {
         return "doctor";
     }
 
-    @GetMapping("/staff")
-    public String getStaff(Model model){
-        List<Doctor> allDoctors = doctorService.findAll();
-        model.addAttribute("doctors", allDoctors);
-        model.addAttribute("status","all");
-        return "staff";
-    }
+//  пошук лікаря те ж саме що вивести персонал
+
+//    @GetMapping("/staff")
+//    public String getStaff(Model model){
+//        List<Doctor> allDoctors = doctorService.findAll();
+//        model.addAttribute("doctors", allDoctors);
+//        model.addAttribute("status","all");
+//        return "staff";
+//    }
 
     @GetMapping("/department/{id}")
     public String getDepartment(Model model, @PathVariable Long id){
         Department department = departmentService.findById(id);
-        List<Doctor> thisDepartmentDoctors = doctorService.findByDepartment(department);
+        List<Doctor> thisDepartmentDoctors = new ArrayList<>(doctorService.findByDepartment(department));
         model.addAttribute("doctors", thisDepartmentDoctors);
         model.addAttribute("department",department);
         model.addAttribute("status","department");

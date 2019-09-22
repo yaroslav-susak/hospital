@@ -6,6 +6,9 @@ INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_le
 INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_level, specialization, surname, department_id) VALUES (2, 'Львович', 'Ярослав', 'h56caz.jpg', 'Вища', 'Невролог', 'Криштафович', 1);
 INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_level, specialization, surname, department_id) VALUES (3, 'Васильович', 'Тарас', 'ce1kz8.jpg', 'Перша', 'Анестезіолог', 'Мельник', 2);
 INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_level, specialization, surname, department_id) VALUES (4, 'Михайлович', 'Тарас', 'c34tqa.jpg', 'Перша', 'Педіатр', 'Величко', 3);
+INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_level, specialization, surname, department_id) VALUES (5, 'Михайлович1', 'Тарас1', 'c34tqa.jpg', 'Вища', 'Педіатр', 'Величко1', 3);
+INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_level, specialization, surname, department_id) VALUES (6, 'Михайлович2', 'Тарас2', 'c34tqa.jpg', 'Вища', 'Невролог', 'Величко2', 1);
+INSERT INTO hospital.doctor (id, middle_name, name, photo_name, qualification_level, specialization, surname, department_id) VALUES (7, 'Михайлович3', 'Тарас3', 'c34tqa.jpg', 'Перша', 'Педіатр', 'Величко3', 3);
 
 INSERT INTO hospital.role (id, name) VALUES (1, 'ADMIN');
 INSERT INTO hospital.role (id, name) VALUES (2, 'USER');

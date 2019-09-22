@@ -15,7 +15,7 @@
 <main>
         <aside class="left-side" th:replace="layouts :: left-side"></aside>
         <div class="center">
-            <a th:href="@{/doctor/search}">Пошук лікаря</a>
+ <!--           <a th:href="@{/doctor/search}">Пошук лікаря</a>  -->
             <div th:each="doctor: ${doctors}">
                 <a th:replace="layouts :: doctor-link"></a>
             </div>
