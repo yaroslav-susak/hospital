@@ -58,8 +58,8 @@ CREATE TABLE schedule
     id INT AUTO_INCREMENT,
     doctor_id INT NOT NULL,
     patient_id INT,
-    start DATE NOT NULL,
-    end DATE NOT NULL,
+    start DATETIME(0) NOT NULL,
+    end DATETIME(0) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (doctor_id) REFERENCES doctor(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (patient_id) REFERENCES user(id) ON DELETE RESTRICT ON UPDATE CASCADE

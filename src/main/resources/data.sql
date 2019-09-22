@@ -16,7 +16,14 @@ INSERT INTO role (id, name) VALUES (4, 'DOCTOR');
 INSERT INTO role (id, name) VALUES (5, 'PATIENT');
 
 INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (1, '2019-09-17 15:58:37.612000000', 'susak.slava@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null );
+INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (2, '2019-09-17 15:58:37.612000000', 'susak.yaroslav@comp-sc.if.ua', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null );
+INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (3, '2019-09-17 15:58:37.612000000', 'symx2019new@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null );
 
-INSERT INTO user_role (user_id, role_id) VALUES (1, 1);
+INSERT INTO user_role (user_id, role_id) VALUES (1,1);
+INSERT INTO user_role (user_id, role_id) VALUES (2,2), (2,5);
+INSERT INTO user_role (user_id, role_id) VALUES (3,2), (3,5);
 
 INSERT INTO hibernate_sequence (next_val) VALUE (100);
+
+INSERT INTO schedule(id, doctor_id, patient_id, start, end) VALUES (1,1,2,'2019-09-23 15:10:00','2019-09-23 15:30:00');
+INSERT INTO schedule(id, doctor_id, patient_id, start, end) VALUES (2,1,3,'2019-09-23 15:30:00','2019-09-23 15:50:00');

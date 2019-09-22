@@ -120,3 +120,15 @@ header {
     margin-left: 20px;
     margin-top: 20px;
 }
+
+.timetable {
+    margin-top: 5px;
+    width:100%;
+    border-collapse: collapse;
+}
+
+.timetable td, th {
+    border: 1pt solid black;
+    text-align: center;
+    padding: 5px;
+}
