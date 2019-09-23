@@ -6,10 +6,36 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
 </head>
 <body>
-<header th:replace="homepage::header"></header>
+<header th:replace="layouts::header"></header>
 <main>
-    <h1>Кабінет</h1>
+    <aside th:replace="layouts :: left-side"></aside>
+    <div class="center">
+    <form action="/user/save" method="post" th:object="${user}" >
+
+
+        <b>Ім'я</b>
+        <input type="text" placeholder="Ім'я" name="firstName"
+        th:value="*{firstName}"/>
+        <b>Прізвище</b>
+        <input type="text" placeholder="Ім'я" name="lastName"
+               th:value="*{lastName}"/>
+        <b>Пошта</b>
+        <input type="text" placeholder="Ім'я" name="email"
+               th:value="*{email}"/>
+
+        <div th:if="${user.photo == null}"><img width="200" src="/images/user_icon.png"></div>
+        <div th:unless="${user.photo == null}"><img width="200" th:src="@{*{'/resources/uploads/' + photo}}"></div>
+
+        <button type="submit">Підтвердити</button>
+    </form>
+        <form align="center" action="uploadPhoto" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
+            <input type="button" value="Загрузити Фото"
+                   onclick="document.getElementById('selectedFile').click();"/>
+        </form>
+    </div>
+    <aside th:replace="layouts :: right-side"></aside>
 </main>
-<footer th:replace="homepage::footer"></footer>
+<footer th:replace="layouts::footer"></footer>
 </body>
 </html>
