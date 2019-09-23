@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${'Розклад роботи лікаря - ' + doctor.surname+' '+doctor.name+' '+doctor.middleName}"></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<header th:replace="layouts :: header"></header>
+<main>
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
+    <div class="center">
+        <div th:if="${doctor.user} == ${user}">
+            <p>Додати розклад:</p>
+        </div>
+
+        <div>
+            <p>Запис на прийом до лікаря</p>
+            <p><b>Лікар: </b><span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span></p>
+            <table th:replace="layouts :: timetable"></table>
+        </div>
+    </div>
+
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts :: footer"></footer>
+</body>
+</html>

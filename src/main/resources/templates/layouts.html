@@ -34,5 +34,34 @@
     </div>
 </div>
 
+<table th:fragment="timetable" class="timetable">
+    <tr>
+        <th>Лікар</th>
+        <th>Дата</th>
+        <th>Початок</th>
+        <th>Кінець</th>
+        <th>Статус</th>
+    </tr>
+    <tr th:each="schedule: ${schedules}">
+        <td th:text="${
+                    schedule.doctor.surname + ' ' +
+                    schedule.doctor.name + ' ' +
+                    schedule.doctor.middleName }">
+        </td>
+
+        <td th:text="${#dates.format(schedule.start, 'dd.MM.yyyy')}"></td>
+
+        <td th:text="${#dates.format(schedule.start, 'HH:mm')}"></td>
+
+        <td th:text="${#dates.format(schedule.end, 'HH:mm')}"></td>
+
+        <td th:if="${schedule.patient} == null">
+            <a th:href="/">Записатись</a>
+        </td>
+
+        <td th:if="${schedule.patient} != null">Зайнято</td>
+    </tr>
+</table>
+
 </body>
 </html>

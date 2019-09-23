@@ -21,4 +21,7 @@ public class Doctor {
     private String specialization;
     private String qualificationLevel;
     private String photoName;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

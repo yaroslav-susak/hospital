@@ -1,16 +1,28 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
-
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.model.Schedule;
+import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.DepartmentService;
 import com.itcluster.javaadvanced2.hospital.service.DoctorService;
+import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
+import com.itcluster.javaadvanced2.hospital.service.UserService;
+import org.hibernate.validator.constraints.EAN;
+import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
+import com.itcluster.javaadvanced2.hospital.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import javax.print.Doc;
+import java.util.Date;
 import java.util.HashSet;
 
 @Controller
@@ -23,17 +35,16 @@ public class DoctorController {
     @Autowired
     DepartmentService departmentService;
 
-//    @GetMapping("/search")
-//    public String getSearch(){
-//        return "search";
-//    }
+    @Autowired
+    ScheduleService scheduleService;
 
-//    @GetMapping("/search/{surname}")
-//    public String findDoctorsBySurname(@PathVariable String surname, Model model){
-//        List<Doctor> doctorsBySurname = doctorService.findBySurname(surname);
-//        model.addAttribute("doctors",doctorsBySurname);
-//        return "staff";
-//    }
+    @Autowired
+    UserService userService;
+
+    @ModelAttribute("user")
+    public User activeUser(Authentication authentication) {
+        return userService.findUserByEmail(authentication.getName()).get();
+    }
 
     @GetMapping("/search")
     public String findDoctorsByQualificationLevel(@RequestParam(name = "lvl", required = false) String qualification,
@@ -58,12 +69,18 @@ public class DoctorController {
         return "staff";
     }
 
-//    @GetMapping("/search/{Department}")
-//    public String findDoctorsByDepartment(@PathVariable String Department, Model model){
-//        List<Doctor> doctorsByDepartment = doctorService.findBySurname(Department);
-//        model.addAttribute("doctors",doctorsByDepartment);
-//        return "staff";
-//    }
+    @GetMapping("/{id}/timetable")
+    public String giveTimetable(@PathVariable Long id, Model model){
+        Doctor doctor = doctorService.findById(id);
+        List<Schedule> schedules = scheduleService.findActiveByDoctor(doctor);
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("schedules",schedules);
+        return "timetable";
+    }
 
-
+    @PostMapping("/{id}/timetable/create")
+    public String createTimetable(@PathVariable Long id, Model model) {
+        Date date = new Date();
+        return "forward:/{id}/timetable";
+    }
 }
