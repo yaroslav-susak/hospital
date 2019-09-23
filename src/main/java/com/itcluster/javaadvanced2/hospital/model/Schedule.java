@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.print.Doc;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Entity
@@ -14,12 +15,16 @@ public class Schedule {
     @Id()
     @GeneratedValue
     private Long id;
+
     @OneToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
+
     @OneToOne
     @JoinColumn(name = "patient_id")
     private User patient;
+
     private Date start;
+
     private Date end;
 }

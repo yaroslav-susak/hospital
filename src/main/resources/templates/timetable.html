@@ -14,9 +14,15 @@
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-         <h3>Запис на прийом до лікаря</h3>
-        <p><b>Лікар: </b><span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span></p>
-        <table th:replace="layouts :: timetable"></table>
+        <div th:if="${doctor.user} == ${user}">
+            <p>Додати розклад:</p>
+        </div>
+
+        <div>
+            <p>Запис на прийом до лікаря</p>
+            <p><b>Лікар: </b><span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span></p>
+            <table th:replace="layouts :: timetable"></table>
+        </div>
     </div>
 
     <aside class="right-side" th:replace="layouts :: right-side"></aside>

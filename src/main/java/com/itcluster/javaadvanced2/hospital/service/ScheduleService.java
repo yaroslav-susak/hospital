@@ -7,6 +7,7 @@ import com.itcluster.javaadvanced2.hospital.repository.ScheduleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,7 @@ public class ScheduleService {
         List<Schedule> activeSchedules = new ArrayList<>();
 
         for (Schedule schedule : schedules){
-            if(schedule.getStart().after(new Date())){
+            if(schedule.getEnd().after(new Date())){
                 activeSchedules.add(schedule);
             }
         }

@@ -2,19 +2,20 @@ package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
 import com.itcluster.javaadvanced2.hospital.model.Schedule;
+import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.repository.DoctorRepository;
 import com.itcluster.javaadvanced2.hospital.service.DoctorService;
 import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
+import com.itcluster.javaadvanced2.hospital.service.UserService;
 import org.hibernate.validator.constraints.EAN;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.print.Doc;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -26,6 +27,14 @@ public class DoctorController {
 
     @Autowired
     ScheduleService scheduleService;
+
+    @Autowired
+    UserService userService;
+
+    @ModelAttribute("user")
+    public User activeUser(Authentication authentication) {
+        return userService.findUserByEmail(authentication.getName()).get();
+    }
 
     @GetMapping("/search")
     public String getSearch(){
@@ -46,5 +55,11 @@ public class DoctorController {
         model.addAttribute("doctor", doctor);
         model.addAttribute("schedules",schedules);
         return "timetable";
+    }
+
+    @PostMapping("/{id}/timetable/create")
+    public String createTimetable(@PathVariable Long id, Model model) {
+        Date date = new Date();
+        return "forward:/{id}/timetable";
     }
 }

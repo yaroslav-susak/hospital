@@ -33,7 +33,9 @@ CREATE TABLE doctor
     specialization VARCHAR(50) NOT NULL,
     surname VARCHAR(50) NOT NULL,
     department_id INT NOT NULL,
+    user_id INT,
     PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (department_id) REFERENCES department (id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=INNODB CHAR SET=utf8;
 
