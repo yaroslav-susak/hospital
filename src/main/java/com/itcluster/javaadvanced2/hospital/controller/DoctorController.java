@@ -27,6 +27,7 @@ import java.util.HashSet;
 
 @Controller
 @RequestMapping("/doctor")
+
 public class DoctorController {
 
     @Autowired
@@ -73,6 +74,7 @@ public class DoctorController {
     public String giveTimetable(@PathVariable Long id, Model model){
         Doctor doctor = doctorService.findById(id);
         List<Schedule> schedules = scheduleService.findActiveByDoctor(doctor);
+
         model.addAttribute("doctor", doctor);
         model.addAttribute("schedules",schedules);
         return "timetable";
