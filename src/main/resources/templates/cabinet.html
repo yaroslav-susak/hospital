@@ -24,7 +24,7 @@
                th:value="*{email}"/>
 
         <div th:if="${user.photo == null}"><img width="200" src="/images/user_icon.png"></div>
-        <div th:unless="${user.photo == null}"><img width="200" th:src="@{*{'/resources/uploads/' + photo}}"></div>
+        <div th:unless="${user.photo == null}"><img width="200" th:src="@{${'/resources/uploads/' + user.photo}}"></div>
 
         <button type="submit">Підтвердити</button>
     </form>

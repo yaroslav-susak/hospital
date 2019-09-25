@@ -39,7 +39,7 @@ public class UserController {
     @PostMapping("/save")
     public String saveUser(User user)
     {
-      log.info("new user {}", user);
+        log.info("new user {}", user);
         userService.createUpdate(user);
         return "cabinet";
     }
