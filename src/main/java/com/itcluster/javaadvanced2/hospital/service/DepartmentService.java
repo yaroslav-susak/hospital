@@ -16,10 +16,6 @@ public class DepartmentService {
 
     @Autowired
     DepartmentRepository departmentRepository;
-//----------- в DoctorService є аналогічний метод-----------
-//    public List<Doctor> getAllDoctorsFromDepartment(Department department){
-//        return doctorRepository.findByDepartment(department);
-//    }
 
     public Department findByName(String name){
         return departmentRepository.findByName(name);

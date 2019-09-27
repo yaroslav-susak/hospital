@@ -1,8 +1,10 @@
 package com.itcluster.javaadvanced2.hospital.service;
 
+import com.itcluster.javaadvanced2.hospital.exceptions.DoctorNotFoundException;
 import com.itcluster.javaadvanced2.hospital.model.Department;
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
 import com.itcluster.javaadvanced2.hospital.repository.DoctorRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,17 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Slf4j
 public class DoctorService {
     @Autowired
     DoctorRepository doctorRepository;
 
     public Doctor findById(Long id) {
-        return doctorRepository.findById(id).orElse(null);
+        return doctorRepository.findById(id).orElseThrow(() -> {
+                DoctorNotFoundException e = new DoctorNotFoundException(id);
+                log.error("Doctor not found",e);
+                return e;
+        });
     }
 
     public List<Doctor> findAll(){

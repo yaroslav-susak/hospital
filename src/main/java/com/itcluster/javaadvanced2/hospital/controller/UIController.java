@@ -61,16 +61,6 @@ public class UIController {
         return "staff";
     }
 
-    @GetMapping("/department/{id}")
-    public String getDepartment(Model model, @PathVariable Long id){
-        Department department = departmentService.findById(id);
-        List<Doctor> thisDepartmentDoctors = new ArrayList<>(doctorService.findByDepartment(department));
-        model.addAttribute("doctors", thisDepartmentDoctors);
-        model.addAttribute("department",department);
-        model.addAttribute("status","department");
-        return "staff";
-    }
-
     @GetMapping("/departments")
     public String getDepartmentsList(Model model){
         List<Department> departments = departmentService.findAll();

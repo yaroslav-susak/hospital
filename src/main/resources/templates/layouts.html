@@ -31,7 +31,7 @@
 
 <div th:fragment="deparment-list" class="department-list" th:each="department: ${departments}">
     <div>
-    <a th:href="@{${'/department/' + department.id}}" th:text="${department.getName()}"></a>
+    <a th:href="@{${'/doctor/search?dep=' + department.name}}" th:text="${department.getName()}"></a>
     </div>
 </div>
 
