@@ -1,11 +1,13 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
+import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
 import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,6 +43,29 @@ public class UserController {
     {
         log.info("new user {}", user);
         userService.createUpdate(user);
+        return "cabinet";
+    }
+
+    @GetMapping("/passwordchange")
+    public String changePassword(@ModelAttribute("user") User user)
+    {
+
+        return "passwordchange";
+    }
+
+    @PostMapping("/savePassword")
+    public String savePassword(@ModelAttribute("user") User user,PasswordCheckingDTO passwordCheckingDTO)
+    {
+        BCryptPasswordEncoder coder = new BCryptPasswordEncoder();
+
+        if(coder.matches(passwordCheckingDTO.getPasswordOld(),user.getPassword()) &&
+                passwordCheckingDTO.getPasswordRawFir().equals(passwordCheckingDTO.getPasswordRawSec())){
+            User user1 = user;
+            user1.setPassword(coder.encode(passwordCheckingDTO.getPasswordRawFir()));
+            userService.createUpdate(user1);
+        }else{
+            return "passwordchange";
+        }
         return "cabinet";
     }
 
