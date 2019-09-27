@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Персональний кабінет</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <header th:replace="layouts::header"></header>
@@ -27,6 +28,8 @@
         <div th:unless="${user.photo == null}"><img width="200" th:src="@{${'/resources/uploads/' + user.photo}}"></div>
 
         <button type="submit">Підтвердити</button>
+        <a th:href="@{/user/passwordchange}">Змінити пароль</a>
+
     </form>
         <form align="center" action="uploadPhoto" method="POST" enctype="multipart/form-data">
             <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
@@ -37,5 +40,10 @@
     <aside th:replace="layouts :: right-side"></aside>
 </main>
 <footer th:replace="layouts::footer"></footer>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 </body>
 </html>
