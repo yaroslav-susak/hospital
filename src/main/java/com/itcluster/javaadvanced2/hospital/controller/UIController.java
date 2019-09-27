@@ -14,9 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class UIController {
@@ -39,23 +37,27 @@ public class UIController {
         return "doctor";
     }
 
-//  пошук лікаря те ж саме що вивести персонал
+    @GetMapping("/doctor/search")
+    public String findDoctorsByQualificationLevel(@RequestParam(name = "lvl", required = false) String qualification,
+                                                  @RequestParam(name = "dep", required = false) String department,
+                                                  @RequestParam(name = "sur", required = false) String surname,
+                                                  Model model) {
 
-//    @GetMapping("/staff")
-//    public String getStaff(Model model){
-//        List<Doctor> allDoctors = doctorService.findAll();
-//        model.addAttribute("doctors", allDoctors);
-//        model.addAttribute("status","all");
-//        return "staff";
-//    }
+        Set<Doctor> doctors = new HashSet<>(doctorService.findAll());
 
-    @GetMapping("/department/{id}")
-    public String getDepartment(Model model, @PathVariable Long id){
-        Department department = departmentService.findById(id);
-        List<Doctor> thisDepartmentDoctors = new ArrayList<>(doctorService.findByDepartment(department));
-        model.addAttribute("doctors", thisDepartmentDoctors);
-        model.addAttribute("department",department);
-        model.addAttribute("status","department");
+        if (qualification != null){
+            doctors.retainAll(doctorService.findByQualificationLevel(qualification));
+        }
+
+        if(department!=null) {
+            doctors.retainAll(doctorService.findByDepartment(departmentService.findByName(department)));
+        }
+
+        if(surname!=null) {
+            doctors.retainAll(doctorService.findBySurname(surname));
+        }
+
+        model.addAttribute("doctors",doctors);
         return "staff";
     }
 
