@@ -10,6 +10,7 @@ import javax.print.Doc;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class DoctorService {
@@ -33,11 +34,11 @@ public class DoctorService {
         return doctorRepository.findByQualificationLevel(qualificationLevel);
     }
 
-    public void removeDifferent(HashSet<Doctor> from, HashSet<Doctor> arg){
-        HashSet<Doctor> tmp = (HashSet<Doctor>) from.clone();
-        tmp.removeAll(arg);
-        from.removeAll(tmp);
-    }
+//    public void removeDifferent(HashSet<Doctor> from, HashSet<Doctor> arg){
+//        Set<Doctor> tmp = new HashSet<>(from);
+//        tmp.removeAll(arg);
+//        from.removeAll(tmp);
+//    }
 
     public HashSet<Doctor> findBySurname(String surname){
         return doctorRepository.findBySurname(surname);

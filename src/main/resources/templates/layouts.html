@@ -7,7 +7,6 @@
     <nav>
         <a href="/">Головна</a>
         <a href="/doctor/search">Персонал</a>
-  <!--      <a href="/staff">Персонал</a> -->
     </nav>
 </header>
 
@@ -58,7 +57,7 @@
         <td th:text="${#dates.format(schedule.end, 'HH:mm')}"></td>
 
         <td th:if="${schedule.patient} == null">
-            <a th:href="/">Записатись</a>
+            <a href="/">Записатись</a>
         </td>
 
         <td th:if="${schedule.patient} != null">Зайнято</td>

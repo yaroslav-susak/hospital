@@ -20,10 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 import javax.print.Doc;
-import java.util.Date;
-import java.util.HashSet;
 
 @Controller
 @RequestMapping("/doctor")
@@ -45,29 +43,6 @@ public class DoctorController {
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
         return userService.findUserByEmail(authentication.getName()).get();
-    }
-
-    @GetMapping("/search")
-    public String findDoctorsByQualificationLevel(@RequestParam(name = "lvl", required = false) String qualification,
-                                                  @RequestParam(name = "dep", required = false) String department,
-                                                  @RequestParam(name = "sur", required = false) String surname,
-                                                  Model model) {
-
-        HashSet<Doctor> doctors = new HashSet<>(doctorService.findAll());
-
-        if (qualification != null){
-            doctorService.removeDifferent(doctors, doctorService.findByQualificationLevel(qualification));
-        }
-        if(department!=null) {
-            doctorService.removeDifferent(doctors, doctorService.findByDepartment(departmentService.findByName(
-                    department)));
-        }
-        if(surname!=null) {
-            doctorService.removeDifferent(doctors, doctorService.findBySurname(surname));
-        }
-
-        model.addAttribute("doctors",doctors);
-        return "staff";
     }
 
     @GetMapping("/{id}/timetable")
