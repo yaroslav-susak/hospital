@@ -37,18 +37,26 @@
 
 <table th:fragment="timetable" class="timetable">
     <tr>
-        <th>Лікар</th>
+        <th sec:authorize="hasAuthority('PATIENT')">Лікар</th>
+        <th sec:authorize = "hasAuthority('DOCTOR')">Пацієнт</th>
         <th>Дата</th>
         <th>Початок</th>
         <th>Кінець</th>
         <th>Статус</th>
     </tr>
     <tr th:each="schedule: ${schedules}">
-        <td th:text="${
+        <td sec:authorize = "hasAuthority('PATIENT')" th:text="${
                     schedule.doctor.surname + ' ' +
                     schedule.doctor.name + ' ' +
                     schedule.doctor.middleName }">
         </td>
+        <td th:if="${schedule.patient} != null" sec:authorize="hasAuthority('DOCTOR')" th:text="${
+                    schedule.patient.surname + ' ' +
+                    schedule.patient.name
+            }">
+        </td>
+
+        <td th:if="${schedule.patient} == null" sec:authorize="hasAuthority('DOCTOR')" th:text="Відсутній"></td>
 
         <td th:text="${#dates.format(schedule.start, 'dd.MM.yyyy')}"></td>
 
