@@ -14,12 +14,50 @@
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-        <div th:if="${doctor.user} == ${user}">
-            <p>Додати розклад:</p>
+        <div th:if="${doctor.user} == ${user}" style="margin-bottom: 50px;">
+            <h3 class="small-centered-headline">Додати розклад</h3>
+            <form autocomplete="off" action="#" th:action="@{${'/doctor/' + doctor.id + '/timetable/create'}}"
+                  th:object="${scheduleDTO}" method="post" role="form">
+                <div class="form-element">
+                    <p>
+                        На дату:
+                    </p>
+                    <input placeholder="01.01.2019" th:field="*{dateString}">
+                </div>
+
+                <div class="form-element">
+                <p>
+                        Година початку роботи:
+                </p>
+
+                <select th:field="*{startingHour}">
+                        <option th:each="hour: ${hoursToStart}" th:value="${hour}" th:text="${hour + ':00'}"></option>
+                </select>
+                </div>
+
+                <div class="form-element">
+                <p>
+                        Кількість годин роботи:
+                </p>
+
+                <select th:field="*{lengthOfTheDay}">
+                        <option th:each="hour: ${durationsHours}" th:value="${hour}" th:text="${hour + ' годин'}"></option>
+                </select>
+                </div>
+
+                <div class="form-element">
+                <p>
+                    Довжина прийому (хв):
+                </p>
+                    <input placeholder="15" th:field="*{duration}">
+                </div>
+
+                <button style="display: block;" type="submit">Створити</button>
+            </form>
         </div>
 
         <div>
-            <p>Запис на прийом до лікаря</p>
+            <h3 class="small-centered-headline">Запис на прийом до лікаря</h3>
             <p><b>Лікар: </b><span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span></p>
             <table th:replace="layouts :: timetable"></table>
         </div>

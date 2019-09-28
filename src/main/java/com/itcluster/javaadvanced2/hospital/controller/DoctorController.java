@@ -1,5 +1,6 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
+import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
 import com.itcluster.javaadvanced2.hospital.model.Schedule;
 import com.itcluster.javaadvanced2.hospital.model.User;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.*;
 import javax.print.Doc;
 
@@ -49,15 +51,22 @@ public class DoctorController {
     public String giveTimetable(@PathVariable Long id, Model model){
         Doctor doctor = doctorService.findById(id);
         List<Schedule> schedules = scheduleService.findActiveByDoctor(doctor);
+        ScheduleGenerateDTO dto = new ScheduleGenerateDTO();
 
         model.addAttribute("doctor", doctor);
-        model.addAttribute("schedules",schedules);
+        model.addAttribute("schedules", schedules);
+        model.addAttribute("scheduleDTO", dto);
+        model.addAttribute("hoursToStart", scheduleService.getHours(23));
+        model.addAttribute("durationsHours", scheduleService.getHours(8));
+
         return "timetable";
     }
 
     @PostMapping("/{id}/timetable/create")
-    public String createTimetable(@PathVariable Long id, Model model) {
-        Date date = new Date();
-        return "forward:/{id}/timetable";
+    public String createTimetable(@PathVariable Long id,
+                                  @ModelAttribute ScheduleGenerateDTO dto,
+                                  Model model) {
+        scheduleService.generateSchedule(dto, doctorService.findById(id));
+        return "redirect:/doctor/{id}/timetable";
     }
 }

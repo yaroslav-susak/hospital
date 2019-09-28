@@ -25,7 +25,7 @@
                 <b>Прізвище</b>: <span th:text="${doctor.surname}"></span>
             </p>
             <p>
-                <b>Відділення</b>: <a th:href="@{${'/department/'+doctor.department.id}}" th:text="${doctor.department.name}"></a>
+                <b>Відділення</b>: <a th:href="@{${'/doctor/search?dep='+doctor.department.name}}" th:text="${doctor.department.name}"></a>
             </p>
             <p>
                 <b>Спеціалізація</b>: <span th:text="${doctor.specialization}"></span>

@@ -15,7 +15,10 @@
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-        Сторінка на помилку. Ще треба зробити
+        <p>
+            Помилка.
+            <span th:text="${message}"></span>
+        </p>
     </div>
 
     <aside class="right-side" th:replace="layouts :: right-side"></aside>

@@ -132,3 +132,15 @@ header {
     text-align: center;
     padding: 2px;
 }
+
+.small-centered-headline {
+    display: block;
+    text-align: center;
+    font-size: 16pt;
+    margin: 0 0 20px 0;
+}
+
+.form-element {
+    margin-bottom: 20px;
+}
+
