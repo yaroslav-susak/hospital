@@ -45,15 +45,15 @@ public class UIController {
 
         Set<Doctor> doctors = new HashSet<>(doctorService.findAll());
 
-        if (qualification != null){
+        if (qualification != null && !qualification.equals("")){
             doctors.retainAll(doctorService.findByQualificationLevel(qualification));
         }
 
-        if(department!=null) {
+        if(department!=null && !department.equals("")) {
             doctors.retainAll(doctorService.findByDepartment(departmentService.findByName(department)));
         }
 
-        if(surname!=null) {
+        if(surname!=null && !surname.equals("")) {
             doctors.retainAll(doctorService.findBySurname(surname));
         }
 
