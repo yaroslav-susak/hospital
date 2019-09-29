@@ -18,6 +18,7 @@
 <aside class="right-side" th:fragment="right-side">
     <div class="login-link" sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> <br/> <a th:href="@{/registration}">Зареєструватись</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>
+    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
 
     </aside>

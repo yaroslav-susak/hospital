@@ -2,9 +2,11 @@ package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.model.Department;
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.model.Question;
 import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.DepartmentService;
 import com.itcluster.javaadvanced2.hospital.service.DoctorService;
+import com.itcluster.javaadvanced2.hospital.service.QuestionService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,9 @@ public class UIController {
 
     @Autowired
     DepartmentService departmentService;
+
+    @Autowired
+    QuestionService questionService;
 
     @GetMapping("/")
     public String homePage(){
@@ -66,5 +71,12 @@ public class UIController {
         List<Department> departments = departmentService.findAll();
         model.addAttribute("departments",departments);
         return "departments";
+    }
+
+    @GetMapping("/faq")
+    public String getFaqList(Model model){
+        List<Question> questions = questionService.findAll();
+        model.addAttribute("questions",questions);
+        return "faq";
     }
 }

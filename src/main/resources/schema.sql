@@ -23,6 +23,14 @@ CREATE TABLE department
     PRIMARY KEY (id)
 ) ENGINE =INNODB CHAR SET =utf8;
 
+CREATE TABLE question
+(
+    id INT AUTO_INCREMENT,
+    question TEXT NOT NULL,
+    answer TEXT NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE =INNODB CHAR SET =utf8;
+
 CREATE TABLE doctor
 (
     id INT AUTO_INCREMENT,

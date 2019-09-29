@@ -29,3 +29,6 @@ INSERT INTO hibernate_sequence (next_val) VALUE (100);
 
 INSERT INTO schedule(id, doctor_id, patient_id, start, end) VALUES (1,1,2,'2019-09-26 09:00:00','2019-09-26 09:07:00');
 INSERT INTO schedule(id, doctor_id, patient_id, start, end) VALUES (2,1,3,'2019-09-26 15:30:00','2019-09-26 15:50:00');
+
+INSERT INTO question(question,answer) VALUES('Як саме записатись на прийом?','Подзвоніть або заповніть заявку');
+INSERT INTO question(question,answer) VALUES('Мій сеанс відмінили. Що робити?','Зверніться за телефоном, щоб вирішити дане питання, можливі збої, або зміни в розпорядку лікарів');
