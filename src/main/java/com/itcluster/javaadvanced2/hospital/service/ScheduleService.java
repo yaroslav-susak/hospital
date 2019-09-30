@@ -1,6 +1,7 @@
 package com.itcluster.javaadvanced2.hospital.service;
 
 import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
+import com.itcluster.javaadvanced2.hospital.exceptions.ScheduleNotAvailableException;
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
 import com.itcluster.javaadvanced2.hospital.model.Schedule;
 import com.itcluster.javaadvanced2.hospital.model.User;
@@ -19,6 +20,9 @@ import java.util.*;
 public class ScheduleService {
     @Autowired
     ScheduleRepository scheduleRepository;
+
+    @Autowired
+    UserService userService;
 
     public List<Schedule> findByDoctor(Doctor doctor){
         return scheduleRepository.findByDoctor(doctor);
@@ -88,5 +92,76 @@ public class ScheduleService {
             hours.add(i);
         }
         return hours;
+    }
+
+    public Schedule findById(Long id){
+        return scheduleRepository.findById(id).orElse(null);
+    }
+
+    public void setPatientForSchedule(Long scheduleId, Long patientId){
+        Schedule schedule = findById(scheduleId);
+        User patient = userService.findById(patientId);
+
+        if (scheduleIsFree(schedule, patient)){
+            setOrDeletePatient(patient, schedule);
+        } else throw new ScheduleNotAvailableException();
+    }
+
+    public void deletePatientFromSchedule(Long scheduleId, Long patientId){
+        Schedule schedule = findById(scheduleId);
+        setOrDeletePatient(null, schedule);
+    }
+
+    public void setOrDeletePatient(User patient, Schedule schedule){
+        schedule.setPatient(patient);
+        scheduleRepository.save(schedule);
+    }
+
+    public boolean scheduleIsFree(Schedule schedule, User patient){
+        List<Schedule> schedulesByPatient = findByPatient(patient);
+        List<Schedule> schedulesByPatientAndByDoctor = new ArrayList<>();
+
+        for (Schedule sc : schedulesByPatient) {
+            if(sc.getDoctor().equals(schedule.getDoctor())){
+                schedulesByPatientAndByDoctor.add(sc);
+            }
+        }
+
+        return !onSameDay(schedulesByPatientAndByDoctor, schedule) &&
+                !hoursConflict(schedulesByPatientAndByDoctor, schedule);
+    }
+
+    public boolean onSameDay(List<Schedule> schedules, Schedule schedule){
+        for (Schedule sc : schedules){
+            if(sameDay(sc.getStart(), schedule.getStart())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean sameDay(Date date1, Date date2){
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(date1);
+        cal2.setTime(date2);
+        return cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
+                cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
+    }
+
+    public boolean hoursConflict(List<Schedule> schedules, Schedule schedule){
+        for (Schedule sc : schedules){
+            if(hoursIntermix(sc.getStart(), sc.getEnd(), schedule.getStart(), schedule.getEnd())){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hoursIntermix(Date firstStart, Date firstEnd, Date secondStart, Date secondEnd){
+        return (firstStart.after(secondStart) && firstStart.before(secondEnd)) ||
+                (firstEnd.after(secondStart) && firstEnd.before(secondEnd)) ||
+                (secondStart.after(firstStart) && secondStart.before(firstEnd)) ||
+                (secondEnd.after(firstStart) && secondEnd.before(firstEnd));
     }
 }
