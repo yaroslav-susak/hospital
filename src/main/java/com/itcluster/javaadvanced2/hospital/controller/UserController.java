@@ -1,19 +1,24 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
+import com.itcluster.javaadvanced2.hospital.model.Schedule;
 import com.itcluster.javaadvanced2.hospital.model.User;
+import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -25,11 +30,16 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private ScheduleService scheduleService;
+
+    @Autowired
     @Qualifier("basePath")
     private String basePath;
 
     @GetMapping("/cabinet")
-    public String userCabinet() {
+    public String userCabinet(Model model, @ModelAttribute User user) {
+        List<Schedule> schedules = scheduleService.findActiveByUser(user);
+        model.addAttribute("schedules",schedules);
         return "cabinet";
     }
 

@@ -66,7 +66,7 @@
         <td th:text="${#dates.format(schedule.end, 'HH:mm')}"></td>
 
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == null">
-            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>
+            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>
         </td>
 
         <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} == null">
@@ -76,11 +76,11 @@
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} != null and ${schedule.patient} != ${user}">Зайнято</td>
 
         <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} != null">
-            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>
+            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>
         </td>
 
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == ${user}">
-            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
+            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
         </td>
 
         <td sec:authorize="hasAuthority('AUTHOR') || hasAuthority('ADMIN')">Недоступно</td>
