@@ -69,4 +69,22 @@ public class DoctorController {
         scheduleService.generateSchedule(dto, doctorService.findById(id));
         return "redirect:/doctor/{id}/timetable";
     }
+
+    @GetMapping("/{id}/timetable/schedule")
+    public String setUserForSchedule(@RequestParam(name="scheduleId") Long scheduleId,
+                                     @RequestParam(name="patientId") Long patientId,
+                                     Model model,
+                                     @PathVariable Long id){
+        scheduleService.setPatientForSchedule(scheduleId, patientId);
+        return "redirect:/doctor/{id}/timetable";
+    }
+
+    @GetMapping("/{id}/timetable/schedule/delete")
+    public String deleteUserFromSchedule(@RequestParam(name="scheduleId") Long scheduleId,
+                                     @RequestParam(name="patientId") Long patientId,
+                                     Model model,
+                                     @PathVariable Long id){
+        scheduleService.deletePatientFromSchedule(scheduleId, patientId);
+        return "redirect:/doctor/{id}/timetable";
+    }
 }

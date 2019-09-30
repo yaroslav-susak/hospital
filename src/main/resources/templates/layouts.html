@@ -39,7 +39,7 @@
 <table th:fragment="timetable" class="timetable">
     <tr>
         <th sec:authorize="hasAuthority('PATIENT')">Лікар</th>
-        <th sec:authorize = "hasAuthority('DOCTOR')">Пацієнт</th>
+        <th sec:authorize="hasAuthority('DOCTOR')">Пацієнт</th>
         <th>Дата</th>
         <th>Початок</th>
         <th>Кінець</th>
@@ -52,8 +52,8 @@
                     schedule.doctor.middleName }">
         </td>
         <td th:if="${schedule.patient} != null" sec:authorize="hasAuthority('DOCTOR')" th:text="${
-                    schedule.patient.surname + ' ' +
-                    schedule.patient.name
+                    schedule.patient.lastName + ' ' +
+                    schedule.patient.firstName
             }">
         </td>
 
@@ -65,11 +65,25 @@
 
         <td th:text="${#dates.format(schedule.end, 'HH:mm')}"></td>
 
-        <td th:if="${schedule.patient} == null">
-            <a href="/">Записатись</a>
+        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == null">
+            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>
         </td>
 
-        <td th:if="${schedule.patient} != null">Зайнято</td>
+        <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} == null">
+            Відсутній
+        </td>
+
+        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} != null and ${schedule.patient} != ${user}">Зайнято</td>
+
+        <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} != null">
+            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>
+        </td>
+
+        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == ${user}">
+            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
+        </td>
+
+        <td sec:authorize="hasAuthority('AUTHOR') || hasAuthority('ADMIN')">Недоступно</td>
     </tr>
 </table>
 
