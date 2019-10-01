@@ -14,8 +14,10 @@
         <aside th:replace="layouts :: left-side"></aside>
 
         <div class="center">
-            <div th:each="doctor: ${doctors}">
-                <a th:replace="layouts :: doctor-link"></a>
+            <div class="doctors-wrap">
+                <div class="doctor-item" th:each="doctor: ${doctors}">
+                    <a th:replace="layouts :: doctor-link"></a>
+                </div>
             </div>
         </div>
         <aside class="right-side" th:replace="layouts :: right-side"></aside>
