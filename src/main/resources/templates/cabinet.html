@@ -36,11 +36,13 @@
                            th:value="*{email}"/>
                     </div>
 
-                    <div th:if="${user.photo == null}" ><img width="200" src="/images/user_icon.png" class="user-photo"></div>
-                    <div th:unless="${user.photo == null}" ><img width="200" th:src="@{${'/resources/uploads/' + user.photo}}" class="user-photo"></div>
+                    <div class="cabinet-photo">
+                        <div class="cabinet-photo__avatar" th:if="${user.photo == null}"><img width="200" src="/images/user_icon.png" class="user-photo"></div>
+                        <div class="cabinet-photo__avatar"  th:unless="${user.photo == null}" ><img width="200" th:src="@{${'/resources/uploads/' + user.photo}}" class="user-photo"></div>
 
-                    <button type="submit">Підтвердити</button>
-                    <a th:href="@{/user/passwordchange}">Змінити пароль</a>
+                        <button type="submit">Підтвердити</button>
+                        <a class="change-password-btn" th:href="@{/user/passwordchange}">Змінити пароль</a>
+                    </div>
                 </div>
             </div>
         </form>
