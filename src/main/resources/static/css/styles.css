@@ -47,7 +47,7 @@ nav {
     float:left;
     border-right: 1pt solid black;
     border-left: 1pt solid black;
-    min-height: 300px;
+    min-height: 1000px;
 }
 
 footer {
@@ -152,4 +152,18 @@ header {
 .answer{
     font-style: italic;
     color: lightslategrey;
+}
+
+.search-form {
+    padding:5px;
+    text-align: center;
+    border: 1pt solid black;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.search-form input {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
 }

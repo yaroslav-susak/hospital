@@ -13,12 +13,23 @@
 <aside class="left-side" th:fragment="left-side">
         <a class="side-link" href="/">Історія лікарні</a>
         <a class="side-link" href="/departments">Відділення лікарні</a>
+        <a class="side-link" th:href="@{/faq}">Часті запитання</a>
+
+    <form class="search-form" action="/doctor/search">
+        <h3>Пошук лікаря</h3>
+        <input type="text" name="sur" th:placeholder="Прізвище" class="form-control" /> <br/>
+
+        <input type="text" name="lvl" th:placeholder="Кваліфікація" class="form-control" /> <br/>
+
+        <input type="text" name="dep" th:placeholder="Відділення" class="form-control" /> <br/>
+        <button class="btn btn-lg btn-primary btn-block"  type="submit">Знайти</button>
+    </form>
 </aside>
 
 <aside class="right-side" th:fragment="right-side">
     <div class="login-link" sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> <br/> <a th:href="@{/registration}">Зареєструватись</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>
-    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>
+<!--    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>-->
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
 
     </aside>
