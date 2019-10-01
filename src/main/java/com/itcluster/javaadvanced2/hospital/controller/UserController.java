@@ -6,6 +6,7 @@ import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,7 +43,6 @@ public class UserController {
     private String basePath;
 
 
-
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
         return userService.findUserByEmail(authentication.getName()).get();
@@ -50,7 +51,7 @@ public class UserController {
     @GetMapping("/cabinet")
     public String userCabinet(@ModelAttribute("user") User user,Model model) {
         List<Schedule> schedules = scheduleService.findActiveByUser(user);
-        model.addAttribute(schedules);
+        model.addAttribute("schedules",schedules);
         return "cabinet";
     }
 

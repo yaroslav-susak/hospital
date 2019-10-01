@@ -49,6 +49,11 @@
             <input type="button" value="Завантажити фото"
                    onclick="document.getElementById('selectedFile').click();"/>
         </form>
+
+        <div style="margin-top:20px;">
+        <h3 class="small-centered-headline">Записи</h3>
+        <table th:replace="layouts :: timetable"></table>
+        </div>
     </div>
     <aside th:replace="layouts :: right-side"></aside>
 </main>
