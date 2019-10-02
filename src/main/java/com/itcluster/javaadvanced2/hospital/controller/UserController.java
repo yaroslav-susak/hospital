@@ -3,6 +3,7 @@ package com.itcluster.javaadvanced2.hospital.controller;
 import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
 import com.itcluster.javaadvanced2.hospital.model.Schedule;
 import com.itcluster.javaadvanced2.hospital.model.User;
+import com.itcluster.javaadvanced2.hospital.service.DoctorService;
 import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,9 @@ public class UserController {
     private ScheduleService scheduleService;
 
     @Autowired
+    private DoctorService doctorService;
+
+    @Autowired
     @Qualifier("basePath")
     private String basePath;
 
@@ -52,6 +56,8 @@ public class UserController {
     public String userCabinet(@ModelAttribute("user") User user,Model model) {
         List<Schedule> schedules = scheduleService.findActiveByUser(user);
         model.addAttribute("schedules",schedules);
+
+        doctorService.addSearchOptions(model);
         return "cabinet";
     }
 
@@ -67,6 +73,7 @@ public class UserController {
     public String changePassword(Model model)
     {
         model.addAttribute("dtoPass", new PasswordCheckingDTO());
+        doctorService.addSearchOptions(model);
         return "passwordchange";
     }
 

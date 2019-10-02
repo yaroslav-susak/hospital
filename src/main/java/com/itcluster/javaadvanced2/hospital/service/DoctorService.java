@@ -7,18 +7,19 @@ import com.itcluster.javaadvanced2.hospital.repository.DoctorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import javax.print.Doc;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Slf4j
 public class DoctorService {
     @Autowired
     DoctorRepository doctorRepository;
+
+    @Autowired
+    DepartmentService departmentService;
 
     public Doctor findById(Long id) {
         return doctorRepository.findById(id).orElseThrow(() -> {
@@ -60,5 +61,29 @@ public class DoctorService {
 
     public Doctor save(Doctor doctor){
         return doctorRepository.save(doctor);
+    }
+
+    public void addSearchOptions(Model model){
+        List<Department> departments = departmentService.findAll();
+        Set<String> allDepartments = new TreeSet<>();
+        for (Department department : departments){
+            allDepartments.add(department.getName());
+        }
+
+        List<Doctor> doctors = findAll();
+        Set<String> allDoctors = new TreeSet<>();
+        for (Doctor doctor : doctors){
+            allDoctors.add(doctor.getSurname());
+        }
+
+        Set<String> allQualifications = new LinkedHashSet<>();
+        allQualifications.add("Перша");
+        allQualifications.add("Друга");
+        allQualifications.add("Вища");
+
+
+        model.addAttribute("allDepartments", allDepartments);
+        model.addAttribute("allDoctors", allDoctors);
+        model.addAttribute("allQualifications", allQualifications);
     }
 }

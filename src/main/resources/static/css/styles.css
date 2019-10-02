@@ -167,8 +167,9 @@ header {
     font-size: 16pt;
     color: black;
 }
+
 .search-form input {
-    width:80%;
+    width:90%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
