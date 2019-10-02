@@ -75,6 +75,15 @@ CREATE TABLE schedule
     FOREIGN KEY (patient_id) REFERENCES user(id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=INNODB CHAR SET=utf8;
 
+CREATE TABLE disease
+(
+    id INT AUTO_INCREMENT,
+    name VARCHAR(200) NOT NULL,
+    department_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (department_id) REFERENCES department (id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=INNODB CHAR SET=utf8;
+
 CREATE TABLE hibernate_sequence
 (
     next_val INT

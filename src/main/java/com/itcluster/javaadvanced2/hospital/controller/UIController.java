@@ -1,13 +1,7 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
-import com.itcluster.javaadvanced2.hospital.model.Department;
-import com.itcluster.javaadvanced2.hospital.model.Doctor;
-import com.itcluster.javaadvanced2.hospital.model.Question;
-import com.itcluster.javaadvanced2.hospital.model.User;
-import com.itcluster.javaadvanced2.hospital.service.DepartmentService;
-import com.itcluster.javaadvanced2.hospital.service.DoctorService;
-import com.itcluster.javaadvanced2.hospital.service.QuestionService;
-import com.itcluster.javaadvanced2.hospital.service.UserService;
+import com.itcluster.javaadvanced2.hospital.model.*;
+import com.itcluster.javaadvanced2.hospital.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +23,9 @@ public class UIController {
 
     @Autowired
     QuestionService questionService;
+
+    @Autowired
+    DiseaseService diseaseService;
 
     @GetMapping("/")
     public String homePage(){
@@ -78,5 +75,22 @@ public class UIController {
         List<Question> questions = questionService.findAll();
         model.addAttribute("questions",questions);
         return "faq";
+    }
+
+    @GetMapping("/diseases")
+    public String getDiseases(Model model){
+        Map<Department, Set<Disease>> diseasesByDepartment = new HashMap<>();
+
+        List<Department> departments = departmentService.findAll();
+        Set<Disease> tempDiseases;
+
+        for (Department department : departments){
+            tempDiseases = diseaseService.findByDepartment(department);
+            diseasesByDepartment.put(department, tempDiseases);
+            tempDiseases = null;
+        }
+
+        model.addAttribute("diseasesByDepartment", diseasesByDepartment);
+        return "diseases";
     }
 }

@@ -7,13 +7,14 @@
     <nav>
         <a href="/">Головна</a>
         <a href="/doctor/search">Персонал</a>
+        <a th:href="@{/faq}">FAQ</a>
     </nav>
 </header>
 
 <aside class="left-side" th:fragment="left-side">
         <a class="side-link" href="/">Історія лікарні</a>
         <a class="side-link" href="/departments">Відділення лікарні</a>
-        <a class="side-link" th:href="@{/faq}">Часті запитання</a>
+        <a class="side-link" th:href="@{/diseases}">Показання до госпіталізації</a>
 
     <form class="search-form" action="/doctor/search">
         <h3>Пошук лікаря</h3>
