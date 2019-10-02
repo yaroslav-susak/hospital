@@ -1,0 +1,43 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<header th:replace="layouts :: header"></header>
+<main>
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
+    <div class="center">
+        <form autocomplete="off" action="#" th:action="@{/admin/userinfo}"
+              method="get" class="form-horizontal"
+              role="form">
+            <h2>Знайти користувача по email</h2>
+
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <input type="text" name="email"  th:placeholder="email"
+                           class="form-control" />
+                    </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-9">
+                    <button type="submit">знайти</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts :: footer"></footer>
+</body>
+</html>

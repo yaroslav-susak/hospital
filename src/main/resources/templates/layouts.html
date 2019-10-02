@@ -20,8 +20,11 @@
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
+    <div class="login-link" sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/admin/user-info}">Адміністрування</a>
+    </div>
 
-    </aside>
+</aside>
 
 <footer th:fragment="footer"></footer>
 
@@ -29,6 +32,7 @@
     <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
     <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
 </a>
+
 
 <div th:fragment="deparment-list" class="department-list" th:each="department: ${departments}">
     <div>

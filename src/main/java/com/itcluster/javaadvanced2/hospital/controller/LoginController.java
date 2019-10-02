@@ -49,7 +49,7 @@ public class LoginController {
                                 BindingResult bindingResult,
                                 Model model
     ) {
-        if (bindingResult.hasErrors() || userExists(user, bindingResult))  {
+        if (bindingResult.hasErrors() || userExists(user, bindingResult, EMAIL_ALREADY_USED_MESSAGE))  {
             return "registration";
         }
 
@@ -57,10 +57,10 @@ public class LoginController {
         return "homepage";
     }
 
-    private boolean userExists(User user, BindingResult bindingResult) {
+    public boolean userExists(User user, BindingResult bindingResult, String mess) {
         boolean result = userService.findUserByEmail(user.getEmail()).isPresent();
         if (result) {
-            bindingResult.rejectValue("email", "error.user", EMAIL_ALREADY_USED_MESSAGE);
+            bindingResult.rejectValue("email", "error.user", mess);
         }
         return result;
     }

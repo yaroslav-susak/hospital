@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 
 import java.util.*;
 
@@ -25,13 +26,14 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public User createUpdate(User user) {
-        User toSave = user.getId() == null ? createUser(user) : updateUser(user);
+        User toSave = user.getId() == null ? createPatientUser(user) : updateUser(user);
         return userRepository.save(toSave);
     }
 
-    private User createUser(User user) {
+    private User createPatientUser(User user) {
 
         Set<Role> roles = new HashSet<>();
+        //roles.addAll(roleRepository.findByNames())
         roles.add(roleRepository.findByName("user"));
         roles.add(roleRepository.findByName("patient"));
         user.setRoles(roles);
@@ -59,6 +61,28 @@ public class UserService {
             origin.setRoles(user.getRoles());
         }
         return origin;
+    }
+
+    User addUserRole(User user, Role roleToAdd){
+        Set<Role> userRoles = user.getRoles();
+        userRoles.add(roleToAdd);
+        user.setRoles(userRoles);
+        return createUpdate(user);
+    }
+
+    public boolean userExists(User user, BindingResult bindingResult, String mess) {
+        boolean result = userRepository.findByEmail(user.getEmail()).isPresent();
+        if (result) {
+            bindingResult.rejectValue("email", "error.user", mess);
+        }
+        return result;
+    }
+
+    User deleteUserRole(User user, Role roleToAdd){
+        Set<Role> userRoles = user.getRoles();
+        userRoles.remove(roleToAdd);
+        user.setRoles(userRoles);
+        return createUpdate(user);
     }
 
     public Optional<User> findUserByEmail(String email) {
