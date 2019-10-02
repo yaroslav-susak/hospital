@@ -59,12 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/department/**","/departments","/doctor-info/**","/staff","/doctor/search/**").permitAll()
-                .antMatchers("/registration").anonymous()
+                .antMatchers("/", "/registration","/department/**","/departments","/doctor-info/**","/doctor/search/**","/faq","/diseases").permitAll()
                 .antMatchers("/admin/**").access("hasAnyAuthority('ADMIN')")
                 .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
-                // .antMatchers("/author/**").hasAnyAuthority("AUTHOR","ADMIN")
-                //.anyRequest().authenticated()
+                .antMatchers("/author/**").hasAnyAuthority("AUTHOR","ADMIN")
+                .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
                 .formLogin().loginPage("/login").permitAll()

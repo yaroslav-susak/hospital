@@ -7,18 +7,28 @@
     <nav>
         <a href="/">Головна</a>
         <a href="/doctor/search">Персонал</a>
+        <a th:href="@{/faq}">FAQ</a>
     </nav>
 </header>
 
 <aside class="left-side" th:fragment="left-side">
         <a class="side-link" href="/">Історія лікарні</a>
         <a class="side-link" href="/departments">Відділення лікарні</a>
+        <a class="side-link" th:href="@{/diseases}">Показання до госпіталізації</a>
+
+    <form class="search-form" action="/doctor/search">
+        <h3>Пошук лікаря</h3>
+        <input type="text" name="sur" th:placeholder="Прізвище" class="form-control" />
+        <input type="text" name="lvl" th:placeholder="Кваліфікація" class="form-control" />
+        <input type="text" name="dep" th:placeholder="Відділення" class="form-control" />
+        <button class="btn btn-lg btn-primary btn-block"  type="submit">Знайти</button>
+    </form>
 </aside>
 
 <aside class="right-side" th:fragment="right-side">
     <div class="login-link" sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> <br/> <a th:href="@{/registration}">Зареєструватись</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>
-    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>
+<!--    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>-->
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
     <div class="login-link" sec:authorize="hasRole('ADMIN')">
         <a th:href="@{/admin/user-info}">Адміністрування</a>
@@ -29,15 +39,13 @@
 <footer th:fragment="footer"></footer>
 
 <a th:fragment="doctor-link" th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">
-    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
+    <div class="doctor-photo"><img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" /></div>
     <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
 </a>
 
 
 <div th:fragment="deparment-list" class="department-list" th:each="department: ${departments}">
-    <div>
     <a th:href="@{${'/doctor/search?dep=' + department.name}}" th:text="${department.getName()}"></a>
-    </div>
 </div>
 
 <table th:fragment="timetable" class="timetable">
@@ -70,7 +78,7 @@
         <td th:text="${#dates.format(schedule.end, 'HH:mm')}"></td>
 
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == null">
-            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>
+            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>
         </td>
 
         <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} == null">
@@ -80,11 +88,11 @@
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} != null and ${schedule.patient} != ${user}">Зайнято</td>
 
         <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} != null">
-            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>
+            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>
         </td>
 
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == ${user}">
-            <a th:href="@{${'/doctor/' + doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
+            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
         </td>
 
         <td sec:authorize="hasAuthority('AUTHOR') || hasAuthority('ADMIN')">Недоступно</td>

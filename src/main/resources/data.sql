@@ -32,3 +32,7 @@ INSERT INTO schedule(id, doctor_id, patient_id, start, end) VALUES (2,1,3,'2019-
 
 INSERT INTO question(question,answer) VALUES('Як саме записатись на прийом?','Подзвоніть або заповніть заявку');
 INSERT INTO question(question,answer) VALUES('Мій сеанс відмінили. Що робити?','Зверніться за телефоном, щоб вирішити дане питання, можливі збої, або зміни в розпорядку лікарів');
+
+INSERT INTO disease(name, department_id) VALUES ('Гостра респіраторна вірусна інфекція (ускладнені форми)', 3);
+INSERT INTO disease(name, department_id) VALUES ('Гострий бронхіт', 3);
+INSERT INTO disease(name, department_id) VALUES ('Гіпертермія неясного ґенезу', 3);

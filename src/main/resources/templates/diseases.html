@@ -1,21 +1,30 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
-    <title>Відділення</title>
+    <title>Лікарня</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <header th:replace="layouts :: header"></header>
 <main>
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-        <div class="department-wrap">
-            <div th:replace="layouts :: deparment-list"></div>
+        <div th:each="department: ${diseasesByDepartment}">
+            <div class="disease-block">
+                <a style="font-size: 16pt;"
+                   th:text="${department.key.name}"
+                   th:href="@{${'/doctor/search?dep=' + department.key.name}}"
+                ></a>
+                <ul th:each="disease: ${department.value}">
+                    <li th:text="${disease.name}"></li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -23,4 +32,5 @@
 </main>
 <footer th:replace="layouts :: footer"></footer>
 </body>
+
 </html>

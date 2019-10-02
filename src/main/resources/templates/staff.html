@@ -11,23 +11,13 @@
 <body>
 <header th:replace="layouts :: header"></header>
 <main>
-        <aside class="left-side" >
-
-                <form action="/doctor/search">
-                    <h3>пошук лікаря</h3>
-                    <input type="text" name="sur" th:placeholder="прізвище" class="form-control" /> <br/>
-
-                    <input type="text" name="lvl" th:placeholder="кваліфікація" class="form-control" /> <br/>
-
-                    <input type="text" name="dep" th:placeholder="відділення" class="form-control" /> <br/>
-                    <button class="btn btn-lg btn-primary btn-block"  type="submit">Знайти</button>
-                </form>
-
-        </aside>
+        <aside th:replace="layouts :: left-side"></aside>
 
         <div class="center">
-            <div th:each="doctor: ${doctors}">
-                <a th:replace="layouts :: doctor-link"></a>
+            <div class="doctors-wrap">
+                <div class="doctor-item" th:each="doctor: ${doctors}">
+                    <a th:replace="layouts :: doctor-link"></a>
+                </div>
             </div>
         </div>
         <aside class="right-side" th:replace="layouts :: right-side"></aside>

@@ -47,7 +47,7 @@ nav {
     float:left;
     border-right: 1pt solid black;
     border-left: 1pt solid black;
-    min-height: 300px;
+    min-height: 1000px;
 }
 
 footer {
@@ -71,11 +71,10 @@ header {
     border-radius: 10px;
     padding: 5px;
     text-decoration: none;
-    font-size: 18pt;
+    font-size: 16pt;
     text-align:center;
     color:black;
     margin: 10px;
-    font-weight: bold;
 }
 
 .side-link:hover {
@@ -114,6 +113,7 @@ header {
 .department-list a {
     display: inline-block;
     margin-bottom: 30px;
+    font-size: 16pt;
 }
 
 .login-link {
@@ -152,4 +152,33 @@ header {
 .answer{
     font-style: italic;
     color: lightslategrey;
+}
+
+.search-form {
+    padding:5px;
+    text-align: center;
+    border: 1pt solid black;
+    margin: 10px;
+    border-radius: 10px;
+}
+
+.search-form h3{
+    margin: 0 0 10px 0;
+    font-size: 16pt;
+    color: black;
+}
+.search-form input {
+    width:80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.disease-block a {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.disease-block {
+    margin-bottom: 20px;
 }
