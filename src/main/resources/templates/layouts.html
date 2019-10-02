@@ -18,11 +18,9 @@
 
     <form class="search-form" action="/doctor/search">
         <h3>Пошук лікаря</h3>
-        <input type="text" name="sur" th:placeholder="Прізвище" class="form-control" /> <br/>
-
-        <input type="text" name="lvl" th:placeholder="Кваліфікація" class="form-control" /> <br/>
-
-        <input type="text" name="dep" th:placeholder="Відділення" class="form-control" /> <br/>
+        <input type="text" name="sur" th:placeholder="Прізвище" class="form-control" />
+        <input type="text" name="lvl" th:placeholder="Кваліфікація" class="form-control" />
+        <input type="text" name="dep" th:placeholder="Відділення" class="form-control" />
         <button class="btn btn-lg btn-primary btn-block"  type="submit">Знайти</button>
     </form>
 </aside>
@@ -38,14 +36,12 @@
 <footer th:fragment="footer"></footer>
 
 <a th:fragment="doctor-link" th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">
-    <img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" />
+    <div class="doctor-photo"><img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" /></div>
     <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>
 </a>
 
 <div th:fragment="deparment-list" class="department-list" th:each="department: ${departments}">
-    <div>
     <a th:href="@{${'/doctor/search?dep=' + department.name}}" th:text="${department.getName()}"></a>
-    </div>
 </div>
 
 <table th:fragment="timetable" class="timetable">

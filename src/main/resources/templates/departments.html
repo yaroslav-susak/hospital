@@ -14,7 +14,9 @@
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-        <div th:replace="layouts :: deparment-list"></div>
+        <div class="department-wrap">
+            <div th:replace="layouts :: deparment-list"></div>
+        </div>
     </div>
 
     <aside class="right-side" th:replace="layouts :: right-side"></aside>
