@@ -30,9 +30,7 @@
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>
 <!--    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>-->
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
-    <div class="login-link" sec:authorize="hasRole('ADMIN')">
-        <a th:href="@{/admin/user-info}">Адміністрування</a>
-    </div>
+    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/admin/find-user}">Адміністрування</a></div>
 
 </aside>
 
