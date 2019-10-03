@@ -15,7 +15,16 @@
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-        
+        <div th:replace="layouts :: user-info-change-forms"></div>
+        <div style="margin-top: 50px;">
+            <h3 style="">Знайти користувача</h3>
+            <form autocomplete="off"
+                  action="#" th:action="@{/admin/find-user}"
+                  method="post">
+                <input style="width:200px;" name="email" type="text" placeholder="Email">
+                <button style="margin-top: 20px; width: 100px;" class="btn btn-lg btn-primary btn-block"  type="submit">Знайти</button>
+            </form>
+        </div>
     </div>
 
     <aside class="right-side" th:replace="layouts :: right-side"></aside>

@@ -15,43 +15,9 @@
     <aside th:replace="layouts :: left-side"></aside>
     <div class="center">
 
-        <form action="/user/save" method="post" th:object="${user}" >
+        <div th:replace="layouts :: user-info-change-forms"></div>
 
-            <div class="cabinet-body">
-                <div class="cabinet-wrap">
-                    <div class="cabinet-wrap__row">
-                        <b class="text-before-field">Ім'я</b>
-                        <input class="text-input" type="text" placeholder="Ім'я" name="firstName"
-                               th:value="*{firstName}"/>
-                    </div>
-                    <div class="cabinet-wrap__row">
-                        <b class="text-before-field">Прізвище</b>
-                        <input class="text-input" type="text" placeholder="Прізвище" name="lastName"
-                               th:value="*{lastName}"/>
-                    </div>
-                    <div class="cabinet-wrap__row">
-                        <b class="text-before-field">Пошта</b>
-                        <input class="text-input" type="text" placeholder="Пошта" name="email"
-                               th:value="*{email}"/>
-                    </div>
-
-                    <div class="cabinet-photo">
-                        <div class="cabinet-photo__avatar" th:if="${user.photo == null}"><img width="200" src="/images/user_icon.png" class="user-photo"></div>
-                        <div class="cabinet-photo__avatar"  th:unless="${user.photo == null}" ><img width="200" th:src="@{${'/resources/uploads/' + user.photo}}" class="user-photo"></div>
-
-                        <button type="submit">Підтвердити</button>
-                        <a class="change-password-btn" th:href="@{/user/passwordchange}">Змінити пароль</a>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <form align="center" action="uploadPhoto" method="POST" enctype="multipart/form-data">
-            <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
-            <input type="button" value="Завантажити фото"
-                   onclick="document.getElementById('selectedFile').click();"/>
-        </form>
-
-        <div style="margin-top:20px;">
+        <div style="margin-top:20px;" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')">
             <h3 class="small-centered-headline">Записи</h3>
             <table th:replace="layouts :: timetable"></table>
         </div>
