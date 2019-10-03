@@ -13,12 +13,19 @@
 <main>
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
     <div class="center">
-        <h1>user</h1>
-        <p>name </p><p th:text="${foundedUser.firstName}"></p>
-        <p>last name </p><p th:text="${foundedUser.lastName}"></p>
-        <p>email </p><p th:text="${foundedUser.email}"></p>
-        <p>roles </p>
-
+        <h1>користувач</h1>
+        <p>
+            <b>ім'я</b> <span th:text="${foundedUser.firstName}"></span></p>
+        <p>
+            <b>прізвище</b>
+            <span th:text="${foundedUser.lastName}"></span>
+        </p>
+        <p>
+            <b> email </b>
+            <span th:text="${foundedUser.email}"></span>
+        </p>
+        <p>
+            <h3>ролі:</h3>
             <div  th:each="userRole:${foundedUser.roles}">
                 <form action="#" th:action="@{/admin/user-info}" th:object="${roleToDeleteDTO}" th:method="delete" >
 
@@ -27,24 +34,19 @@
                     <label>
                         <p th:text="${userRole.name}"></p>
                     </label>
-                    <button type="submit">delete</button>
+                    <button type="submit">видалити</button>
                 </form>
             </div>
-
-<!--        <div  th:each="role:${rolesToAdd}">-->
-
+        </p>
+        <h3>додати роль</h3>
             <form action="#" th:action="@{/admin/user-info}" th:object="${roleToDeleteDTO}" th:method="post" >
 
                 <input type="hidden"  name="email" th:value="${foundedUser.email}" >
                 <input type="text" name="role"/>
-<!--                th:value="${rolesToAdd}">-->
-            <!--            <select th:field="*{role}">-->
-<!--                    <option th:each="role : ${rolesToAdd}" th:value="${role}" th:text="${ro}">-->
-<!--                    </option>-->
-<!--            </select>-->
-                <button type="submit">add</button>
+
+                <button type="submit">додати</button>
             </form>
-<!--        </div>-->
+
     </div>
 
     <aside class="right-side" th:replace="layouts :: right-side"></aside>
