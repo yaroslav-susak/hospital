@@ -27,7 +27,7 @@
         <p>
             <h3>ролі:</h3>
             <div  th:each="userRole:${foundedUser.roles}">
-                <form action="#" th:action="@{/admin/user-info}" th:object="${roleToDeleteDTO}" th:method="delete" >
+                <form action="#" th:action="@{/admin/user-info}" th:object="${roleToChangeDTO}" th:method="delete" >
 
                     <input type="hidden"  name="email" th:value="${foundedUser.email}" >
                     <input type="hidden"  name="role" th:value="${userRole.name}">
@@ -39,11 +39,14 @@
             </div>
         </p>
         <h3>додати роль</h3>
-            <form action="#" th:action="@{/admin/user-info}" th:object="${roleToDeleteDTO}" th:method="post" >
+            <form action="#" th:action="@{/admin/user-info}" th:object="${roleToChangeDTO}" th:method="post" >
 
                 <input type="hidden"  name="email" th:value="${foundedUser.email}" >
-                <input type="text" name="role"/>
-
+<!--                <input type="text" name="role"/>-->
+                <input type="search" name="role" th:placeholder="роль" th:list="rolesToAdd"/>
+                <datalist id="rolesToAdd">
+                    <option th:each="role: ${rolesToAdd}" th:value="${role}" th:text="${role}"></option>
+                </datalist>
                 <button type="submit">додати</button>
             </form>
 
