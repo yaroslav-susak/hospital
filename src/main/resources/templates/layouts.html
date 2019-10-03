@@ -1,3 +1,95 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">-->
+<!--<body>-->
+
+<!--<header th:fragment="header">-->
+<!--    <img id = "logo" src="/images/logo.png">-->
+<!--    <nav>-->
+<!--        <a href="/">Головна</a>-->
+<!--        <a href="/doctor/search">Персонал</a>-->
+<!--        <a th:href="@{/faq}">FAQ</a>-->
+<!--    </nav>-->
+<!--</header>-->
+
+<!--<aside class="left-side" th:fragment="left-side">-->
+<!--        <a class="side-link" href="/">Історія лікарні</a>-->
+<!--        <a class="side-link" href="/departments">Відділення лікарні</a>-->
+<!--        <a class="side-link" th:href="@{/diseases}">Показання до госпіталізації</a>-->
+<!--</aside>-->
+
+<!--<aside class="right-side" th:fragment="right-side">-->
+<!--    <div class="login-link" sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> <br/> <a th:href="@{/registration}">Зареєструватись</a></div>-->
+<!--    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>-->
+<!--&lt;!&ndash;    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>&ndash;&gt;-->
+<!--    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>-->
+
+<!--    </aside>-->
+
+<!--<footer th:fragment="footer"></footer>-->
+
+<!--<a th:fragment="doctor-link" th:href="@{${'/doctor-info/'+doctor.id}}" class="staff-container-item">-->
+<!--    <div class="doctor-photo"><img class="doctor-little-photo" th:src="@{${'/images/doctors/' + doctor.photoName}}" /></div>-->
+<!--    <span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span>-->
+<!--</a>-->
+
+<!--<div th:fragment="deparment-list" class="department-list" th:each="department: ${departments}">-->
+<!--    <a th:href="@{${'/doctor/search?dep=' + department.name}}" th:text="${department.getName()}"></a>-->
+<!--</div>-->
+
+<!--<table th:fragment="timetable" class="timetable">-->
+<!--    <tr>-->
+<!--        <th sec:authorize="hasAuthority('PATIENT')">Лікар</th>-->
+<!--        <th sec:authorize="hasAuthority('DOCTOR')">Пацієнт</th>-->
+<!--        <th>Дата</th>-->
+<!--        <th>Початок</th>-->
+<!--        <th>Кінець</th>-->
+<!--        <th>Статус</th>-->
+<!--    </tr>-->
+<!--    <tr th:each="schedule: ${schedules}">-->
+<!--        <td sec:authorize = "hasAuthority('PATIENT')" th:text="${-->
+<!--                    schedule.doctor.surname + ' ' +-->
+<!--                    schedule.doctor.name + ' ' +-->
+<!--                    schedule.doctor.middleName }">-->
+<!--        </td>-->
+<!--        <td th:if="${schedule.patient} != null" sec:authorize="hasAuthority('DOCTOR')" th:text="${-->
+<!--                    schedule.patient.lastName + ' ' +-->
+<!--                    schedule.patient.firstName-->
+<!--            }">-->
+<!--        </td>-->
+
+<!--        <td th:if="${schedule.patient} == null" sec:authorize="hasAuthority('DOCTOR')" th:text="Відсутній"></td>-->
+
+<!--        <td th:text="${#dates.format(schedule.start, 'dd.MM.yyyy')}"></td>-->
+
+<!--        <td th:text="${#dates.format(schedule.start, 'HH:mm')}"></td>-->
+
+<!--        <td th:text="${#dates.format(schedule.end, 'HH:mm')}"></td>-->
+
+<!--        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == null">-->
+<!--            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>-->
+<!--        </td>-->
+
+<!--        <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} == null">-->
+<!--            Відсутній-->
+<!--        </td>-->
+
+<!--        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} != null and ${schedule.patient} != ${user}">Зайнято</td>-->
+
+<!--        <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} != null">-->
+<!--            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>-->
+<!--        </td>-->
+
+<!--        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == ${user}">-->
+<!--            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>-->
+<!--        </td>-->
+
+<!--        <td sec:authorize="hasAuthority('AUTHOR') || hasAuthority('ADMIN')">Недоступно</td>-->
+<!--    </tr>-->
+<!--</table>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <body>
@@ -12,9 +104,9 @@
 </header>
 
 <aside class="left-side" th:fragment="left-side">
-        <a class="side-link" href="/">Історія лікарні</a>
-        <a class="side-link" href="/departments">Відділення лікарні</a>
-        <a class="side-link" th:href="@{/diseases}">Показання до госпіталізації</a>
+    <a class="side-link" href="/">Історія лікарні</a>
+    <a class="side-link" href="/departments">Відділення лікарні</a>
+    <a class="side-link" href="/diseases">Показання до госпіталізації</a>
 
     <form class="search-form" action="/doctor/search">
         <h3>Пошук лікаря</h3>
@@ -41,10 +133,9 @@
 <aside class="right-side" th:fragment="right-side">
     <div class="login-link" sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> <br/> <a th:href="@{/registration}">Зареєструватись</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>
-<!--    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>-->
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
 
-    </aside>
+</aside>
 
 <footer th:fragment="footer"></footer>
 

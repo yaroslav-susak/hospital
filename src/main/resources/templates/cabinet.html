@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
 </head>
 <body>
 <header th:replace="layouts::header"></header>
@@ -22,17 +22,17 @@
                     <div class="cabinet-wrap__row">
                         <b class="text-before-field">Ім'я</b>
                         <input class="text-input" type="text" placeholder="Ім'я" name="firstName"
-                        th:value="*{firstName}"/>
+                               th:value="*{firstName}"/>
                     </div>
                     <div class="cabinet-wrap__row">
                         <b class="text-before-field">Прізвище</b>
                         <input class="text-input" type="text" placeholder="Прізвище" name="lastName"
-                           th:value="*{lastName}"/>
+                               th:value="*{lastName}"/>
                     </div>
                     <div class="cabinet-wrap__row">
                         <b class="text-before-field">Пошта</b>
                         <input class="text-input" type="text" placeholder="Пошта" name="email"
-                           th:value="*{email}"/>
+                               th:value="*{email}"/>
                     </div>
 
                     <div class="cabinet-photo">
@@ -52,8 +52,8 @@
         </form>
 
         <div style="margin-top:20px;">
-        <h3 class="small-centered-headline">Записи</h3>
-        <table th:replace="layouts :: timetable"></table>
+            <h3 class="small-centered-headline">Записи</h3>
+            <table th:replace="layouts :: timetable"></table>
         </div>
     </div>
     <aside th:replace="layouts :: right-side"></aside>

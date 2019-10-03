@@ -32,7 +32,6 @@ public class UserService {
     private User createUser(User user) {
 
         Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.findByName("user"));
         roles.add(roleRepository.findByName("patient"));
         user.setRoles(roles);
         user.setDateOfRegistration(new Date());

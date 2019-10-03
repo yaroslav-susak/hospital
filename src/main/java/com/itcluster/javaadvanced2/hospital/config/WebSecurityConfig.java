@@ -59,10 +59,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/registration","/department/**","/departments","/doctor-info/**","/doctor/search/**","/faq","/diseases").permitAll()
+                .antMatchers("/","/department/**","/departments","/doctor-info/**","/doctor/search/**","/faq","/diseases").permitAll()
                 .antMatchers("/admin/**").access("hasAnyAuthority('ADMIN')")
-                .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/user/**").hasAnyAuthority("PATIENT", "ADMIN", "DOCTOR", "AUTHOR")
                 .antMatchers("/author/**").hasAnyAuthority("AUTHOR","ADMIN")
+                .antMatchers("/registration").anonymous()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

@@ -17,7 +17,7 @@
     <div class="center">
         <div th:each="department: ${diseasesByDepartment}">
             <div class="disease-block">
-                <a style="font-size: 16pt;"
+                <a
                    th:text="${department.key.name}"
                    th:href="@{${'/doctor/search?dep=' + department.key.name}}"
                 ></a>
