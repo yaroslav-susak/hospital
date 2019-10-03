@@ -11,16 +11,16 @@
 <body>
 <header th:replace="layouts :: header"></header>
 <main>
-        <aside th:replace="layouts :: left-side"></aside>
+    <aside th:replace="layouts :: left-side"></aside>
 
-        <div class="center">
-            <div class="doctors-wrap">
-                <div class="doctor-item" th:each="doctor: ${doctors}">
-                    <a th:replace="layouts :: doctor-link"></a>
-                </div>
+    <div class="center">
+        <div class="doctors-wrap">
+            <div class="doctor-item" th:each="doctor: ${doctors}">
+                <a th:replace="layouts :: doctor-link"></a>
             </div>
         </div>
-        <aside class="right-side" th:replace="layouts :: right-side"></aside>
+    </div>
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
 </main>
 <footer th:replace="layouts :: footer"></footer>
 </body>

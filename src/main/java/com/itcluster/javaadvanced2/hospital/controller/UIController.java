@@ -16,19 +16,20 @@ import java.util.*;
 public class UIController {
 
     @Autowired
-    DoctorService doctorService;
+    private DoctorService doctorService;
 
     @Autowired
-    DepartmentService departmentService;
+    private DepartmentService departmentService;
 
     @Autowired
-    QuestionService questionService;
+    private QuestionService questionService;
 
     @Autowired
-    DiseaseService diseaseService;
+    private DiseaseService diseaseService;
 
     @GetMapping("/")
-    public String homePage(){
+    public String homePage(Model model){
+        doctorService.addSearchOptions(model);
         return "homepage";
     }
 
@@ -36,6 +37,8 @@ public class UIController {
     public String doctorById(@PathVariable Long id, Model model){
         Doctor doctor = doctorService.findById(id);
         model.addAttribute("doctor", doctor);
+
+        doctorService.addSearchOptions(model);
         return "doctor";
     }
 
@@ -60,6 +63,8 @@ public class UIController {
         }
 
         model.addAttribute("doctors",doctors);
+
+        doctorService.addSearchOptions(model);
         return "staff";
     }
 
@@ -67,6 +72,8 @@ public class UIController {
     public String getDepartmentsList(Model model){
         List<Department> departments = departmentService.findAll();
         model.addAttribute("departments",departments);
+
+        doctorService.addSearchOptions(model);
         return "departments";
     }
 
@@ -74,6 +81,8 @@ public class UIController {
     public String getFaqList(Model model){
         List<Question> questions = questionService.findAll();
         model.addAttribute("questions",questions);
+
+        doctorService.addSearchOptions(model);
         return "faq";
     }
 
@@ -91,6 +100,8 @@ public class UIController {
         }
 
         model.addAttribute("diseasesByDepartment", diseasesByDepartment);
+
+        doctorService.addSearchOptions(model);
         return "diseases";
     }
 }

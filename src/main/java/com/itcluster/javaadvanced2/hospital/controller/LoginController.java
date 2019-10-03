@@ -1,6 +1,7 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.model.User;
+import com.itcluster.javaadvanced2.hospital.service.DoctorService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,18 +30,23 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private DoctorService doctorService;
+
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
         return new User();
     }
 
     @GetMapping(value={"/login"})
-    public String login() {
+    public String login(Model model) {
+        doctorService.addSearchOptions(model);
         return "login";
     }
 
     @GetMapping("/registration")
     public String registration(Model model) {
+        doctorService.addSearchOptions(model);
         return "registration";
     }
 

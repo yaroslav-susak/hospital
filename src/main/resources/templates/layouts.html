@@ -12,23 +12,36 @@
 </header>
 
 <aside class="left-side" th:fragment="left-side">
-        <a class="side-link" href="/">Історія лікарні</a>
-        <a class="side-link" href="/departments">Відділення лікарні</a>
-        <a class="side-link" th:href="@{/diseases}">Показання до госпіталізації</a>
+    <a class="side-link" href="/">Історія лікарні</a>
+    <a class="side-link" href="/departments">Відділення лікарні</a>
+    <a class="side-link" href="/diseases">Показання до госпіталізації</a>
 
     <form class="search-form" action="/doctor/search">
         <h3>Пошук лікаря</h3>
-        <input type="text" name="sur" th:placeholder="Прізвище" class="form-control" />
-        <input type="text" name="lvl" th:placeholder="Кваліфікація" class="form-control" />
-        <input type="text" name="dep" th:placeholder="Відділення" class="form-control" />
+
+        <input type="search" name="sur" th:placeholder="Прізвище" class="form-control" th:list="search-surname"/>
+        <datalist id="search-surname">
+            <option th:each="surname: ${allDoctors}" th:value="${surname}" th:text="${surname}"></option>
+        </datalist>
+
+        <input type="search" name="lvl" th:placeholder="Кваліфікація" class="form-control" th:list="search-lvl"/>
+        <datalist id="search-lvl">
+            <option th:each="lvl: ${allQualifications}" th:value="${lvl}" th:text="${lvl}"></option>
+        </datalist>
+
+        <input type="search" name="dep" th:placeholder="Відділення" class="form-control" th:list="search-dep"/>
+        <datalist id="search-dep">
+            <option th:each="dep: ${allDepartments}" th:value="${dep}" th:text="${dep}"></option>
+        </datalist>
+
         <button class="btn btn-lg btn-primary btn-block"  type="submit">Знайти</button>
     </form>
 </aside>
 
 <aside class="right-side" th:fragment="right-side">
     <div class="login-link" sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> <br/> <a th:href="@{/registration}">Зареєструватись</a></div>
-    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/user/cabinet}">Кабінет</a></div>
-<!--    <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/faq}">FAQ</a></div>-->
+    <div class="login-link" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')"><a th:href="@{/user/cabinet}">Кабінет</a></div>
+    <div class="login-link" sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}">Кабінет адміна</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/admin/find-user}">Адміністрування</a></div>
 
@@ -96,6 +109,44 @@
         <td sec:authorize="hasAuthority('AUTHOR') || hasAuthority('ADMIN')">Недоступно</td>
     </tr>
 </table>
+
+<div th:fragment="user-info-change-forms">
+    <form action="/user/save" method="post" th:object="${user}" >
+
+        <div class="cabinet-body">
+            <div class="cabinet-wrap">
+                <div class="cabinet-wrap__row">
+                    <b class="text-before-field">Ім'я</b>
+                    <input class="text-input" type="text" placeholder="Ім'я" name="firstName"
+                           th:value="*{firstName}"/>
+                </div>
+                <div class="cabinet-wrap__row">
+                    <b class="text-before-field">Прізвище</b>
+                    <input class="text-input" type="text" placeholder="Прізвище" name="lastName"
+                           th:value="*{lastName}"/>
+                </div>
+                <div class="cabinet-wrap__row">
+                    <b class="text-before-field">Пошта</b>
+                    <input class="text-input" type="text" placeholder="Пошта" name="email"
+                           th:value="*{email}"/>
+                </div>
+
+                <div class="cabinet-photo">
+                    <div class="cabinet-photo__avatar" th:if="${user.photo == null}"><img width="200" src="/images/user_icon.png" class="user-photo"></div>
+                    <div class="cabinet-photo__avatar"  th:unless="${user.photo == null}" ><img width="200" th:src="@{${'/resources/uploads/' + user.photo}}" class="user-photo"></div>
+
+                    <button type="submit">Підтвердити</button>
+                    <a class="change-password-btn" th:href="@{/user/passwordchange}">Змінити пароль</a>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form align="center" action="uploadPhoto" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
+        <input type="button" value="Завантажити фото"
+               onclick="document.getElementById('selectedFile').click();"/>
+    </form>
+</div>
 
 </body>
 </html>

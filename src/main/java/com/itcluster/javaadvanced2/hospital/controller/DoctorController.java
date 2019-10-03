@@ -31,16 +31,16 @@ import javax.print.Doc;
 public class DoctorController {
 
     @Autowired
-    DoctorService doctorService;
+    private DoctorService doctorService;
 
     @Autowired
-    DepartmentService departmentService;
+    private DepartmentService departmentService;
 
     @Autowired
-    ScheduleService scheduleService;
+    private ScheduleService scheduleService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
@@ -59,6 +59,7 @@ public class DoctorController {
         model.addAttribute("hoursToStart", scheduleService.getHours(23));
         model.addAttribute("durationsHours", scheduleService.getHours(8));
 
+        doctorService.addSearchOptions(model);
         return "timetable";
     }
 

@@ -15,15 +15,14 @@ INSERT INTO doctor (id, middle_name, name, photo_name, qualification_level, spec
 INSERT INTO doctor (id, middle_name, name, photo_name, qualification_level, specialization, surname, department_id, user_id) VALUES (4, 'Михайлович', 'Тарас', 'c34tqa.jpg', 'Перша', 'Педіатр', 'Величко', 3, null );
 
 INSERT INTO role (id, name) VALUES (1, 'ADMIN');
-INSERT INTO role (id, name) VALUES (2, 'USER');
-INSERT INTO role (id, name) VALUES (3, 'AUTHOR');
-INSERT INTO role (id, name) VALUES (4, 'DOCTOR');
-INSERT INTO role (id, name) VALUES (5, 'PATIENT');
+INSERT INTO role (id, name) VALUES (2, 'AUTHOR');
+INSERT INTO role (id, name) VALUES (3, 'DOCTOR');
+INSERT INTO role (id, name) VALUES (4, 'PATIENT');
 
 INSERT INTO user_role (user_id, role_id) VALUES (1,1);
-INSERT INTO user_role (user_id, role_id) VALUES (2,2), (2,5);
-INSERT INTO user_role (user_id, role_id) VALUES (3,2), (3,5);
-INSERT INTO user_role (user_id, role_id) VALUES (4,4), (4,2);
+INSERT INTO user_role (user_id, role_id) VALUES (2,4);
+INSERT INTO user_role (user_id, role_id) VALUES (3,4);
+INSERT INTO user_role (user_id, role_id) VALUES (4,3);
 
 INSERT INTO hibernate_sequence (next_val) VALUE (100);
 

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
-    <title>Лікарня</title>
+    <title>Адмін</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -15,16 +15,15 @@
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-        <div th:each="department: ${diseasesByDepartment}">
-            <div class="disease-block">
-                <a
-                   th:text="${department.key.name}"
-                   th:href="@{${'/doctor/search?dep=' + department.key.name}}"
-                ></a>
-                <ul th:each="disease: ${department.value}">
-                    <li th:text="${disease.name}"></li>
-                </ul>
-            </div>
+        <div th:replace="layouts :: user-info-change-forms"></div>
+        <div style="margin-top: 50px;">
+            <h3 style="">Знайти користувача</h3>
+            <form autocomplete="off"
+                  action="#" th:action="@{/admin/find-user}"
+                  method="post">
+                <input style="width:200px;" name="email" type="text" placeholder="Email">
+                <button style="margin-top: 20px; width: 100px;" class="btn btn-lg btn-primary btn-block"  type="submit">Знайти</button>
+            </form>
         </div>
     </div>
 
