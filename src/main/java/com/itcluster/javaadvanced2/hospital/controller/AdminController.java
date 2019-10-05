@@ -7,6 +7,7 @@ import com.itcluster.javaadvanced2.hospital.service.AdminService;
 import com.itcluster.javaadvanced2.hospital.service.RoleService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,10 @@ public class AdminController {
     @Autowired
     RoleService roleService;
 
-
+    @ModelAttribute("user")
+    public User activeUser(Authentication authentication) {
+        return userService.findUserByEmail(authentication.getName()).get();
+    }
 
     @GetMapping("/find-user")
     public String findUser(){
@@ -35,11 +39,11 @@ public class AdminController {
     }
 
     @GetMapping("/user-info")
-    public String adminControl(@RequestParam("email") String email, Model model){
+    public String adminControl(@RequestParam(name="email") String email, Model model){
         User user = userService.findUserByEmail(email).get();
         model.addAttribute("foundedUser", user);
         model.addAttribute("roleToDeleteDTO", new RoleToChangeDTO() );
-        model.addAttribute("rolesToAdd", roleService.getAll().removeAll(user.getRoles()));
+        model.addAttribute("rolesToAdd", roleService.getAll());
         return "userinfo";
     }
 
@@ -54,6 +58,7 @@ public class AdminController {
         user.setRoles(roles);
 
         userService.createUpdate(user);
+        model.addAttribute("rolesToAdd", roleService.getAll());
 
         return "userinfo";
     }
@@ -69,7 +74,7 @@ public class AdminController {
         user.setRoles(roles);
 
         userService.createUpdate(user);
-
+        model.addAttribute("rolesToAdd", roleService.getAll());
         return "userinfo";
     }
 

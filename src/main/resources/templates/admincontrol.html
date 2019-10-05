@@ -1,7 +1,8 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
-    <title>Реєстрація</title>
+    <title>Адміністрування</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -29,11 +30,17 @@
 
             <div class="form-group">
                 <div class="col-sm-9">
-                    <button type="submit">знайти</button>
+                    <button type="submit">Знайти</button>
                 </div>
             </div>
 
         </form>
+
+        <div>
+            <h3 style="text-align: center;">Мої дані</h3>
+            <div th:replace="layouts :: user-info-change-forms"></div>
+        </div>
+
     </div>
 
     <aside class="right-side" th:replace="layouts :: right-side"></aside>

@@ -13,19 +13,19 @@
 <main>
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
     <div class="center">
-        <h1>користувач</h1>
+        <h1>Користувач</h1>
         <p>
-            <b>ім'я</b> <span th:text="${foundedUser.firstName}"></span></p>
+            <b>Ім'я: </b> <span th:text="${foundedUser.firstName}"></span></p>
         <p>
-            <b>прізвище</b>
+            <b>Прізвище: </b>
             <span th:text="${foundedUser.lastName}"></span>
         </p>
         <p>
-            <b> email </b>
+            <b>Email: </b>
             <span th:text="${foundedUser.email}"></span>
         </p>
         <p>
-            <h3>ролі:</h3>
+            <h3>Ролі:</h3>
             <div  th:each="userRole:${foundedUser.roles}">
                 <form action="#" th:action="@{/admin/user-info}" th:object="${roleToChangeDTO}" th:method="delete" >
 
@@ -34,20 +34,20 @@
                     <label>
                         <p th:text="${userRole.name}"></p>
                     </label>
-                    <button type="submit">видалити</button>
+                    <button type="submit">Видалити</button>
                 </form>
             </div>
         </p>
-        <h3>додати роль</h3>
+        <h3>Додати роль</h3>
             <form action="#" th:action="@{/admin/user-info}" th:object="${roleToChangeDTO}" th:method="post" >
 
                 <input type="hidden"  name="email" th:value="${foundedUser.email}" >
-<!--                <input type="text" name="role"/>-->
-                <input type="search" name="role" th:placeholder="роль" th:list="rolesToAdd"/>
-                <datalist id="rolesToAdd">
-                    <option th:each="role: ${rolesToAdd}" th:value="${role}" th:text="${role}"></option>
-                </datalist>
-                <button type="submit">додати</button>
+
+                <div style="margin-bottom: 10px;" th:each="role: ${rolesToAdd}">
+                    <input style="margin-right: 5px;" name="role" type="radio" th:value="${role.name}">
+                    <span th:text="${role.name}"></span>
+                </div>
+                <button type="submit">Додати</button>
             </form>
 
     </div>
