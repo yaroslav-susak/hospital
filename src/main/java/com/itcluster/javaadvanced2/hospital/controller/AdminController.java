@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -54,7 +55,11 @@ public class AdminController {
         User user = userService.findById(id);
         model.addAttribute("foundedUser", user);
         model.addAttribute("roleToDeleteDTO", new RoleToChangeDTO() );
-        model.addAttribute("rolesToAdd", roleService.getAll());
+
+        List<Role> allRoles = roleService.getAll();
+        allRoles.removeAll(user.getRoles());
+
+        model.addAttribute("rolesToAdd", allRoles);
         doctorService.addSearchOptions(model);
         return "userinfo";
     }

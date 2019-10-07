@@ -30,7 +30,10 @@ public class UniversalController {
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
-        return userService.findUserByEmail(authentication.getName()).get();
+        if (authentication != null) {
+            return userService.findUserByEmail(authentication.getName()).get();
+        }
+        return  null;
     }
 
     @GetMapping("/doctor-info/{id}")
