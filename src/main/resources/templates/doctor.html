@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
 <head>
     <meta charset="UTF-8">
     <title th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></title>
@@ -35,9 +35,31 @@
             </p>
 
             <a th:href="@{${'/doctor/' + doctor.id + '/timetable'}}">Розпорядок роботи лікаря</a>
+
+            <div style="margin-top: 20px;">
+                <h3 class="small-centered-headline">Відгуки</h3>
+                <div class="review" th:each="review: ${reviews}">
+                    <p th:text="${review.patient.getFirstName() + ' ' + review.patient.getLastName()}"></p>
+                    <p th:text="${review.text}"></p>
+                    <p th:text="${#dates.format(review.date, 'dd.MM.yyyy') + ' ' + #dates.format(review.date, 'HH:mm')}"></p>
+                </div>
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
+            <div sec:authorize="hasAuthority('PATIENT')">
+                <h3 style="margin:0; font-size: 16pt;">Додати відгук</h3>
+                <form method="post" th:object="${reviewDTO}" th:action="@{/user/leave-review}">
+                    <input type="hidden" name="patientId" th:value="${user.id}">
+                    <input type="hidden" name="doctorId" th:value="${doctor.id}">
+                    <textarea class="large-textarea" name="text"></textarea>
+                    <button type="submit">Надіслати</button>
+                </form>
+            </div>
+            </div>
+
         </div>
 
-    <aside class="right-side" th:replace="layouts :: right-side"></aside>
+        <aside class="right-side" th:replace="layouts :: right-side"></aside>
 </main>
 <footer th:replace="layouts :: footer"></footer>
 </body>
