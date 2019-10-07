@@ -84,6 +84,18 @@ CREATE TABLE disease
     FOREIGN KEY (department_id) REFERENCES department (id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=INNODB CHAR SET=utf8;
 
+CREATE TABLE review
+(
+    id INT AUTO_INCREMENT,
+    date DATETIME(0) NOT NULL,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    text TEXT NOT NULL ,
+    PRIMARY KEY (id),
+    FOREIGN KEY (patient_id) REFERENCES user (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (doctor_id) REFERENCES doctor (id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=INNODB CHAR SET=utf8;
+
 CREATE TABLE hibernate_sequence
 (
     next_val INT

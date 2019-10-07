@@ -23,11 +23,6 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 public class HospitalApplication {
-    @PostConstruct
-    public void init(){
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(HospitalApplication.class, args);
     }

@@ -1,9 +1,13 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
+import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
+import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.model.Review;
 import com.itcluster.javaadvanced2.hospital.model.Schedule;
 import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.DoctorService;
+import com.itcluster.javaadvanced2.hospital.service.ReviewService;
 import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -43,9 +48,11 @@ public class UserController {
     private DoctorService doctorService;
 
     @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
     @Qualifier("basePath")
     private String basePath;
-
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
@@ -64,7 +71,6 @@ public class UserController {
     @PostMapping("/save")
     public String saveUser(User user)
     {
-        log.info("new user {}", user);
         userService.createUpdate(user);
         return "cabinet";
     }
@@ -118,5 +124,20 @@ public class UserController {
         }
 
         return "redirect:/user/cabinet";
+    }
+
+    @PostMapping("/leave-review")
+    public String leaveReview(@ModelAttribute ReviewDTO reviewDTO, @ModelAttribute User user){
+        Doctor doctor = doctorService.findById(reviewDTO.getDoctorId());
+        User patient = userService.findById(reviewDTO.getPatientId());
+
+        Review review = new Review();
+        review.setDoctor(doctor);
+        review.setPatient(patient);
+        review.setDate(new Date());
+        review.setText(reviewDTO.getText());
+        reviewService.save(review);
+
+        return "redirect:/doctor-info/" + doctor.getId();
     }
 }
