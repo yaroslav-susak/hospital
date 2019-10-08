@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -40,10 +41,14 @@ public class UniversalController {
     public String doctorById(@PathVariable Long id, Model model, @ModelAttribute User user){
         Doctor doctor = doctorService.findById(id);
         List<Review> reviews = reviewService.findByDoctor(doctor);
+        Collections.reverse(reviews);
+        reviewService.userReviewFirst(reviews, user);
 
         model.addAttribute("doctor", doctor);
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewDTO", new ReviewDTO());
+        model.addAttribute("userAlreadyLeftReview",
+                reviewService.userAlreadyLeftReview(reviews, user));
 
         doctorService.addSearchOptions(model);
         return "doctor";

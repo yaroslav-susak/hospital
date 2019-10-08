@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class ReviewDTO {
-    private Long patientId;
     private Long doctorId;
     private String text;
 }

@@ -56,7 +56,10 @@ public class UserController {
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
-        return userService.findUserByEmail(authentication.getName()).get();
+        if (authentication != null) {
+            return userService.findUserByEmail(authentication.getName()).get();
+        }
+        return  null;
     }
 
     @GetMapping("/cabinet")
@@ -129,15 +132,16 @@ public class UserController {
     @PostMapping("/leave-review")
     public String leaveReview(@ModelAttribute ReviewDTO reviewDTO, @ModelAttribute User user){
         Doctor doctor = doctorService.findById(reviewDTO.getDoctorId());
-        User patient = userService.findById(reviewDTO.getPatientId());
 
         Review review = new Review();
         review.setDoctor(doctor);
-        review.setPatient(patient);
+        review.setPatient(user);
         review.setDate(new Date());
         review.setText(reviewDTO.getText());
         reviewService.save(review);
 
         return "redirect:/doctor-info/" + doctor.getId();
     }
+
+
 }
