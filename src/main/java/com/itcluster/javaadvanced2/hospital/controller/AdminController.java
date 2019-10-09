@@ -1,18 +1,17 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.RoleToChangeDTO;
+import com.itcluster.javaadvanced2.hospital.model.Department;
 import com.itcluster.javaadvanced2.hospital.model.Role;
 import com.itcluster.javaadvanced2.hospital.model.User;
-import com.itcluster.javaadvanced2.hospital.service.AdminService;
-import com.itcluster.javaadvanced2.hospital.service.DoctorService;
-import com.itcluster.javaadvanced2.hospital.service.RoleService;
-import com.itcluster.javaadvanced2.hospital.service.UserService;
+import com.itcluster.javaadvanced2.hospital.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -32,14 +31,38 @@ public class AdminController {
     @Autowired
     DoctorService doctorService;
 
+    @Autowired
+    DepartmentService departmentService;
+
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
         return userService.findUserByEmail(authentication.getName()).get();
     }
 
+    @GetMapping("/change-department")
+    public String changeDepartment(Model model,@RequestParam(name="id") Long id){
+        Department department = departmentService.findById(id);
+        model.addAttribute("department",department);
+        return "change-department";
+    }
+
+    @PostMapping("/save-changed-department")
+    public String saveChangedDepartment(Department department){
+        departmentService.save(department);
+        return "redirect:/admin/find-user";
+    }
+
+    @PostMapping("/delete-department")
+    public String deleteDepartment(@RequestParam(name="id") Long id){
+        departmentService.delete(departmentService.findById(id));
+        return "redirect:/admin/find-user";
+    }
+
     @GetMapping("/find-user")
     public String findUser(Model model){
         doctorService.addSearchOptions(model);
+        List<Department> departments = departmentService.findAll();
+        model.addAttribute("departments",departments);
         return "admincontrol";
     }
 
