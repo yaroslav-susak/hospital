@@ -109,27 +109,31 @@
     </tr>
 </table>
 
-<table th:fragment="departments-table" class="departments-table">
+<table th:fragment="departments-table" class="departments-table table">
     <tr>
-        <th>Id</th>
+        <th style="text-align: center;">Id</th>
         <th>Відділ</th>
-        <th></th>
-        <th></th>
+        <th style="text-align: center;">Керування</th>
     </tr>
     <tr th:each="department: ${departments}">
-        <td th:text="${department.getId()}"></td>
+        <td align="center" th:text="${department.getId()}"></td>
         <td th:text="${department.getName()}"></td>
-        <td>
-             <a th:href="@{${'/admin/change-department?id='+department.getId()}}">Редагувати</a>
-        </td>
-        <td>
-            <form method="post" th:method="${'/admin/delete-department?id='+department.getId()}">
-                <input type="submit" value="del">
-            </form>
-
+        <td align="center">
+             <a class="table-edit-btn" th:href="@{${'/admin/change-department?id='+department.getId()}}">Редагувати</a>
         </td>
     </tr>
 </table>
+
+<!--<div th:fragment="add-department-form">-->
+    <form th:fragment="add-department-form" method="post"  th:action="/save-changed-department" th:object="${department}">
+        <b>Назва відділу</b>
+        <input type="text" placeholder="Відділ" name="name">
+        <b>Опис відділу</b>
+        <input type="text" placeholder="Опис" name="description">
+
+        <button type="submit">Добавити відділ</button>
+    </form>
+<!--</div>-->
 
 <div th:fragment="user-info-change-forms">
     <form action="/user/save" method="post" th:object="${user}" >

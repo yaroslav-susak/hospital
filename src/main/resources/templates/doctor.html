@@ -39,16 +39,20 @@
             <div style="margin-top: 20px;">
                 <h3 class="small-centered-headline">Відгуки</h3>
                 <div class="review" th:each="review: ${reviews}">
-                    <p th:text="${review.patient.getFirstName() + ' ' + review.patient.getLastName()}"></p>
-                    <p th:text="${review.text}"></p>
-                    <p th:text="${#dates.format(review.date, 'dd.MM.yyyy') + ' ' + #dates.format(review.date, 'HH:mm')}"></p>
+                    <div class="review__header">
+                        <div class="review__avatar" th:if="${user.photo == null}"><img src="/images/user_icon.png"></div>
+                        <div class="review__avatar"  th:unless="${user.photo == null}" ><img th:src="@{${'/resources/uploads/' + user.photo}}"></div>
+                        <div class="review__author" th:text="${review.patient.getFirstName() + ' ' + review.patient.getLastName()}"></div>
+                    </div>
+                    <div class="review__text" th:text="${review.text}"></div>
+                    <div class="review__date" th:text="${#dates.format(review.date, 'dd.MM.yyyy') + ', ' + #dates.format(review.date, 'HH:mm')}"></div>
                 </div>
             </div>
             <div th:unless="${userAlreadyLeftReview}" sec:authorize="hasAuthority('PATIENT')">
                 <h3 style="margin:0; font-size: 16pt;">Додати відгук</h3>
                 <form method="post" th:object="${reviewDTO}" th:action="@{/user/leave-review}">
                     <input type="hidden" name="doctorId" th:value="${doctor.getId()}">
-                    <textarea class="large-textarea" name="text"></textarea>
+                    <textarea class="large-textarea" name="text" rows="6"></textarea>
                     <button type="submit">Надіслати</button>
                 </form>
             </div>
