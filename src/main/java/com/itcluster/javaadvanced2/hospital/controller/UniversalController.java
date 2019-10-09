@@ -1,15 +1,10 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
+import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
 import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
-import com.itcluster.javaadvanced2.hospital.model.Doctor;
-import com.itcluster.javaadvanced2.hospital.model.Review;
-import com.itcluster.javaadvanced2.hospital.model.Role;
-import com.itcluster.javaadvanced2.hospital.model.User;
-import com.itcluster.javaadvanced2.hospital.service.DoctorService;
-import com.itcluster.javaadvanced2.hospital.service.ReviewService;
-import com.itcluster.javaadvanced2.hospital.service.RoleService;
-import com.itcluster.javaadvanced2.hospital.service.UserService;
+import com.itcluster.javaadvanced2.hospital.model.*;
+import com.itcluster.javaadvanced2.hospital.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -34,6 +29,9 @@ public class UniversalController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private ScheduleService scheduleService;
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
@@ -63,5 +61,21 @@ public class UniversalController {
 
         doctorService.addSearchOptions(model);
         return "doctor";
+    }
+
+    @GetMapping("/doctor-info/{id}/timetable")
+    public String giveTimetable(@PathVariable Long id, Model model){
+        Doctor doctor = doctorService.findById(id);
+        List<Schedule> schedules = scheduleService.findActiveByDoctor(doctor);
+        ScheduleGenerateDTO dto = new ScheduleGenerateDTO();
+
+        model.addAttribute("doctor", doctor);
+        model.addAttribute("schedules", schedules);
+        model.addAttribute("scheduleDTO", dto);
+        model.addAttribute("hoursToStart", scheduleService.getHours(23));
+        model.addAttribute("durationsHours", scheduleService.getHours(8));
+
+        doctorService.addSearchOptions(model);
+        return "timetable";
     }
 }

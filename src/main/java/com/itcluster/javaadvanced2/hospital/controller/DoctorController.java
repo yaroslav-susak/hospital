@@ -58,28 +58,12 @@ public class DoctorController {
         return  null;
     }
 
-    @GetMapping("/{id}/timetable")
-    public String giveTimetable(@PathVariable Long id, Model model){
-        Doctor doctor = doctorService.findById(id);
-        List<Schedule> schedules = scheduleService.findActiveByDoctor(doctor);
-        ScheduleGenerateDTO dto = new ScheduleGenerateDTO();
-
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("schedules", schedules);
-        model.addAttribute("scheduleDTO", dto);
-        model.addAttribute("hoursToStart", scheduleService.getHours(23));
-        model.addAttribute("durationsHours", scheduleService.getHours(8));
-
-        doctorService.addSearchOptions(model);
-        return "timetable";
-    }
-
     @PostMapping("/{id}/timetable/create")
     public String createTimetable(@PathVariable Long id,
                                   @ModelAttribute ScheduleGenerateDTO dto,
                                   Model model) {
         scheduleService.generateSchedule(dto, doctorService.findById(id));
-        return "redirect:/doctor/{id}/timetable";
+        return "redirect:/doctor-info/{id}/timetable";
     }
 
     @GetMapping("/{id}/timetable/schedule")
@@ -88,7 +72,7 @@ public class DoctorController {
                                      Model model,
                                      @PathVariable Long id){
         scheduleService.setPatientForSchedule(scheduleId, patientId);
-        return "redirect:/doctor/{id}/timetable";
+        return "redirect:/doctor-info/{id}/timetable";
     }
 
     @GetMapping("/{id}/timetable/schedule/delete")
@@ -97,6 +81,6 @@ public class DoctorController {
                                      Model model,
                                      @PathVariable Long id){
         scheduleService.deletePatientFromSchedule(scheduleId, patientId);
-        return "redirect:/doctor/{id}/timetable";
+        return "redirect:/doctor-info/{id}/timetable";
     }
 }

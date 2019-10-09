@@ -25,13 +25,15 @@ public class DepartmentService {
         return departmentRepository.save(department);
     }
 
-    public void delete(Department department){ departmentRepository.delete(department);}
-
     public Department findById(Long id){
         return departmentRepository.findById(id).orElse(null);
     }
 
     public List<Department> findAll(){
         return departmentRepository.findAll();
+    }
+
+    public void delete(Department byId) {
+        departmentRepository.delete(byId);
     }
 }
