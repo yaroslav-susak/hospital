@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Реєстрація</title>
+    <title>Інформація про користувача</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -25,15 +25,26 @@
             <span th:text="${foundedUser.email}"></span>
         </p>
         <p>
+
+        <form th:unless="${foundedUser.banned}" th:action="@{'/admin/ban-user?status=true'}" th:object="${roleToChangeDTO}" th:method="post" >
+            <input type="hidden"  name="email" th:value="${foundedUser.email}" >
+            <button type="submit">Забанити</button>
+        </form>
+
+        <form th:if="${foundedUser.banned}" th:action="@{'/admin/ban-user?status=false'}" th:object="${roleToChangeDTO}" th:method="post" >
+            <input type="hidden"  name="email" th:value="${foundedUser.email}" >
+            <button type="submit">Розбанити</button>
+        </form>
+
             <h3>Ролі:</h3>
-            <div  th:each="userRole:${foundedUser.roles}">
+            <div th:each="userRole:${foundedUser.roles}">
                 <form action="#" th:action="@{/admin/user-info}" th:object="${roleToChangeDTO}" th:method="delete" >
 
                     <input type="hidden"  name="email" th:value="${foundedUser.email}" >
                     <input type="hidden"  name="role" th:value="${userRole.name}">
-                    <label>
-                        <p th:text="${userRole.name}"></p>
-                    </label>
+                        <label>
+                            <p th:text="${userRole.name}"></p>
+                        </label>
                     <button type="submit">Видалити</button>
                 </form>
             </div>

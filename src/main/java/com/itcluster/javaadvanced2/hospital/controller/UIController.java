@@ -1,6 +1,7 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
+import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
 import com.itcluster.javaadvanced2.hospital.model.*;
 import com.itcluster.javaadvanced2.hospital.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,22 @@ public class UIController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @ModelAttribute("user")
+    public User activeUser(Authentication authentication) {
+        if (authentication != null) {
+            User user = userService.findUserByEmail(authentication.getName()).get();
+            if (user.isBanned()) {
+                throw new BannedUserException();
+            } else {
+                return user;
+            }
+        }
+        return  null;
+    }
 
     @GetMapping("/")
     public String homePage(Model model){

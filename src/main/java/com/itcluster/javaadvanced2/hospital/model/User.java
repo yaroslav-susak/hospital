@@ -39,4 +39,6 @@ public class User {
     @ManyToMany
     @JoinTable(name = "user_role",  inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    private boolean banned;
 }

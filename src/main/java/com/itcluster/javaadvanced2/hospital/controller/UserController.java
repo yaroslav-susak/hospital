@@ -2,14 +2,9 @@ package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
-import com.itcluster.javaadvanced2.hospital.model.Doctor;
-import com.itcluster.javaadvanced2.hospital.model.Review;
-import com.itcluster.javaadvanced2.hospital.model.Schedule;
-import com.itcluster.javaadvanced2.hospital.model.User;
-import com.itcluster.javaadvanced2.hospital.service.DoctorService;
-import com.itcluster.javaadvanced2.hospital.service.ReviewService;
-import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
-import com.itcluster.javaadvanced2.hospital.service.UserService;
+import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
+import com.itcluster.javaadvanced2.hospital.model.*;
+import com.itcluster.javaadvanced2.hospital.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,13 +46,21 @@ public class UserController {
     private ReviewService reviewService;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     @Qualifier("basePath")
     private String basePath;
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
         if (authentication != null) {
-            return userService.findUserByEmail(authentication.getName()).get();
+            User user = userService.findUserByEmail(authentication.getName()).get();
+            if (user.isBanned()) {
+                throw new BannedUserException();
+            } else {
+                return user;
+            }
         }
         return  null;
     }
