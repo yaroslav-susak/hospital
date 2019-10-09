@@ -12,6 +12,7 @@ CREATE TABLE user
     last_name VARCHAR(50) NOT NULL,
     password VARCHAR(255) NOT NULL,
     photo VARCHAR(255) NULL,
+    banned BOOLEAN,
     PRIMARY KEY (id)
 ) ENGINE=INNODB CHAR SET=utf8;
 

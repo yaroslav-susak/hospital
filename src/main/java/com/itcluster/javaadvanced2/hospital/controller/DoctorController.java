@@ -2,10 +2,8 @@ package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
-import com.itcluster.javaadvanced2.hospital.model.Doctor;
-import com.itcluster.javaadvanced2.hospital.model.Review;
-import com.itcluster.javaadvanced2.hospital.model.Schedule;
-import com.itcluster.javaadvanced2.hospital.model.User;
+import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
+import com.itcluster.javaadvanced2.hospital.model.*;
 import com.itcluster.javaadvanced2.hospital.service.*;
 import org.hibernate.validator.constraints.EAN;
 import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
@@ -44,25 +42,20 @@ public class DoctorController {
     @Autowired
     private ReviewService reviewService;
 
+    @Autowired
+    private RoleService roleService;
+
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
-        return userService.findUserByEmail(authentication.getName()).get();
-    }
-
-    @GetMapping("/{id}/timetable")
-    public String giveTimetable(@PathVariable Long id, Model model){
-        Doctor doctor = doctorService.findById(id);
-        List<Schedule> schedules = scheduleService.findActiveByDoctor(doctor);
-        ScheduleGenerateDTO dto = new ScheduleGenerateDTO();
-
-        model.addAttribute("doctor", doctor);
-        model.addAttribute("schedules", schedules);
-        model.addAttribute("scheduleDTO", dto);
-        model.addAttribute("hoursToStart", scheduleService.getHours(23));
-        model.addAttribute("durationsHours", scheduleService.getHours(8));
-
-        doctorService.addSearchOptions(model);
-        return "timetable";
+        if (authentication != null) {
+            User user = userService.findUserByEmail(authentication.getName()).get();
+            if (user.isBanned()) {
+                throw new BannedUserException();
+            } else {
+                return user;
+            }
+        }
+        return  null;
     }
 
     @PostMapping("/{id}/timetable/create")
@@ -70,7 +63,7 @@ public class DoctorController {
                                   @ModelAttribute ScheduleGenerateDTO dto,
                                   Model model) {
         scheduleService.generateSchedule(dto, doctorService.findById(id));
-        return "redirect:/doctor/{id}/timetable";
+        return "redirect:/doctor-info/{id}/timetable";
     }
 
     @GetMapping("/{id}/timetable/schedule")
@@ -79,7 +72,7 @@ public class DoctorController {
                                      Model model,
                                      @PathVariable Long id){
         scheduleService.setPatientForSchedule(scheduleId, patientId);
-        return "redirect:/doctor/{id}/timetable";
+        return "redirect:/doctor-info/{id}/timetable";
     }
 
     @GetMapping("/{id}/timetable/schedule/delete")
@@ -88,6 +81,6 @@ public class DoctorController {
                                      Model model,
                                      @PathVariable Long id){
         scheduleService.deletePatientFromSchedule(scheduleId, patientId);
-        return "redirect:/doctor/{id}/timetable";
+        return "redirect:/doctor-info/{id}/timetable";
     }
 }

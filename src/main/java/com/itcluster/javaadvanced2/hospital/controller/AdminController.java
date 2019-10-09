@@ -1,7 +1,9 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.RoleToChangeDTO;
+import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
 import com.itcluster.javaadvanced2.hospital.model.Department;
+
 import com.itcluster.javaadvanced2.hospital.model.Role;
 import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.*;
@@ -27,17 +29,24 @@ public class AdminController {
     AdminService adminService;
 
     @Autowired
-    RoleService roleService;
-
-    @Autowired
     DoctorService doctorService;
 
     @Autowired
     DepartmentService departmentService;
 
+    private RoleService roleService;
+
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
-        return userService.findUserByEmail(authentication.getName()).get();
+        if (authentication != null) {
+            User user = userService.findUserByEmail(authentication.getName()).get();
+            if (user.isBanned()) {
+                throw new BannedUserException();
+            } else {
+                return user;
+            }
+        }
+        return  null;
     }
 
     @GetMapping("/change-department")
@@ -101,24 +110,22 @@ public class AdminController {
         return "redirect:/admin/user-info?userId=" + user.getId();
     }
 
-    @PostMapping("/user-info")
-    public String updateUserRole(@ModelAttribute("roleToChangeDTO") RoleToChangeDTO roleToChangeDTO, Model model){
-
+    @PostMapping("/ban-user")
+    public String banUser(@ModelAttribute("roleToChangeDTO") RoleToChangeDTO roleToChangeDTO,
+                          @RequestParam(name="status") boolean status){
         User user = userService.findUserByEmail(roleToChangeDTO.getEmail()).get();
-
-        Set<Role> roles = user.getRoles();
-
-        if(roleToChangeDTO.getRole().equals("BANNED")){
-            roles = new HashSet<>();
-        }
-        if(!roles.contains(roleService.getByName("BANNED"))) {
-            roles.add(roleService.getByName(roleToChangeDTO.getRole()));
-        }
-
-        user.setRoles(roles);
-
+        user.setBanned(status);
         userService.createUpdate(user);
+        return "redirect:/admin/user-info?userId=" + user.getId();
+    }
 
+    @PostMapping("/user-info")
+    public String updateUserRole(@ModelAttribute("roleToChangeDTO") RoleToChangeDTO roleToChangeDTO){
+        User user = userService.findUserByEmail(roleToChangeDTO.getEmail()).get();
+        Set<Role> roles = user.getRoles();
+        roles.add(roleService.getByName(roleToChangeDTO.getRole()));
+        user.setRoles(roles);
+        userService.createUpdate(user);
         return "redirect:/admin/user-info?userId=" + user.getId();
     }
 }

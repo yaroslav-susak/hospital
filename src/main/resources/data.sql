@@ -1,9 +1,9 @@
 use hospital;
 
-INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (1, '2019-09-17 15:58:37.612000000', 'susak.slava@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null );
-INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (2, '2019-09-17 15:58:37.612000000', 'susak.yaroslav@comp-sc.if.ua', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null );
-INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (3, '2019-09-17 15:58:37.612000000', 'symx2019new@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null );
-INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo) VALUES (4, '2019-09-17 15:58:37.612000000', 'symx2020new@gmail.com', 'Ярослав', 'Лупуляк', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null );
+INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo, banned) VALUES (1, '2019-09-17 15:58:37.612000000', 'susak.slava@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null, false);
+INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo, banned) VALUES (2, '2019-09-17 15:58:37.612000000', 'susak.yaroslav@comp-sc.if.ua', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null, false);
+INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo, banned) VALUES (3, '2019-09-17 15:58:37.612000000', 'symx2019new@gmail.com', 'Ярослав', 'Сусак', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null, false);
+INSERT INTO user (id, date_of_registration, email, first_name, last_name, password, photo, banned) VALUES (4, '2019-09-17 15:58:37.612000000', 'symx2020new@gmail.com', 'Ярослав', 'Лупуляк', '$2a$10$XwOBe/x7BnbdNlOLdkW7IeGTCMhjy22MXgWtMDVOONtwgvbbKvxpy',null, false);
 
 INSERT INTO department (id, description, name) VALUES (1, 'опис', 'Неврологія');
 INSERT INTO department (id, description, name) VALUES (2, 'опис', 'Анестезіологія');

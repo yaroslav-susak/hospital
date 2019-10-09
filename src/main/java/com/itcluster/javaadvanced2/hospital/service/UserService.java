@@ -31,11 +31,11 @@ public class UserService {
     }
 
     private User createPatientUser(User user) {
-
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.findByName("patient"));
         user.setRoles(roles);
         user.setDateOfRegistration(new Date());
+        user.setBanned(false);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return user;
 
