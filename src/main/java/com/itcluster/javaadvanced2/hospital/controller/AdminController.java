@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -77,7 +78,11 @@ public class AdminController {
         User user = userService.findById(id);
         model.addAttribute("foundedUser", user);
         model.addAttribute("roleToDeleteDTO", new RoleToChangeDTO() );
-        model.addAttribute("rolesToAdd", roleService.getAll());
+
+        List<Role> allRoles = roleService.getAll();
+        allRoles.removeAll(user.getRoles());
+
+        model.addAttribute("rolesToAdd", allRoles);
         doctorService.addSearchOptions(model);
         return "userinfo";
     }
@@ -102,7 +107,14 @@ public class AdminController {
         User user = userService.findUserByEmail(roleToChangeDTO.getEmail()).get();
 
         Set<Role> roles = user.getRoles();
-        roles.add(roleService.getByName(roleToChangeDTO.getRole()));
+
+        if(roleToChangeDTO.getRole().equals("BANNED")){
+            roles = new HashSet<>();
+        }
+        if(!roles.contains(roleService.getByName("BANNED"))) {
+            roles.add(roleService.getByName(roleToChangeDTO.getRole()));
+        }
+
         user.setRoles(roles);
 
         userService.createUpdate(user);

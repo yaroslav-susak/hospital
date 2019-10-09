@@ -1,8 +1,10 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
+import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
 import com.itcluster.javaadvanced2.hospital.model.*;
 import com.itcluster.javaadvanced2.hospital.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,22 +29,19 @@ public class UIController {
     @Autowired
     private DiseaseService diseaseService;
 
+    @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/")
     public String homePage(Model model){
         doctorService.addSearchOptions(model);
         return "homepage";
     }
 
-    @GetMapping("/doctor-info/{id}")
-    public String doctorById(@PathVariable Long id, Model model){
-        Doctor doctor = doctorService.findById(id);
-        model.addAttribute("doctor", doctor);
-
-        doctorService.addSearchOptions(model);
-        return "doctor";
-    }
-
-    @GetMapping("/doctor/search")
+    @GetMapping("/search")
     public String findDoctorsByQualificationLevel(@RequestParam(name = "lvl", required = false) String qualification,
                                                   @RequestParam(name = "dep", required = false) String department,
                                                   @RequestParam(name = "sur", required = false) String surname,

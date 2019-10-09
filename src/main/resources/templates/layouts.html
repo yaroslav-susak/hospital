@@ -6,7 +6,7 @@
     <img id = "logo" src="/images/logo.png">
     <nav>
         <a href="/">Головна</a>
-        <a href="/doctor/search">Персонал</a>
+        <a href="/search">Персонал</a>
         <a th:href="@{/faq}">FAQ</a>
     </nav>
 </header>
@@ -16,7 +16,7 @@
     <a class="side-link" href="/departments">Відділення лікарні</a>
     <a class="side-link" href="/diseases">Показання до госпіталізації</a>
 
-    <form class="search-form" action="/doctor/search">
+    <form class="search-form" action="/search">
         <h3>Пошук лікаря</h3>
 
         <input type="search" name="sur" th:placeholder="Прізвище" class="form-control" th:list="search-surname"/>
@@ -43,7 +43,7 @@
     <div class="login-link" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')"><a th:href="@{/user/cabinet}">Кабінет</a></div>
     <div class="login-link" sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/find-user}">Адміністрування</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
-
+    <div class="login-link" sec:authorize="hasAuthority('BANNED')"><b>Ваш аккунт забанений</b></div>
 </aside>
 
 <footer th:fragment="footer"></footer>
@@ -55,7 +55,7 @@
 
 
 <div th:fragment="deparment-list" class="department-list" th:each="department: ${departments}">
-    <a th:href="@{${'/doctor/search?dep=' + department.name}}" th:text="${department.getName()}"></a>
+    <a th:href="@{${'/search?dep=' + department.name}}" th:text="${department.getName()}"></a>
 </div>
 
 <table th:fragment="timetable" class="timetable">

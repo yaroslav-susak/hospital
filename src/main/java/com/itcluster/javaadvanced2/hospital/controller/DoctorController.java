@@ -1,13 +1,12 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
+import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
+import com.itcluster.javaadvanced2.hospital.model.Review;
 import com.itcluster.javaadvanced2.hospital.model.Schedule;
 import com.itcluster.javaadvanced2.hospital.model.User;
-import com.itcluster.javaadvanced2.hospital.service.DepartmentService;
-import com.itcluster.javaadvanced2.hospital.service.DoctorService;
-import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
-import com.itcluster.javaadvanced2.hospital.service.UserService;
+import com.itcluster.javaadvanced2.hospital.service.*;
 import org.hibernate.validator.constraints.EAN;
 import com.itcluster.javaadvanced2.hospital.service.ScheduleService;
 import com.itcluster.javaadvanced2.hospital.service.UserService;
@@ -41,6 +40,9 @@ public class DoctorController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
