@@ -2,12 +2,11 @@ package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.RoleToChangeDTO;
 import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
+import com.itcluster.javaadvanced2.hospital.model.Department;
+
 import com.itcluster.javaadvanced2.hospital.model.Role;
 import com.itcluster.javaadvanced2.hospital.model.User;
-import com.itcluster.javaadvanced2.hospital.service.AdminService;
-import com.itcluster.javaadvanced2.hospital.service.DoctorService;
-import com.itcluster.javaadvanced2.hospital.service.RoleService;
-import com.itcluster.javaadvanced2.hospital.service.UserService;
+import com.itcluster.javaadvanced2.hospital.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -33,6 +32,8 @@ public class AdminController {
     DoctorService doctorService;
 
     @Autowired
+    DepartmentService departmentService;
+
     private RoleService roleService;
 
     @ModelAttribute("user")
@@ -48,9 +49,30 @@ public class AdminController {
         return  null;
     }
 
+    @GetMapping("/change-department")
+    public String changeDepartment(Model model,@RequestParam(name="id") Long id){
+        Department department = departmentService.findById(id);
+        model.addAttribute("department",department);
+        return "change-department";
+    }
+
+    @PostMapping("/save-changed-department")
+    public String saveChangedDepartment(Department department){
+        departmentService.save(department);
+        return "redirect:/admin/find-user";
+    }
+
+    @PostMapping("/delete-department")
+    public String deleteDepartment(@RequestParam(name="id") Long id){
+        departmentService.delete(departmentService.findById(id));
+        return "redirect:/admin/find-user";
+    }
+
     @GetMapping("/find-user")
     public String findUser(Model model){
         doctorService.addSearchOptions(model);
+        List<Department> departments = departmentService.findAll();
+        model.addAttribute("departments",departments);
         return "admincontrol";
     }
 
@@ -64,14 +86,10 @@ public class AdminController {
     public String adminControl(@RequestParam(name="userId") Long id, Model model){
         User user = userService.findById(id);
         model.addAttribute("foundedUser", user);
-        Role banned = roleService.getByName("BANNED");
-        model.addAttribute("banned", banned);
-
         model.addAttribute("roleToDeleteDTO", new RoleToChangeDTO() );
 
         List<Role> allRoles = roleService.getAll();
         allRoles.removeAll(user.getRoles());
-        allRoles.remove(banned);
 
         model.addAttribute("rolesToAdd", allRoles);
         doctorService.addSearchOptions(model);

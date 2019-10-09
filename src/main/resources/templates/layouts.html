@@ -109,6 +109,28 @@
     </tr>
 </table>
 
+<table th:fragment="departments-table" class="departments-table">
+    <tr>
+        <th>Id</th>
+        <th>Відділ</th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each="department: ${departments}">
+        <td th:text="${department.getId()}"></td>
+        <td th:text="${department.getName()}"></td>
+        <td>
+             <a th:href="@{${'/admin/change-department?id='+department.getId()}}">Редагувати</a>
+        </td>
+        <td>
+            <form method="post" th:method="${'/admin/delete-department?id='+department.getId()}">
+                <input type="submit" value="del">
+            </form>
+
+        </td>
+    </tr>
+</table>
+
 <div th:fragment="user-info-change-forms">
     <form action="/user/save" method="post" th:object="${user}" >
 
