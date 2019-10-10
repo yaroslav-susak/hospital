@@ -51,4 +51,12 @@ public class ReviewService {
             reviews.add(0, userReview);
         }
     }
+
+    public void delete(Review review){
+        reviewRepository.delete(review);
+    }
+
+    public Review findById(Long id){
+        return reviewRepository.findById(id).orElse(null);
+    }
 }

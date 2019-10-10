@@ -44,8 +44,12 @@
                         <div class="review__avatar"  th:unless="${user.photo == null}" ><img th:src="@{${'/resources/uploads/' + user.photo}}"></div>
                         <div class="review__author" th:text="${review.patient.getFirstName() + ' ' + review.patient.getLastName()}"></div>
                     </div>
-                    <div class="review__text" th:text="${review.text}"></div>
                     <div class="review__date" th:text="${#dates.format(review.date, 'dd.MM.yyyy') + ', ' + #dates.format(review.date, 'HH:mm')}"></div>
+                    <div class="review__text" th:text="${review.text}"></div>
+                    <form th:object="${reviewDTO}" th:if="${review.patient == user or user.roles.contains(admin)}" th:action="@{${'/user/delete-review?reviewId=' + review.id}}" th:method="delete">
+                        <input type="hidden" name="doctorId" th:value="${doctor.id}">
+                        <button class="link-button" type="submit">Видалити</button>
+                    </form>
                 </div>
             </div>
             <div th:unless="${userAlreadyLeftReview}" sec:authorize="hasAuthority('PATIENT')">

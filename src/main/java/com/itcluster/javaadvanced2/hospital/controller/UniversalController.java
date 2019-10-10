@@ -58,7 +58,7 @@ public class UniversalController {
         model.addAttribute("reviewDTO", new ReviewDTO());
         model.addAttribute("userAlreadyLeftReview",
                 reviewService.userAlreadyLeftReview(reviews, user));
-
+        model.addAttribute("admin", roleService.getByName("ADMIN"));
         doctorService.addSearchOptions(model);
         return "doctor";
     }

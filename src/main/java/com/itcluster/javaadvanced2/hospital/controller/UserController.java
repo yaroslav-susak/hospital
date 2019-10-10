@@ -146,5 +146,27 @@ public class UserController {
         return "redirect:/doctor-info/" + doctor.getId();
     }
 
+    @DeleteMapping("/delete-review")
+    public String deleteReview(@ModelAttribute ReviewDTO reviewDTO,
+                               @ModelAttribute User user,
+                               @RequestParam(name="reviewId") Long id){
+        Review review = reviewService.findById(id);
+        if (review.getPatient().equals(user) ||
+            user.getRoles().contains(roleService.getByName("ADMIN"))){
+            reviewService.delete(review);
+        }
+        return "redirect:/doctor-info/" + reviewDTO.getDoctorId();
+    }
 
+    @PostMapping("/edit-review")
+    public String editReview(@ModelAttribute ReviewDTO reviewDTO,
+                             @ModelAttribute User user,
+                             @RequestParam(name="reviewId") Long id){
+        Review review = reviewService.findById(id);
+        if (review.getPatient().equals(user)){
+            review.setText(reviewDTO.getText());
+            reviewService.save(review);
+        }
+        return "redirect:/doctor-info/" + reviewDTO.getDoctorId();
+    }
 }
