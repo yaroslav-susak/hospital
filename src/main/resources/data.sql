@@ -20,7 +20,7 @@ INSERT INTO role (id, name) VALUES (3, 'DOCTOR');
 INSERT INTO role (id, name) VALUES (4, 'PATIENT');
 
 INSERT INTO user_role (user_id, role_id) VALUES (1,1);
-INSERT INTO user_role (user_id, role_id) VALUES (2,4);
+INSERT INTO user_role (user_id, role_id) VALUES (2,2);
 INSERT INTO user_role (user_id, role_id) VALUES (3,4);
 INSERT INTO user_role (user_id, role_id) VALUES (4,3);
 
@@ -35,3 +35,6 @@ INSERT INTO question(question,answer) VALUES('Мій сеанс відмінил
 INSERT INTO disease(name, department_id) VALUES ('Гостра респіраторна вірусна інфекція (ускладнені форми)', 3);
 INSERT INTO disease(name, department_id) VALUES ('Гострий бронхіт', 3);
 INSERT INTO disease(name, department_id) VALUES ('Гіпертермія неясного ґенезу', 3);
+
+INSERT INTO news(id, author_id, date, name, text, type) VALUES (1,2,'2019-10-11 23:00:00','Бронхіальна астма',
+'Астма – це хронічна хвороба, яка найчастіше проявляється періодичними нападами задишки та свистячими хрипами. Частота та ступінь важкості цих симптомів можуть бути різними. Наприклад, інтервал між нападами може коливатися від однієї години до одного дня. Як правило, напади відбуваються під час фізичної активності або вночі. Бронхіальною астмою можуть хворіти люди усіх вікових груп, але найчастіше це діти та молодь. Такі тенденції є однаковими як в Україні, так і в інших країнах світу.','NEWS');

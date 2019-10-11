@@ -1,5 +1,6 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
+import com.itcluster.javaadvanced2.hospital.dto.CommentDTO;
 import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
 import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
@@ -51,6 +52,12 @@ public class UserController {
     @Autowired
     @Qualifier("basePath")
     private String basePath;
+
+    @Autowired
+    private NewsService newsService;
+
+    @Autowired
+    private CommentService commentService;
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
@@ -169,5 +176,20 @@ public class UserController {
             reviewService.save(review);
         }
         return "redirect:/doctor-info/" + reviewDTO.getDoctorId();
+    }
+
+    @PostMapping("/leave-comment")
+    public String leaveComment(@ModelAttribute CommentDTO commentDTO,
+                               @ModelAttribute User user){
+        Comment comment = new Comment();
+        News news = newsService.findById(commentDTO.getNewsId());
+
+        comment.setNews(news);
+        comment.setText(commentDTO.getText());
+        comment.setUser(user);
+        comment.setDate(new Date());
+
+        commentService.save(comment);
+        return "redirect:/news/" + news.getId();
     }
 }

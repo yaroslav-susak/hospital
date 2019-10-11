@@ -42,7 +42,7 @@
                 <div th:id="${review.id}" class="review" th:each="review: ${reviews}">
                     <div class="review__header">
                         <div class="review__avatar" th:if="${review.patient.photo == null}"><img src="/images/user_icon.png"></div>
-                        <div class="review__avatar"  th:unless="${review.patient.photo == null}" ><img th:src="@{${'/resources/uploads/' + user.photo}}"></div>
+                        <div class="review__avatar"  th:unless="${review.patient.photo == null}" ><img th:src="@{${'/resources/uploads/' + review.patient.photo}}"></div>
                         <div class="review__author" th:text="${review.patient.getFirstName() + ' ' + review.patient.getLastName()}"></div>
                     </div>
                     <div class="review__date" th:text="${#dates.format(review.date, 'dd.MM.yyyy') + ', ' + #dates.format(review.date, 'HH:mm')}"></div>

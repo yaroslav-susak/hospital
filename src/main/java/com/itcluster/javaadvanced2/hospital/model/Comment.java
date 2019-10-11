@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
-public class Comment {
+public class Comment implements Comparable<Comment>{
 
     @Id()
     @GeneratedValue
@@ -27,4 +27,9 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     @JoinColumn(name="news_id", nullable = false)
     private News news;
+
+    @Override
+    public int compareTo(Comment o) {
+        return o.getDate().compareTo(this.getDate());
+    }
 }

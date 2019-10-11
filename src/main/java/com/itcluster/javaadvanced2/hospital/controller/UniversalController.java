@@ -1,5 +1,6 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
+import com.itcluster.javaadvanced2.hospital.dto.CommentDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
 import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -33,6 +33,12 @@ public class UniversalController {
 
     @Autowired
     private ScheduleService scheduleService;
+
+    @Autowired
+    private NewsService newsService;
+
+    @Autowired
+    private CommentService commentService;
 
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
@@ -83,5 +89,24 @@ public class UniversalController {
 
         doctorService.addSearchOptions(model);
         return "timetable";
+    }
+
+    @GetMapping("/news/{id}")
+    public String getNewsById(@PathVariable Long id,
+                              @ModelAttribute User user,
+                              Model model){
+        News news = newsService.findById(id);
+        List<Comment> comments = commentService.findByNews(news);
+        Collections.sort(comments);
+
+        if(user != null) {
+            commentService.userCommentsFirst(comments, user);
+        }
+
+        model.addAttribute("news", news);
+        model.addAttribute("comments", comments);
+        model.addAttribute("commentDTO", new CommentDTO());
+        doctorService.addSearchOptions(model);
+        return "news";
     }
 }
