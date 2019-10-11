@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -50,14 +51,19 @@ public class UniversalController {
     public String doctorById(@PathVariable Long id, Model model, @ModelAttribute User user){
         Doctor doctor = doctorService.findById(id);
         List<Review> reviews = reviewService.findByDoctor(doctor);
-        Collections.reverse(reviews);
-        reviewService.userReviewFirst(reviews, user);
+        Collections.sort(reviews);
+
+        boolean userAlreadyLeftReview = false;
+
+        if(user != null) {
+            reviewService.userReviewFirst(reviews, user);
+            userAlreadyLeftReview = reviewService.userAlreadyLeftReview(reviews, user);
+        }
 
         model.addAttribute("doctor", doctor);
         model.addAttribute("reviews", reviews);
         model.addAttribute("reviewDTO", new ReviewDTO());
-        model.addAttribute("userAlreadyLeftReview",
-                reviewService.userAlreadyLeftReview(reviews, user));
+        model.addAttribute("userAlreadyLeftReview", userAlreadyLeftReview);
         model.addAttribute("admin", roleService.getByName("ADMIN"));
         doctorService.addSearchOptions(model);
         return "doctor";

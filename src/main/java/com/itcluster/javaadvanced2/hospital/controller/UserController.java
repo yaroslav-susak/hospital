@@ -165,6 +165,7 @@ public class UserController {
         Review review = reviewService.findById(id);
         if (review.getPatient().equals(user)){
             review.setText(reviewDTO.getText());
+            review.setDate(new Date());
             reviewService.save(review);
         }
         return "redirect:/doctor-info/" + reviewDTO.getDoctorId();

@@ -340,7 +340,7 @@ button[type="submit"]:hover {
 
 .large-textarea {
     width:100%;
-    margin: 10px 0 20px 0;
+    margin: 10px 0 10px 0;
 }
 
 .review {
@@ -419,4 +419,12 @@ button[type="submit"]:hover {
 
 .link-button:hover {
     text-decoration: underline !important;
+}
+
+.edit-review-button {
+    background: none;
+    border: none;
+    margin-left: 10px;
+    font-size: 15px;
+    color: black;
 }
