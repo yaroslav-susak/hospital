@@ -56,7 +56,7 @@
             </form>
         </div>
 
-        <div>
+        <div sec:authorize="isAuthenticated()">
             <h3 class="small-centered-headline">Записи</h3>
             <p><b>Лікар: </b><span th:text="${doctor.surname+' '+doctor.name+' '+doctor.middleName}"></span></p>
             <table th:replace="layouts :: timetable"></table>

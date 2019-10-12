@@ -19,8 +19,8 @@ CREATE TABLE user
 CREATE TABLE department
 (
     id INT AUTO_INCREMENT,
-    description TEXT NOT NULL,
     name VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE =INNODB CHAR SET =utf8;
 

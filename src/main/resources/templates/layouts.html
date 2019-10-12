@@ -59,7 +59,7 @@
     <a th:href="@{${'/search?dep=' + department.name}}" th:text="${department.getName()}"></a>
 </div>
 
-<table th:fragment="timetable" class="timetable">
+<table sec:authorize="isAuthenticated()" th:fragment="timetable" class="timetable">
     <tr>
         <th sec:authorize="hasAuthority('PATIENT')">Лікар</th>
         <th sec:authorize="hasAuthority('DOCTOR')">Пацієнт</th>
