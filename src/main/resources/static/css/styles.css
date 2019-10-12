@@ -465,4 +465,16 @@ a, a:hover {
     color: black;
 }
 
+.question {
+    display: inline-block;
+}
+
+.answer {
+    margin-top: 10px;
+    display: inline-block;
+    text-indent: 30px;
+    font-style: normal;
+    color: black;
+}
+
 
