@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${type == 'ARTICLE'}" th:text="Статті"></title>
+    <title th:if="${type == 'NEWS'}" th:text="Новини"></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/scripts.js"></script>
+</head>
+<body>
+<header th:replace="layouts :: header"></header>
+<main>
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
+    <div class="center">
+        <h3 th:if="${type == 'ARTICLE'}" class="all-news-title">Статті</h3>
+        <h3 th:if="${type == 'NEWS'}" class="all-news-title">Новини</h3>
+
+        <table class="news-table">
+                <tr th:each="item : ${news}" th:if="${type == 'NEWS'}">
+                    <td class="news-date">
+                        <span th:text="${#dates.format(item.date, 'HH:mm')}"></span>
+                    </td>
+                    <td class="news-name">
+                        <a th:text="${item.name}" th:href="@{${'/news/' + item.id}}"></a>
+                    </td>
+                </tr>
+
+            <tr th:each="item : ${news}" th:if="${type == 'ARTICLE'}">
+                <td>
+                    <span class="news-date" th:text="${#dates.format(item.date, 'HH:mm')}"></span>
+                </td>
+                <td class="news-name">
+                    <a th:text="${item.name}" th:href="@{${'/articles/' + item.id}}"></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts :: footer"></footer>
+</body>
+</html>

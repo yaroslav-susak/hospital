@@ -6,8 +6,10 @@
     <img id = "logo" src="/images/logo.png">
     <nav>
         <a href="/">Головна</a>
+        <a href="/news">Новини</a>
         <a href="/search">Персонал</a>
-        <a th:href="@{/faq}">FAQ</a>
+        <a href="/articles">Статті</a>
+        <a href="/faq">FAQ</a>
     </nav>
 </header>
 
@@ -43,7 +45,6 @@
     <div class="login-link" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')"><a th:href="@{/user/cabinet}">Кабінет</a></div>
     <div class="login-link" sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/find-user}">Адміністрування</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
-<!--    <div class="login-link" sec:authorize="hasAuthority('BANNED')"><b>Ваш аккунт забанений</b></div>-->
 </aside>
 
 <footer th:fragment="footer"></footer>

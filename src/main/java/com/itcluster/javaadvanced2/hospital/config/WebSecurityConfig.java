@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/department/**","/departments","/doctor-info/**","/search/**","/faq","/diseases","/news/**").permitAll()
+                .antMatchers("/","/department/**","/departments","/doctor-info/**","/search/**","/faq","/diseases","/news/**", "/articles/**").permitAll()
                 .antMatchers("/admin/**").access("hasAnyAuthority('ADMIN')")
                 .antMatchers("/user/**").hasAnyAuthority("PATIENT","ADMIN")
                 .antMatchers("/doctor/**").hasAnyAuthority("DOCTOR","ADMIN")

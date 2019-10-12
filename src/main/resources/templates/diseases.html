@@ -19,7 +19,7 @@
             <div class="disease-block">
                 <a
                    th:text="${department.key.name}"
-                   th:href="@{${'/doctor/search?dep=' + department.key.name}}"
+                   th:href="@{${'/search?dep=' + department.key.name}}"
                 ></a>
                 <ul th:each="disease: ${department.value}">
                     <li th:text="${disease.name}"></li>

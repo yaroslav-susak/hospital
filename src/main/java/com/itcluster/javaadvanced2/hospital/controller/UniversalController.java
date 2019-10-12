@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collections;
 import java.util.List;
@@ -95,18 +96,37 @@ public class UniversalController {
     public String getNewsById(@PathVariable Long id,
                               @ModelAttribute User user,
                               Model model){
-        News news = newsService.findById(id);
-        List<Comment> comments = commentService.findByNews(news);
-        Collections.sort(comments);
-
-        if(user != null) {
-            commentService.userCommentsFirst(comments, user);
-        }
-
-        model.addAttribute("news", news);
-        model.addAttribute("comments", comments);
-        model.addAttribute("commentDTO", new CommentDTO());
+        newsService.formNewsOrArticle(id, user, model);
         doctorService.addSearchOptions(model);
         return "news";
+    }
+
+    @GetMapping("/articles/{id}")
+    public String getArticleById(@PathVariable Long id,
+                              @ModelAttribute User user,
+                              Model model){
+        newsService.formNewsOrArticle(id, user, model);
+        doctorService.addSearchOptions(model);
+        return "news";
+    }
+
+    @GetMapping("/articles")
+    public String getAllArticles(Model model){
+        String type = "ARTICLE";
+        List<News> allArticles = newsService.findByType(type);
+        model.addAttribute("news", allArticles);
+        model.addAttribute("type", type);
+        doctorService.addSearchOptions(model);
+        return "allnews";
+    }
+
+    @GetMapping("/news")
+    public String getAllNews(Model model){
+        String type = "NEWS";
+        List<News> allNews = newsService.findByType(type);
+        model.addAttribute("news", allNews);
+        model.addAttribute("type", type);
+        doctorService.addSearchOptions(model);
+        return "allnews";
     }
 }
