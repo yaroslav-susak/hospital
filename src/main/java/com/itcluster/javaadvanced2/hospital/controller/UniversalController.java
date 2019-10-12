@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class UniversalController {
@@ -41,6 +40,15 @@ public class UniversalController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private DepartmentService departmentService;
+
+    @Autowired
+    private DiseaseService diseaseService;
+
+    @Autowired
+    private QuestionService questionService;
+
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
         if (authentication != null) {
@@ -52,6 +60,95 @@ public class UniversalController {
             }
         }
         return  null;
+    }
+
+    @GetMapping("/")
+    public String homePage(Model model){
+        doctorService.addSearchOptions(model);
+        return "homepage";
+    }
+
+    @GetMapping("/search")
+    public String findDoctorsByQualificationLevel(@RequestParam(name = "lvl", required = false) String qualification,
+                                                  @RequestParam(name = "dep", required = false) String department,
+                                                  @RequestParam(name = "sur", required = false) String surname,
+                                                  Model model) {
+
+        Set<Doctor> doctors = new HashSet<>(doctorService.findAll());
+
+        if (qualification != null && !qualification.equals("")){
+            doctors.retainAll(doctorService.findByQualificationLevel(qualification));
+        }
+
+        if(department!=null && !department.equals("")) {
+            doctors.retainAll(doctorService.findByDepartment(departmentService.findByName(department)));
+        }
+
+        if(surname!=null && !surname.equals("")) {
+            doctors.retainAll(doctorService.findBySurname(surname));
+        }
+
+        model.addAttribute("doctors",doctors);
+
+        doctorService.addSearchOptions(model);
+        return "staff";
+    }
+
+    @GetMapping("/departments")
+    public String getDepartmentsList(Model model){
+        List<Department> departments = departmentService.findAll();
+        model.addAttribute("departments",departments);
+
+        doctorService.addSearchOptions(model);
+        return "departments";
+    }
+
+    @GetMapping("/faq")
+    public String getFaqList(Model model){
+        List<Question> questions = questionService.findAll();
+        model.addAttribute("questions",questions);
+
+        doctorService.addSearchOptions(model);
+        return "faq";
+    }
+
+    @GetMapping("/diseases")
+    public String getDiseases(Model model){
+        Map<Department, Set<Disease>> diseasesByDepartment = new HashMap<>();
+
+        List<Department> departments = departmentService.findAll();
+        Set<Disease> tempDiseases;
+
+        for (Department department : departments){
+            tempDiseases = diseaseService.findByDepartment(department);
+            diseasesByDepartment.put(department, tempDiseases);
+            tempDiseases = null;
+        }
+
+        model.addAttribute("diseasesByDepartment", diseasesByDepartment);
+
+        doctorService.addSearchOptions(model);
+        return "diseases";
+    }
+
+    @GetMapping("/articles")
+    public String getAllArticles(Model model){
+        String type = "ARTICLE";
+        List<News> allArticles = newsService.findByType(type);
+        model.addAttribute("news", allArticles);
+        model.addAttribute("type", type);
+        doctorService.addSearchOptions(model);
+        return "allnews";
+    }
+
+    @GetMapping("/news")
+    public String getAllNews(Model model){
+        String type = "NEWS";
+        List<News> allNews = newsService.findByType(type);
+        model.addAttribute("news", allNews);
+        model.addAttribute("type", type);
+        doctorService.addSearchOptions(model);
+        return "allnews";
     }
 
     @GetMapping("/doctor-info/{id}")
@@ -108,25 +205,5 @@ public class UniversalController {
         newsService.formNewsOrArticle(id, user, model);
         doctorService.addSearchOptions(model);
         return "news";
-    }
-
-    @GetMapping("/articles")
-    public String getAllArticles(Model model){
-        String type = "ARTICLE";
-        List<News> allArticles = newsService.findByType(type);
-        model.addAttribute("news", allArticles);
-        model.addAttribute("type", type);
-        doctorService.addSearchOptions(model);
-        return "allnews";
-    }
-
-    @GetMapping("/news")
-    public String getAllNews(Model model){
-        String type = "NEWS";
-        List<News> allNews = newsService.findByType(type);
-        model.addAttribute("news", allNews);
-        model.addAttribute("type", type);
-        doctorService.addSearchOptions(model);
-        return "allnews";
     }
 }
