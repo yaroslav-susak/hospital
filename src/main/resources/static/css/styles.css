@@ -120,11 +120,8 @@ header {
 .question{
     font-size: 25px;
     font-weight: 600;
-}
-
-.answer{
-    font-style: italic;
-    color: lightslategrey;
+    display: inline-block;
+    text-indent: 30px;
 }
 
 .search-form {
@@ -302,6 +299,7 @@ button[type="submit"]:hover {
 .department-wrap {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .department-list {
     margin-right: 15px;
@@ -357,13 +355,13 @@ button[type="submit"]:hover {
 .review__avatar {
     margin-right: 10px;
     width: 30px;
-    height: 30px;
+    height: 40px;
     border: 1px solid #c9c9c9;
 }
 .review__avatar > img {
     display: block;
     width: 30px;
-    height: 30px;
+    height: 40px;
 }
 .review__author {
     font-size: 16px;
@@ -430,8 +428,8 @@ button[type="submit"]:hover {
 }
 
 .news-text {
-    text-indent: 20px;
-    margin-top: 30px;
+    text-indent: 30px;
+    margin-bottom: 10px;
 }
 
 .all-news-title {
@@ -463,10 +461,6 @@ button[type="submit"]:hover {
 
 a, a:hover {
     color: black;
-}
-
-.question {
-    display: inline-block;
 }
 
 .answer {

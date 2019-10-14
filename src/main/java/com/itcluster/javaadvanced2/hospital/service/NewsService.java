@@ -41,7 +41,10 @@ public class NewsService {
             commentService.userCommentsFirst(comments, user);
         }
 
+        String newsText = news.getText();
+        String[] newsTextParts = newsText.split("\\r?\\n");
         model.addAttribute("news", news);
+        model.addAttribute("newsText", newsTextParts);
         model.addAttribute("comments", comments);
         model.addAttribute("commentDTO", new CommentDTO());
     }

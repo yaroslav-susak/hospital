@@ -15,15 +15,18 @@
     <aside class="left-side" th:replace="layouts :: left-side"></aside>
 
     <div class="center">
-        <h3 style="margin-top: 0;" th:text="${news.name}"></h3>
-        <div class="review__header">
+        <h3 style="margin-top: 0; text-indent: 30px;" th:text="${news.name}"></h3>
+        <div style="margin-left: 30px; margin-top: 30px;" class="review__header">
             <div class="review__avatar" th:if="${news.author.photo == null}"><img src="/images/user_icon.png"></div>
             <div class="review__avatar"  th:unless="${news.author.photo == null}" ><img th:src="@{${'/resources/uploads/' + news.author.photo}}"></div>
             <div class="review__author" th:text="${news.author.getFirstName() + ' ' + news.author.getLastName()}"></div>
         </div>
-        <p th:text="${#dates.format(news.date, 'dd.MM.yyyy') + ', ' + #dates.format(news.date, 'HH:mm')}"></p>
-        <p class="news-text" th:text="${news.text}"></p>
-
+        <div style="margin-left: 30px;">
+            <span th:text="${#dates.format(news.date, 'dd.MM.yyyy') + ', ' + #dates.format(news.date, 'HH:mm')}"></span>
+        </div>
+        <div style="margin-top: 30px;">
+            <div class="news-text" th:each="part : ${newsText}" th:text="${part}"></div>
+        </div>
         <div style="margin-top: 20px;">
             <h3 style="margin:0; font-size: 16pt;">Коментарі</h3>
             <div th:id="${comment.id}" class="review" th:each="comment: ${comments}">
