@@ -206,4 +206,52 @@ public class UniversalController {
         doctorService.addSearchOptions(model);
         return "news";
     }
+
+    @GetMapping("/doctor-info/{id}/free-schedule")
+    public String deleteUserFromSchedule(@RequestParam(name="scheduleId") Long scheduleId,
+                                         @RequestParam(name="patientId") Long patientId,
+                                         @PathVariable Long id,
+                                         Model model){
+        scheduleService.deletePatientFromSchedule(scheduleId, patientId);
+        return "redirect:/doctor-info/{id}/timetable";
+    }
+
+    @GetMapping("/doctor-info/{id}/reserve-time")
+    public String setUserForSchedule(@RequestParam(name="scheduleId") Long scheduleId,
+                                     @RequestParam(name="patientId") Long patientId,
+                                     @PathVariable Long id,
+                                     Model model){
+        scheduleService.setPatientForSchedule(scheduleId, patientId);
+        return "redirect:/doctor-info/{id}/timetable";
+    }
+
+    @GetMapping("/cabinet")
+    public String userCabinet(@ModelAttribute("user") User user, Model model) {
+        List<Schedule> schedules = null;
+
+        if (user.getRoles().contains(roleService.getByName("PATIENT"))){
+            schedules = scheduleService.findActiveByUser(user);
+        }
+
+        if (user.getRoles().contains(roleService.getByName("DOCTOR"))){
+            Doctor doctor = null;
+
+            for(Doctor doc : doctorService.findAll()){
+                if (doc.getUser().equals(user)){
+                    doctor = doc;
+                }
+            }
+            model.addAttribute("doctor", doctor);
+            model.addAttribute("scheduleDTO", new ScheduleGenerateDTO());
+            model.addAttribute("hoursToStart", scheduleService.getHours(23));
+            model.addAttribute("durationsHours", scheduleService.getHours(8));
+
+            schedules = scheduleService.findActiveByDoctor(doctor);
+        }
+
+        model.addAttribute("schedules", schedules);
+
+        doctorService.addSearchOptions(model);
+        return "cabinet";
+    }
 }

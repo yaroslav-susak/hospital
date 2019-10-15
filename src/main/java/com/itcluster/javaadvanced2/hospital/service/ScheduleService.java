@@ -1,6 +1,7 @@
 package com.itcluster.javaadvanced2.hospital.service;
 
 import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
+import com.itcluster.javaadvanced2.hospital.exceptions.HoursIntermixException;
 import com.itcluster.javaadvanced2.hospital.exceptions.ScheduleNotAvailableException;
 import com.itcluster.javaadvanced2.hospital.model.Doctor;
 import com.itcluster.javaadvanced2.hospital.model.Schedule;
@@ -46,12 +47,16 @@ public class ScheduleService {
 
     public List<Schedule> findActiveByDoctor(Doctor doctor){
         List<Schedule> allSchedules = findByDoctor(doctor);
-        return getActiveSchedules(allSchedules);
+        List<Schedule> activeSchedules = getActiveSchedules(allSchedules);
+        Collections.sort(activeSchedules);
+        return activeSchedules;
     }
 
     public List<Schedule> findActiveByUser(User user){
         List<Schedule> allSchedules = findByPatient(user);
-        return getActiveSchedules(allSchedules);
+        List<Schedule> activeSchedules = getActiveSchedules(allSchedules);
+        Collections.sort(activeSchedules);
+        return activeSchedules;
     }
 
     public Schedule save(Schedule schedule){
@@ -82,6 +87,11 @@ public class ScheduleService {
             cal.add(Calendar.MINUTE, dto.getDuration());
             schedule.setEnd(cal.getTime());
             schedule.setDoctor(doctor);
+
+            List<Schedule> schedulesForDoctor = findByDoctor(doctor);
+
+            hoursConflict(schedulesForDoctor, schedule);
+
             scheduleRepository.save(schedule);
         }
     }
@@ -104,7 +114,7 @@ public class ScheduleService {
 
         if (scheduleIsFree(schedule, patient)){
             setOrDeletePatient(patient, schedule);
-        } else throw new ScheduleNotAvailableException();
+        }
     }
 
     public void deletePatientFromSchedule(Long scheduleId, Long patientId){
@@ -128,13 +138,13 @@ public class ScheduleService {
         }
 
         return !onSameDay(schedulesByPatientAndByDoctor, schedule) &&
-                !hoursConflict(schedulesByPatientAndByDoctor, schedule);
+                !hoursConflict(schedulesByPatient, schedule);
     }
 
     public boolean onSameDay(List<Schedule> schedules, Schedule schedule){
         for (Schedule sc : schedules){
             if(sameDay(sc.getStart(), schedule.getStart())){
-                return true;
+                throw new ScheduleNotAvailableException();
             }
         }
         return false;
@@ -145,6 +155,7 @@ public class ScheduleService {
         Calendar cal2 = Calendar.getInstance();
         cal1.setTime(date1);
         cal2.setTime(date2);
+
         return cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
                 cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR);
     }
@@ -152,7 +163,7 @@ public class ScheduleService {
     public boolean hoursConflict(List<Schedule> schedules, Schedule schedule){
         for (Schedule sc : schedules){
             if(hoursIntermix(sc.getStart(), sc.getEnd(), schedule.getStart(), schedule.getEnd())){
-                return true;
+                throw new HoursIntermixException();
             }
         }
         return false;
@@ -162,6 +173,7 @@ public class ScheduleService {
         return (firstStart.after(secondStart) && firstStart.before(secondEnd)) ||
                 (firstEnd.after(secondStart) && firstEnd.before(secondEnd)) ||
                 (secondStart.after(firstStart) && secondStart.before(firstEnd)) ||
-                (secondEnd.after(firstStart) && secondEnd.before(firstEnd));
+                (secondEnd.after(firstStart) && secondEnd.before(firstEnd)) ||
+                (firstStart.equals(secondStart) && firstEnd.equals(secondEnd));
     }
 }

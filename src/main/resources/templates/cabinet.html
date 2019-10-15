@@ -14,12 +14,15 @@
 <main>
     <aside th:replace="layouts :: left-side"></aside>
     <div class="center">
-
         <div th:replace="layouts :: user-info-change-forms"></div>
 
         <div style="margin-top:20px;" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')">
             <h3 class="small-centered-headline">Записи</h3>
             <table th:replace="layouts :: timetable"></table>
+        </div>
+
+        <div style="margin-top:50px;">
+            <div th:replace="layouts :: timetable-create-form"></div>
         </div>
     </div>
     <aside th:replace="layouts :: right-side"></aside>

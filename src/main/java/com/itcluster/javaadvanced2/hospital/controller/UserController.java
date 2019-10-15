@@ -72,15 +72,6 @@ public class UserController {
         return  null;
     }
 
-    @GetMapping("/cabinet")
-    public String userCabinet(@ModelAttribute("user") User user,Model model) {
-        List<Schedule> schedules = scheduleService.findActiveByUser(user);
-        model.addAttribute("schedules",schedules);
-
-        doctorService.addSearchOptions(model);
-        return "cabinet";
-    }
-
     @PostMapping("/save")
     public String saveUser(User user)
     {

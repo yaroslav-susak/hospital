@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
-public class Schedule {
+public class Schedule implements Comparable<Schedule> {
     @Id()
     @GeneratedValue
     private Long id;
@@ -27,4 +27,9 @@ public class Schedule {
     private Date start;
 
     private Date end;
+
+    @Override
+    public int compareTo(Schedule o){
+        return this.getStart().compareTo(o.getStart());
+    }
 }

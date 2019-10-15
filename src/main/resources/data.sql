@@ -121,7 +121,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 9,
 '2019-09-17 15:58:37.612000000',
-'roman.burak@gmai.com',
+'roman.burak@gmail.com',
 'Роман',
 'Бурак',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -135,7 +135,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 10,
 '2019-09-17 15:58:37.612000000',
-'marjana.brazda@gmai.com',
+'marjana.brazda@gmail.com',
 'Маряна',
 'Бразда',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -149,7 +149,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 11,
 '2019-09-17 15:58:37.612000000',
-'ivan.dutchak@gmai.com',
+'ivan.dutchak@gmail.com',
 'Іван',
 'Дутчак',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -165,7 +165,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 12,
 '2019-09-17 15:58:37.612000000',
-'oxana.pastuh@gmai.com',
+'oxana.pastuh@gmail.com',
 'Оксана',
 'Пастух',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -190,7 +190,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 13,
 '2019-09-17 15:58:37.612000000',
-'iryna.parandiy@gmai.com',
+'iryna.parandiy@gmail.com',
 'Ірина',
 'Парадій',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -215,7 +215,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 14,
 '2019-09-17 15:58:37.612000000',
-'lida.lupulak@gmai.com',
+'lida.lupulak@gmail.com',
 'Ліда',
 'Лупуляк',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -242,7 +242,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 15,
 '2019-09-17 15:58:37.612000000',
-'oleg.kurtash@gmai.com',
+'oleg.kurtash@gmail.com',
 'Олег',
 'Курташ',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -267,7 +267,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 16,
 '2019-09-17 15:58:37.612000000',
-'volodymyr.valchyshin@gmai.com',
+'volodymyr.valchyshin@gmail.com',
 'Володимир',
 'Вальчишин',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -292,7 +292,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 17,
 '2019-09-17 15:58:37.612000000',
-'yaroslav.demkiv@gmai.com',
+'yaroslav.demkiv@gmail.com',
 'Ярослав',
 'Демків',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -317,7 +317,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 18,
 '2019-09-17 15:58:37.612000000',
-'roman.ivanochko@gmai.com',
+'roman.ivanochko@gmail.com',
 'Роман',
 'Іваночко',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -344,7 +344,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 19,
 '2019-09-17 15:58:37.612000000',
-'yaroslav.kryshtafovich@gmai.com',
+'yaroslav.kryshtafovich@gmail.com',
 'Ярослав',
 'Криштафович',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -369,7 +369,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 20,
 '2019-09-17 15:58:37.612000000',
-'taras.velychko@gmai.com',
+'taras.velychko@gmail.com',
 'Тарас',
 'Величко',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -394,7 +394,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 21,
 '2019-09-17 15:58:37.612000000',
-'svitlana.galanjiy@gmai.com',
+'svitlana.galanjiy@gmail.com',
 'Світлана',
 'Галанджій',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -419,7 +419,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 22,
 '2019-09-17 15:58:37.612000000',
-'ludmyla.delva@gmai.com',
+'ludmyla.delva@gmail.com',
 'Людмила',
 'Дельва',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -446,7 +446,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 23,
 '2019-09-17 15:58:37.612000000',
-'alla.ivanenko@gmai.com',
+'alla.ivanenko@gmail.com',
 'Алла',
 'Іваненко',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -471,7 +471,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 24,
 '2019-09-17 15:58:37.612000000',
-'ludmyla.melnychuk@gmai.com',
+'ludmyla.melnychuk@gmail.com',
 'Людмила',
 'Мельничук',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -496,7 +496,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 25,
 '2019-09-17 15:58:37.612000000',
-'yurij.tomashchuk@gmai.com',
+'yurij.tomashchuk@gmail.com',
 'Юрій',
 'Томащук',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -523,7 +523,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 26,
 '2019-09-17 15:58:37.612000000',
-'natalija.chorna@gmai.com',
+'natalija.chorna@gmail.com',
 'Наталія',
 'Чорна',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -548,7 +548,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 27,
 '2019-09-17 15:58:37.612000000',
-'nina.alekseeva@gmai.com',
+'nina.alekseeva@gmail.com',
 'Ніна',
 'Алексеєва',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
@@ -573,7 +573,7 @@ INSERT INTO user (id, date_of_registration, email, first_name, last_name, passwo
 (
 28,
 '2019-09-17 15:58:37.612000000',
-'lilia.zelinska@gmai.com',
+'lilia.zelinska@gmail.com',
 'Лілія',
 'Зелінська',
 '$2a$10$TEKN31igInElgXgeRaO3neHEdtzvc40ZLU2JRd/DLeKf29btVaEnC',
