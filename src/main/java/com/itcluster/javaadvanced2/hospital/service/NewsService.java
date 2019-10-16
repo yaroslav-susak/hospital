@@ -48,4 +48,8 @@ public class NewsService {
         model.addAttribute("comments", comments);
         model.addAttribute("commentDTO", new CommentDTO());
     }
+
+    public void save(News news){
+        newsRepository.save(news);
+    }
 }

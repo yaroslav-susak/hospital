@@ -183,4 +183,33 @@ public class UserController {
         commentService.save(comment);
         return "redirect:/news/" + news.getId();
     }
+
+    @DeleteMapping("/delete-comment")
+    public String deleteReview(@ModelAttribute CommentDTO commentDTO,
+                               @ModelAttribute User user,
+                               @RequestParam(name="commentId") Long id){
+        Comment comment = commentService.findById(id);
+
+        if (comment.getUser().equals(user) ||
+                user.getRoles().contains(roleService.getByName("ADMIN"))){
+            commentService.delete(comment);
+        }
+
+        return "redirect:/news/" + comment.getNews().getId();
+    }
+
+    @PostMapping("/edit-comment")
+    public String editReview(@ModelAttribute CommentDTO commentDTO,
+                             @ModelAttribute User user,
+                             @RequestParam(name="commentId") Long id){
+        Comment comment = commentService.findById(id);
+
+        if (comment.getUser().equals(user)){
+            comment.setText(commentDTO.getText());
+            comment.setDate(new Date());
+            commentService.save(comment);
+        }
+
+        return "redirect:/news/" + comment.getNews().getId();
+    }
 }

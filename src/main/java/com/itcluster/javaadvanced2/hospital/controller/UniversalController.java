@@ -135,6 +135,7 @@ public class UniversalController {
     public String getAllArticles(Model model){
         String type = "ARTICLE";
         List<News> allArticles = newsService.findByType(type);
+        Collections.sort(allArticles);
         model.addAttribute("news", allArticles);
         model.addAttribute("type", type);
         doctorService.addSearchOptions(model);
@@ -145,6 +146,7 @@ public class UniversalController {
     public String getAllNews(Model model){
         String type = "NEWS";
         List<News> allNews = newsService.findByType(type);
+        Collections.sort(allNews);
         model.addAttribute("news", allNews);
         model.addAttribute("type", type);
         doctorService.addSearchOptions(model);
@@ -194,6 +196,7 @@ public class UniversalController {
                               @ModelAttribute User user,
                               Model model){
         newsService.formNewsOrArticle(id, user, model);
+        model.addAttribute("admin", roleService.getByName("ADMIN"));
         doctorService.addSearchOptions(model);
         return "news";
     }
@@ -203,6 +206,7 @@ public class UniversalController {
                               @ModelAttribute User user,
                               Model model){
         newsService.formNewsOrArticle(id, user, model);
+        model.addAttribute("admin", roleService.getByName("ADMIN"));
         doctorService.addSearchOptions(model);
         return "news";
     }

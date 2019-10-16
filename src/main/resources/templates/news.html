@@ -37,6 +37,17 @@
                 </div>
                 <div class="review__date" th:text="${#dates.format(comment.date, 'dd.MM.yyyy') + ', ' + #dates.format(comment.date, 'HH:mm')}"></div>
                 <div class="review__text" th:text="${comment.text}"></div>
+
+                <div>
+                    <form class="edit-review-form" style="display: none;" method="post" th:object="${commentDTO}" th:action="@{${'/user/edit-comment?commentId=' + comment.id}}">
+                        <textarea class="large-textarea" name="text" rows="6"></textarea>
+                        <button type="submit" class="link-button">Надіслати</button>
+                    </form>
+                    <form class="delete-review-button" style="display:inline" th:object="${commentDTO}" th:if="${comment.user == user or user.roles.contains(admin)}" th:action="@{${'/user/delete-comment?commentId=' + comment.id}}" th:method="delete">
+                        <button class="link-button" type="submit">Видалити</button>
+                    </form>
+                    <button th:if="${comment.user == user}" class="edit-review-button" th:onclick="'editReview(\'' + ${comment.id} + '\');'">Редагувати</button>
+                </div>
             </div>
         </div>
 

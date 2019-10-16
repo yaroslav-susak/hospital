@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Data
 @NoArgsConstructor
-public class News {
+public class News implements Comparable<News> {
 
     @Id()
     @GeneratedValue
@@ -27,4 +27,9 @@ public class News {
     private String text;
 
     private String type;
+
+    @Override
+    public int compareTo(News o){
+        return o.getDate().compareTo(this.getDate());
+    }
 }
