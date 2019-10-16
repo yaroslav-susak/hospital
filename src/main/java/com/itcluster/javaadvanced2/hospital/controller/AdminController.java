@@ -73,6 +73,7 @@ public class AdminController {
         doctorService.addSearchOptions(model);
         List<Department> departments = departmentService.findAll();
         model.addAttribute("departments",departments);
+        model.addAttribute("department", new Department());
         return "admincontrol";
     }
 

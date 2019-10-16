@@ -125,7 +125,7 @@
 </table>
 
 <!--<div th:fragment="add-department-form">-->
-    <form th:fragment="add-department-form" method="post"  th:action="/save-changed-department" th:object="${department}">
+    <form th:fragment="add-department-form" method="post"  action="/admin/save-changed-department" th:object="${department}">
         <b>Назва відділу</b>
         <input type="text" placeholder="Відділ" name="name">
         <b>Опис відділу</b>
