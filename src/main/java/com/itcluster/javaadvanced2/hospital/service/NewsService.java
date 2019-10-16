@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,6 +29,37 @@ public class NewsService {
         return newsRepository.findByAuthor(author);
     }
 
+    public List<News> findAllNewsByAuthor(User author){
+        List<News> news = new ArrayList<>();
+
+        for (News newsItem : findByAuthor(author)){
+            if(newsItem.getType().equals("NEWS")){
+                news.add(newsItem);
+            }
+        }
+
+        return news;
+    }
+
+    public List<News> findArticlesByAuthor(User author){
+        return filterAuthorNewsByType(author, "ARTICLE");
+    }
+
+    public List<News> findNewsByAuthor(User author){
+        return filterAuthorNewsByType(author, "NEWS");
+    }
+
+    public List<News> filterAuthorNewsByType(User author, String type){
+        List<News> news = new ArrayList<>();
+
+        for (News newsItem : findByAuthor(author)){
+            if(newsItem.getType().equals(type)){
+                news.add(newsItem);
+            }
+        }
+
+        return news;
+    }
     public List<News> findByType(String type){
         return newsRepository.findByType(type);
     }

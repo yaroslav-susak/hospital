@@ -237,6 +237,11 @@ public class UniversalController {
             schedules = scheduleService.findActiveByUser(user);
         }
 
+        if(user.getRoles().contains(roleService.getByName("AUTHOR"))){
+            model.addAttribute("news", newsService.findNewsByAuthor(user));
+            model.addAttribute("articles", newsService.findArticlesByAuthor(user));
+        }
+
         if (user.getRoles().contains(roleService.getByName("DOCTOR"))){
             Doctor doctor = null;
 
