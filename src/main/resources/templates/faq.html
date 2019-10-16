@@ -17,9 +17,8 @@
         <h1 style="text-align: center; margin-top:0;">FAQ</h1>
         <div th:each="question: ${questions}">
             <div style="margin-top: 30px;">
-                <b th:text="${question.getQuestion()}"></b>
-            <br/>
-                <span th:text="${question.getAnswer()}"></span>
+                <b class="question" th:text="${question.getQuestion()}"></b>
+                <span class="answer" th:text="${question.getAnswer()}"></span>
             </div>
         </div>
         </ul>

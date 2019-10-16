@@ -1,5 +1,6 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
+import com.itcluster.javaadvanced2.hospital.dto.CommentDTO;
 import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
 import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
@@ -52,6 +53,12 @@ public class UserController {
     @Qualifier("basePath")
     private String basePath;
 
+    @Autowired
+    private NewsService newsService;
+
+    @Autowired
+    private CommentService commentService;
+
     @ModelAttribute("user")
     public User activeUser(Authentication authentication) {
         if (authentication != null) {
@@ -63,15 +70,6 @@ public class UserController {
             }
         }
         return  null;
-    }
-
-    @GetMapping("/cabinet")
-    public String userCabinet(@ModelAttribute("user") User user,Model model) {
-        List<Schedule> schedules = scheduleService.findActiveByUser(user);
-        model.addAttribute("schedules",schedules);
-
-        doctorService.addSearchOptions(model);
-        return "cabinet";
     }
 
     @PostMapping("/save")
@@ -146,5 +144,43 @@ public class UserController {
         return "redirect:/doctor-info/" + doctor.getId();
     }
 
+    @DeleteMapping("/delete-review")
+    public String deleteReview(@ModelAttribute ReviewDTO reviewDTO,
+                               @ModelAttribute User user,
+                               @RequestParam(name="reviewId") Long id){
+        Review review = reviewService.findById(id);
+        if (review.getPatient().equals(user) ||
+            user.getRoles().contains(roleService.getByName("ADMIN"))){
+            reviewService.delete(review);
+        }
+        return "redirect:/doctor-info/" + reviewDTO.getDoctorId();
+    }
 
+    @PostMapping("/edit-review")
+    public String editReview(@ModelAttribute ReviewDTO reviewDTO,
+                             @ModelAttribute User user,
+                             @RequestParam(name="reviewId") Long id){
+        Review review = reviewService.findById(id);
+        if (review.getPatient().equals(user)){
+            review.setText(reviewDTO.getText());
+            review.setDate(new Date());
+            reviewService.save(review);
+        }
+        return "redirect:/doctor-info/" + reviewDTO.getDoctorId();
+    }
+
+    @PostMapping("/leave-comment")
+    public String leaveComment(@ModelAttribute CommentDTO commentDTO,
+                               @ModelAttribute User user){
+        Comment comment = new Comment();
+        News news = newsService.findById(commentDTO.getNewsId());
+
+        comment.setNews(news);
+        comment.setText(commentDTO.getText());
+        comment.setUser(user);
+        comment.setDate(new Date());
+
+        commentService.save(comment);
+        return "redirect:/news/" + news.getId();
+    }
 }

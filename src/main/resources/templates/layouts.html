@@ -6,13 +6,14 @@
     <img id = "logo" src="/images/logo.png">
     <nav>
         <a href="/">Головна</a>
+        <a href="/news">Новини</a>
         <a href="/search">Персонал</a>
-        <a th:href="@{/faq}">FAQ</a>
+        <a href="/articles">Статті</a>
+        <a href="/faq">FAQ</a>
     </nav>
 </header>
 
 <aside class="left-side" th:fragment="left-side">
-    <a class="side-link" href="/">Історія лікарні</a>
     <a class="side-link" href="/departments">Відділення лікарні</a>
     <a class="side-link" href="/diseases">Показання до госпіталізації</a>
 
@@ -40,10 +41,9 @@
 
 <aside class="right-side" th:fragment="right-side">
     <div class="login-link" sec:authorize="isAnonymous()"><a th:href="@{/login}">Ввійти</a> <br/> <a th:href="@{/registration}">Зареєструватись</a></div>
-    <div class="login-link" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')"><a th:href="@{/user/cabinet}">Кабінет</a></div>
+    <div class="login-link" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR','AUTHOR')"><a th:href="@{/cabinet}">Кабінет</a></div>
     <div class="login-link" sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin/find-user}">Адміністрування</a></div>
     <div class="login-link" sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Вийти</a></div>
-<!--    <div class="login-link" sec:authorize="hasAuthority('BANNED')"><b>Ваш аккунт забанений</b></div>-->
 </aside>
 
 <footer th:fragment="footer"></footer>
@@ -58,7 +58,7 @@
     <a th:href="@{${'/search?dep=' + department.name}}" th:text="${department.getName()}"></a>
 </div>
 
-<table th:fragment="timetable" class="timetable">
+<table sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')" th:fragment="timetable" class="timetable">
     <tr>
         <th sec:authorize="hasAuthority('PATIENT')">Лікар</th>
         <th sec:authorize="hasAuthority('DOCTOR')">Пацієнт</th>
@@ -88,7 +88,7 @@
         <td th:text="${#dates.format(schedule.end, 'HH:mm')}"></td>
 
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == null">
-            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>
+            <a th:href="@{${'/doctor-info/' + schedule.doctor.id + '/reserve-time?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Записатись</a>
         </td>
 
         <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} == null">
@@ -98,11 +98,11 @@
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} != null and ${schedule.patient} != ${user}">Зайнято</td>
 
         <td sec:authorize="hasAuthority('DOCTOR')" th:if="${schedule.patient} != null">
-            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>
+            <a th:href="@{${'/doctor-info/' + schedule.doctor.id + '/free-schedule?scheduleId=' + schedule.id + '&patientId=' + schedule.patient.id}}">Відмінити</a>
         </td>
 
-        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient} == ${user}">
-            <a th:href="@{${'/doctor/' + schedule.doctor.id + '/timetable/schedule/delete?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
+        <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient == user}">
+            <a th:href="@{${'/doctor-info/' + schedule.doctor.id + '/free-schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
         </td>
 
         <td sec:authorize="hasAuthority('AUTHOR') || hasAuthority('ADMIN')">Недоступно</td>
@@ -170,6 +170,48 @@
         <input type="file" name="file" id="selectedFile" style="display: none;" onchange="form.submit()"/>
         <input type="button" value="Завантажити фото"
                onclick="document.getElementById('selectedFile').click();"/>
+    </form>
+</div>
+
+<div sec:authorize="hasAuthority('DOCTOR')" th:fragment="timetable-create-form" th:if="${doctor.user} == ${user}">
+    <h3 class="small-centered-headline">Додати розклад</h3>
+    <form autocomplete="off" action="#" th:action="@{${'/doctor/' + doctor.id + '/timetable/create'}}"
+          th:object="${scheduleDTO}" method="post" role="form">
+        <div class="form-element">
+            <p>
+                На дату:
+            </p>
+            <input placeholder="01.01.2019" th:field="*{dateString}">
+        </div>
+
+        <div class="form-element">
+            <p>
+                Година початку роботи:
+            </p>
+
+            <select th:field="*{startingHour}">
+                <option th:each="hour: ${hoursToStart}" th:value="${hour}" th:text="${hour + ':00'}"></option>
+            </select>
+        </div>
+
+        <div class="form-element">
+            <p>
+                Кількість годин роботи:
+            </p>
+
+            <select th:field="*{lengthOfTheDay}">
+                <option th:each="hour: ${durationsHours}" th:value="${hour}" th:text="${hour + ' годин'}"></option>
+            </select>
+        </div>
+
+        <div class="form-element">
+            <p>
+                Довжина прийому (хв):
+            </p>
+            <input placeholder="15" th:field="*{duration}">
+        </div>
+
+        <button style="display: block;" type="submit">Створити</button>
     </form>
 </div>
 

@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Data
-public class Review {
+public class Review implements Comparable<Review>{
     @Id()
     @GeneratedValue
     private Long id;
@@ -24,4 +24,9 @@ public class Review {
 
     @Column(columnDefinition = "TEXT")
     private String text;
+
+    @Override
+    public int compareTo(Review o) {
+        return o.getDate().compareTo(this.getDate());
+    }
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${news.name}"></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/scripts.js"></script>
+</head>
+<body>
+<header th:replace="layouts :: header"></header>
+<main>
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
+    <div class="center">
+        <h3 style="margin-top: 0; text-indent: 30px;" th:text="${news.name}"></h3>
+        <div style="margin-left: 30px; margin-top: 30px;" class="review__header">
+            <div class="review__avatar" th:if="${news.author.photo == null}"><img src="/images/user_icon.png"></div>
+            <div class="review__avatar"  th:unless="${news.author.photo == null}" ><img th:src="@{${'/resources/uploads/' + news.author.photo}}"></div>
+            <div class="review__author" th:text="${news.author.getFirstName() + ' ' + news.author.getLastName()}"></div>
+        </div>
+        <div style="margin-left: 30px;">
+            <span th:text="${#dates.format(news.date, 'dd.MM.yyyy') + ', ' + #dates.format(news.date, 'HH:mm')}"></span>
+        </div>
+        <div style="margin-top: 30px;">
+            <div class="news-text" th:each="part : ${newsText}" th:text="${part}"></div>
+        </div>
+        <div style="margin-top: 20px;">
+            <h3 style="margin:0; font-size: 16pt;">Коментарі</h3>
+            <div th:id="${comment.id}" class="review" th:each="comment: ${comments}">
+                <div class="review__header">
+                    <div class="review__avatar" th:if="${comment.user.photo == null}"><img src="/images/user_icon.png"></div>
+                    <div class="review__avatar"  th:unless="${comment.user.photo == null}" ><img th:src="@{${'/resources/uploads/' + comment.user.photo}}"></div>
+                    <div class="review__author" th:text="${comment.user.getFirstName() + ' ' + comment.user.getLastName()}"></div>
+                </div>
+                <div class="review__date" th:text="${#dates.format(comment.date, 'dd.MM.yyyy') + ', ' + #dates.format(comment.date, 'HH:mm')}"></div>
+                <div class="review__text" th:text="${comment.text}"></div>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px;" sec:authorize="isAuthenticated()">
+            <h3 style="margin:0; font-size: 16pt;">Додати коментар</h3>
+            <form method="post" th:object="${commentDTO}" th:action="@{/user/leave-comment}">
+                <input type="hidden" name="newsId" th:value="${news.id}">
+                <textarea class="large-textarea" name="text" rows="6"></textarea>
+                <button type="submit">Надіслати</button>
+            </form>
+        </div>
+    </div>
+
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts :: footer"></footer>
+</body>
+</html>

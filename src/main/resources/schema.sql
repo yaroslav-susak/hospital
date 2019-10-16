@@ -19,8 +19,8 @@ CREATE TABLE user
 CREATE TABLE department
 (
     id INT AUTO_INCREMENT,
-    description TEXT NOT NULL,
     name VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
     PRIMARY KEY (id)
 ) ENGINE =INNODB CHAR SET =utf8;
 
@@ -69,8 +69,8 @@ CREATE TABLE schedule
     id INT AUTO_INCREMENT,
     doctor_id INT NOT NULL,
     patient_id INT,
-    start DATETIME(0) NOT NULL,
-    end DATETIME(0) NOT NULL,
+    start DATETIME(6) NOT NULL,
+    end DATETIME(6) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (doctor_id) REFERENCES doctor(id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (patient_id) REFERENCES user(id) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -79,7 +79,7 @@ CREATE TABLE schedule
 CREATE TABLE disease
 (
     id INT AUTO_INCREMENT,
-    name VARCHAR(200) NOT NULL,
+    name VARCHAR(1000) NOT NULL,
     department_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (department_id) REFERENCES department (id) ON DELETE RESTRICT ON UPDATE CASCADE
@@ -88,13 +88,37 @@ CREATE TABLE disease
 CREATE TABLE review
 (
     id INT AUTO_INCREMENT,
-    date DATETIME(0) NOT NULL,
+    date DATETIME(6) NOT NULL,
     patient_id INT NOT NULL,
     doctor_id INT NOT NULL,
     text TEXT NOT NULL ,
     PRIMARY KEY (id),
     FOREIGN KEY (patient_id) REFERENCES user (id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (doctor_id) REFERENCES doctor (id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=INNODB CHAR SET=utf8;
+
+CREATE TABLE news
+(
+    id INT AUTO_INCREMENT,
+    author_id INT NOT NULL,
+    date DATETIME(6) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    text TEXT NOT NULL,
+    type VARCHAR(25) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (author_id) REFERENCES user (id) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=INNODB CHAR SET=utf8;
+
+CREATE TABLE comment
+(
+    id INT AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    date DATETIME(6) NOT NULL,
+    text TEXT NOT NULL,
+    news_id INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (news_id) REFERENCES news (id) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=INNODB CHAR SET=utf8;
 
 CREATE TABLE hibernate_sequence

@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class ScheduleNotAvailableException extends RuntimeException {
     public ScheduleNotAvailableException() {
-        super("У вас є один запис на цю дату до цього лікаря або у вас є запис на цю годину до іншого лікаря. Перевірте свої записи");
+        super("У вас вже є один запис на цю дату до цього лікаря");
     }
 }
