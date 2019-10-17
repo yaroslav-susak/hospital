@@ -40,12 +40,14 @@
             <h3 style="text-align: center;">Мої дані</h3>
             <div th:replace="layouts :: user-info-change-forms"></div>
         </div>
-
+        <h3>Відділи</h3>
         <table th:replace="layouts::departments-table"></table>
 
         <div th:replace="layouts::add-department-form"></div>
-<!--        <form th:replace="layouts::add-department-form"></form>-->
+        <h3>Лікарі</h3>
+        <table th:replace="layouts::doctors-table"></table>
 
+<!--        <a href="/admin/create-doctor">Додати лікаря</a>-->
     </div>
 
     <aside class="right-side" th:replace="layouts :: right-side"></aside>

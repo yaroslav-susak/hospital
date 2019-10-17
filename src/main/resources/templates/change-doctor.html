@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <title>Зміна лікаря</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+</head>
+<body>
+<header th:replace="layouts::header"></header>
+<main>
+    <aside th:replace="layouts :: left-side"></aside>
+    <div class="center">
+
+        <form class="resest-password-form" action="/admin/save-changed-doctor" method="post" th:object="${doctor}">
+
+            <input type="hidden" th:value="*{id}" name="id"/>
+            <input type="hidden" th:value="*{photoName}" name="photoName"/>
+            <input type="hidden" th:value="*{department.getId()}" name="department_id"/>
+            <input type="hidden" th:value="*{user.getId()}" name="user_id"/>
+
+            <div>
+                <b>Ім'я</b>
+                <input th:value="*{name}" name="name" >
+            </div>
+            <div>
+                <b>Прізвище</b>
+                <input th:value="*{surname}" name="surname">
+            </div>
+            <div>
+                <b>По-батькові</b>
+                <input th:value="*{middleName}" name="middleName">
+            </div>
+            <div>
+                <b>Рівень освіти</b>
+                <input th:value="*{qualificationLevel}" name="qualificationLevel">
+            </div>
+
+            <div>
+                <b>Спеціалізація</b>
+                <input th:value="*{specialization}" name="specialization">
+            </div>
+            <div>
+                <b>Department ID</b>
+                <select th:field="*{department.id}">
+                    <option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.name}"></option>
+                </select>
+            </div>
+            <div>
+                <b>User ID</b>
+                <input th:field="*{user.id}" th:value="*{user.id}" name="userId"/>
+            </div>
+
+            <button type="submit">Підтвердити</button>
+        </form>
+    </div>
+    <aside th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts::footer"></footer>
+
+
+</body>
+</html>

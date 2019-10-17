@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <title>Зміна лікаря</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
+</head>
+<body>
+<header th:replace="layouts::header"></header>
+<main>
+    <aside th:replace="layouts :: left-side"></aside>
+    <div class="center">
+
+        <form method="post"  action="/admin/save-new-doctor-user" th:object="${dto}">
+            <b>Ім'я</b>
+            <input type="text" placeholder="Ім'я" name="name">
+            <b>Прізвище</b>
+            <input type="text" placeholder="Прізвище" name="surname">
+            <b>По-батькові</b>
+            <input type="text" placeholder="По-батькові" name="middleName">
+            <b>Освіта</b>
+            <input type="text" placeholder="Освіта" name="qualificationLevel">
+            <b>Спеціалізація</b>
+            <input type="text" placeholder="Спеціалізація" name="specialization">
+            <b>Пошта</b>
+            <input type="text" placeholder="Пошта" name="email">
+<!--            <b>Відділ</b>-->
+<!--            <select th:field="*{dto.departmentId}">-->
+<!--                <option th:each="d : ${departments}" th:value="${d.id}" th:text="${d.name}"></option>-->
+<!--            </select>-->
+
+            <input type="hidden" value="5" name="departmentId"/>
+            <input type="hidden" value="11111" name="password"/>
+            <input type="hidden" value=" " name="photo"/>
+
+            <button type="submit">Добавити лікаря</button>
+        </form>
+    </div>
+    <aside th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts::footer"></footer>
+
+
+</body>
+</html>

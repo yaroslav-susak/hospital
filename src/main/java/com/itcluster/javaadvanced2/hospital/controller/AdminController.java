@@ -1,9 +1,11 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.RoleToChangeDTO;
+import com.itcluster.javaadvanced2.hospital.dto.UserDoctorDTO;
 import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
 import com.itcluster.javaadvanced2.hospital.model.Department;
 
+import com.itcluster.javaadvanced2.hospital.model.Doctor;
 import com.itcluster.javaadvanced2.hospital.model.Role;
 import com.itcluster.javaadvanced2.hospital.model.User;
 import com.itcluster.javaadvanced2.hospital.service.*;
@@ -56,6 +58,7 @@ public class AdminController {
         return "change-department";
     }
 
+
     @PostMapping("/save-changed-department")
     public String saveChangedDepartment(Department department){
         departmentService.save(department);
@@ -68,12 +71,71 @@ public class AdminController {
         return "redirect:/admin/find-user";
     }
 
+    @GetMapping("create-doctor")
+    public String createDoctor(Model model){
+
+        model.addAttribute("dto",new UserDoctorDTO());
+        model.addAttribute("departments",departmentService.findAll());
+        return "create-doctor";
+    }
+
+    @GetMapping("/change-doctor")
+    public String changeDoctor(Model model,@RequestParam(name="id") Long id){
+        Doctor doctor = doctorService.findById(id);
+        model.addAttribute("doctor",doctor);
+        model.addAttribute("departments", departmentService.findAll());
+        return "change-doctor";
+    }
+
+    @PostMapping("/save-changed-doctor")
+    public String saveChangedDoctor(Doctor doctor) {
+        doctorService.save(doctor);
+        return "redirect:/admin/find-user";
+    }
+
+    @PostMapping("/save-new-doctor-user")
+    public String saveNewDoctor(UserDoctorDTO dto){
+        User user = new User();
+        user.setId(new Long(userService.getLastId()+1));
+        user.setFirstName(dto.getName());
+        user.setLastName(dto.getSurname());
+        user.setPassword(dto.getPassword());
+        user.setEmail(dto.getEmail());
+        user.setPhoto(dto.getPhoto());
+
+        Doctor doctor = new Doctor();
+        doctor.setName(dto.getName());
+        doctor.setSurname(dto.getSurname());
+        doctor.setMiddleName(dto.getMiddleName());
+        doctor.setPhotoName(dto.getPhoto());
+        doctor.setQualificationLevel(dto.getQualification());
+        doctor.setSpecialization(dto.getSpecialization());
+
+        Department department = new Department();
+        department.setId((long)dto.getDepartmentId());
+        doctor.setDepartment(department);
+
+        User user2 = userService.createUpdate(user);
+        doctor.setUser(user2);
+
+        doctorService.save(doctor);
+
+        return "redirect:/admin/find-user";
+    }
+
     @GetMapping("/find-user")
     public String findUser(Model model){
         doctorService.addSearchOptions(model);
         List<Department> departments = departmentService.findAll();
+
+        List<Doctor> doctors = doctorService.findAll();
+
         model.addAttribute("departments",departments);
         model.addAttribute("department", new Department());
+
+
+        model.addAttribute("doctors",doctors);
+        model.addAttribute("doctor", new Doctor());
         return "admincontrol";
     }
 

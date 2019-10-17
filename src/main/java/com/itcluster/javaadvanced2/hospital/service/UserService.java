@@ -25,6 +25,11 @@ public class UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    public int getLastId(){
+
+        return userRepository.findAll().size();
+    }
+
     public User createUpdate(User user) {
         User toSave = user.getId() == null ? createPatientUser(user) : updateUser(user);
         return userRepository.save(toSave);

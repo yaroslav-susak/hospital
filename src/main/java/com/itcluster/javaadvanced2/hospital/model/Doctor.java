@@ -13,7 +13,7 @@ public class Doctor {
     @GeneratedValue
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    @JoinColumn(name="department_id", nullable = false)
+    @JoinColumn(name="department_id")
     private Department department;
     private String name;
     private String middleName;

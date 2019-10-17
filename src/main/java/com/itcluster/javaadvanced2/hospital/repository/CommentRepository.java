@@ -3,7 +3,6 @@ package com.itcluster.javaadvanced2.hospital.repository;
 import com.itcluster.javaadvanced2.hospital.model.Comment;
 import com.itcluster.javaadvanced2.hospital.model.News;
 import com.itcluster.javaadvanced2.hospital.model.User;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

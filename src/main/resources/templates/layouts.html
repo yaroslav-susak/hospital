@@ -109,6 +109,31 @@
     </tr>
 </table>
 
+
+
+<table th:fragment="doctors-table" class="departments-table table">
+    <tr>
+        <th style="text-align: center;">Id</th>
+        <th>Ім'я</th>
+        <th>Прізвище</th>
+        <th>Спеціалізація</th>
+        <th>Відділ</th>
+        <th style="text-align: center;">Керування</th>
+    </tr>
+    <tr th:each="doctor: ${doctors}">
+        <td align="center" th:text="${doctor.getId()}"></td>
+        <td th:text="${doctor.getName()}"></td>
+        <td th:text="${doctor.getSurname()}"></td>
+        <td th:text="${doctor.getSpecialization()}"></td>
+        <td th:text="${doctor.getDepartment().getName()}"></td>
+        <td align="center">
+            <a class="table-edit-btn" th:href="@{${'/admin/change-doctor?id='+doctor.getId()}}">Редагувати</a>
+        </td>
+    </tr>
+</table>
+
+
+
 <table th:fragment="departments-table" class="departments-table table">
     <tr>
         <th style="text-align: center;">Id</th>
