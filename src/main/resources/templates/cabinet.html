@@ -16,11 +16,6 @@
     <div class="center">
         <div th:replace="layouts :: user-info-change-forms"></div>
 
-        <div style="margin-top:20px;" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')">
-            <h3 class="small-centered-headline">Записи</h3>
-            <table th:replace="layouts :: timetable"></table>
-        </div>
-
         <div class="author-cabinet" sec:authorize="hasAuthority('AUTHOR')">
             <h3 class="small-centered-headline">Мої новини</h3>
             <table class="news-table">
@@ -48,6 +43,11 @@
             </table>
         <a style="display: block; margin: 20px 0 0 20px;" href="/author/create-news">Додати новину чи статтю</a>
     </div>
+
+        <div style="margin-top:50px;" sec:authorize="hasAnyAuthority('PATIENT','DOCTOR')">
+            <h3 class="small-centered-headline">Записи</h3>
+            <table th:replace="layouts :: timetable"></table>
+        </div>
 
         <div style="margin-top:50px;">
             <div th:replace="layouts :: timetable-create-form"></div>

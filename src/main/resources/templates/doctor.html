@@ -48,12 +48,12 @@
                     <div class="review__date" th:text="${#dates.format(review.date, 'dd.MM.yyyy') + ', ' + #dates.format(review.date, 'HH:mm')}"></div>
                     <div class="review__text" th:text="${review.text}"></div>
                     <div sec:authorize="hasAnyAuthority('PATIENT','ADMIN')">
-                    <form class="edit-review-form" style="display: none;" method="post" th:object="${reviewDTO}" th:action="@{${'/user/edit-review?reviewId=' + review.id}}">
+                    <form class="edit-review-form" style="display: none;" method="post" th:object="${reviewDTO}" th:action="@{${'/edit-review?reviewId=' + review.id}}">
                         <input type="hidden" name="doctorId" th:value="${doctor.getId()}">
-                        <textarea class="large-textarea" name="text" rows="6"></textarea>
+                        <textarea autofocus class="large-textarea" name="text" rows="6"></textarea>
                         <button type="submit" class="link-button">Надіслати</button>
                     </form>
-                    <form class="delete-review-button" style="display:inline" th:object="${reviewDTO}" th:if="${review.patient == user or user.roles.contains(admin)}" th:action="@{${'/user/delete-review?reviewId=' + review.id}}" th:method="delete">
+                    <form class="delete-review-button" style="display:inline" th:object="${reviewDTO}" th:if="${review.patient == user or user.roles.contains(admin)}" th:action="@{${'/delete-review?reviewId=' + review.id}}" th:method="delete">
                         <input type="hidden" name="doctorId" th:value="${doctor.id}">
                         <button class="link-button" type="submit">Видалити</button>
                     </form>
@@ -63,7 +63,7 @@
             </div>
             <div style="margin-top: 20px;" th:unless="${userAlreadyLeftReview}" sec:authorize="hasAuthority('PATIENT')">
                 <h3 style="margin:0; font-size: 16pt;">Додати відгук</h3>
-                <form method="post" th:object="${reviewDTO}" th:action="@{/user/leave-review}">
+                <form method="post" th:object="${reviewDTO}" th:action="@{/leave-review}">
                     <input type="hidden" name="doctorId" th:value="${doctor.getId()}">
                     <textarea class="large-textarea" name="text" rows="6"></textarea>
                     <button type="submit">Надіслати</button>

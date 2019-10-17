@@ -104,8 +104,6 @@
         <td sec:authorize="hasAuthority('PATIENT')" th:if="${schedule.patient == user}">
             <a th:href="@{${'/doctor-info/' + schedule.doctor.id + '/free-schedule?scheduleId=' + schedule.id + '&patientId=' + user.id}}">Відмінити</a>
         </td>
-
-        <td sec:authorize="hasAuthority('AUTHOR') || hasAuthority('ADMIN')">Недоступно</td>
     </tr>
 </table>
 
@@ -135,7 +133,7 @@
 
 
 <div th:fragment="user-info-change-forms">
-    <form action="/user/save" method="post" th:object="${user}" >
+    <form action="/save" method="post" th:object="${user}" >
 
         <div class="cabinet-body">
             <div class="cabinet-wrap">
@@ -160,7 +158,7 @@
                     <div class="cabinet-photo__avatar"  th:unless="${user.photo == null}" ><img width="200" th:src="@{${'/resources/uploads/' + user.photo}}" class="user-photo"></div>
 
                     <button type="submit">Підтвердити</button>
-                    <a class="change-password-btn" th:href="@{/user/passwordchange}">Змінити пароль</a>
+                    <a class="change-password-btn" th:href="@{/passwordchange}">Змінити пароль</a>
                 </div>
             </div>
         </div>
