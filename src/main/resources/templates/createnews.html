@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security5">
+<head>
+    <meta charset="UTF-8">
+    <title>Додати новину</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/js/scripts.js"></script>
+</head>
+<body>
+<header th:replace="layouts :: header"></header>
+<main>
+    <aside class="left-side" th:replace="layouts :: left-side"></aside>
+
+    <div class="center">
+        <form th:object="${news}" method="post" action="/author/add-news">
+            <div style="margin-bottom: 5px;">Тип:</div>
+
+            <div>
+            <select name="type" th:field="*{type}">
+                <option th:value="NEWS">Новина</option>
+                <option th:value="ARTICLE">Стаття</option>
+            </select>
+            </div>
+
+            <div style="margin-top: 20px;">Назва:</div>
+
+            <div>
+            <textarea class="large-textarea" style="height:50px;" th:field="*{name}" name="name"></textarea>
+            </div>
+
+            <div>Текст:</div>
+
+            <div>
+            <textarea class="large-textarea" style="height:400px;" th:field="*{text}" name="text"></textarea>
+            </div>
+
+            <button type="submit">Надіслати</button>
+        </form>
+    </div>
+
+    <aside class="right-side" th:replace="layouts :: right-side"></aside>
+</main>
+<footer th:replace="layouts :: footer"></footer>
+</body>
+</html>

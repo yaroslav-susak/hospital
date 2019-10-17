@@ -100,9 +100,9 @@ CREATE TABLE review
 CREATE TABLE news
 (
     id INT AUTO_INCREMENT,
-    author_id INT NOT NULL,
-    date DATETIME(6) NOT NULL,
-    name VARCHAR(100) NOT NULL,
+    author_id INT,
+    date DATETIME(6),
+    name VARCHAR(150) NOT NULL,
     text TEXT NOT NULL,
     type VARCHAR(25) NOT NULL,
     PRIMARY KEY (id),

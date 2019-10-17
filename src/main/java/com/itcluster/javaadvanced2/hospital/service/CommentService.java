@@ -51,4 +51,8 @@ public class CommentService {
             comments.addAll(0,userComments);
         }
     }
+
+    public void delete(Comment comment){
+        commentRepository.delete(comment);
+    }
 }

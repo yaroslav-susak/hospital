@@ -1,24 +1,38 @@
 package com.itcluster.javaadvanced2.hospital.controller;
 
 import com.itcluster.javaadvanced2.hospital.dto.CommentDTO;
+import com.itcluster.javaadvanced2.hospital.dto.PasswordCheckingDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ReviewDTO;
 import com.itcluster.javaadvanced2.hospital.dto.ScheduleGenerateDTO;
 import com.itcluster.javaadvanced2.hospital.exceptions.BannedUserException;
 import com.itcluster.javaadvanced2.hospital.model.*;
 import com.itcluster.javaadvanced2.hospital.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 @Controller
 public class UniversalController {
+
+    private static final String SUCCESSFULLY_CHANGED_DATA = "Дані успішно змінені";
+    private static final String ERROR_CHANGED_DATA = "Помилка при зміні даних";
+    private static final String ERROR_CHANGED_PASSWORD = "Помилка при зміні паролю";
+    private static final String ERROR_CHANGED_PASSWORD2 = "Помилка! Паролі не однакові";
+
+    @Autowired
+    @Qualifier("basePath")
+    private String basePath;
+
     @Autowired
     DoctorService doctorService;
 
@@ -135,6 +149,7 @@ public class UniversalController {
     public String getAllArticles(Model model){
         String type = "ARTICLE";
         List<News> allArticles = newsService.findByType(type);
+        Collections.sort(allArticles);
         model.addAttribute("news", allArticles);
         model.addAttribute("type", type);
         doctorService.addSearchOptions(model);
@@ -145,6 +160,7 @@ public class UniversalController {
     public String getAllNews(Model model){
         String type = "NEWS";
         List<News> allNews = newsService.findByType(type);
+        Collections.sort(allNews);
         model.addAttribute("news", allNews);
         model.addAttribute("type", type);
         doctorService.addSearchOptions(model);
@@ -194,6 +210,7 @@ public class UniversalController {
                               @ModelAttribute User user,
                               Model model){
         newsService.formNewsOrArticle(id, user, model);
+        model.addAttribute("admin", roleService.getByName("ADMIN"));
         doctorService.addSearchOptions(model);
         return "news";
     }
@@ -203,6 +220,7 @@ public class UniversalController {
                               @ModelAttribute User user,
                               Model model){
         newsService.formNewsOrArticle(id, user, model);
+        model.addAttribute("admin", roleService.getByName("ADMIN"));
         doctorService.addSearchOptions(model);
         return "news";
     }
@@ -233,6 +251,11 @@ public class UniversalController {
             schedules = scheduleService.findActiveByUser(user);
         }
 
+        if(user.getRoles().contains(roleService.getByName("AUTHOR"))){
+            model.addAttribute("news", newsService.findNewsByAuthor(user));
+            model.addAttribute("articles", newsService.findArticlesByAuthor(user));
+        }
+
         if (user.getRoles().contains(roleService.getByName("DOCTOR"))){
             Doctor doctor = null;
 
@@ -253,5 +276,145 @@ public class UniversalController {
 
         doctorService.addSearchOptions(model);
         return "cabinet";
+    }
+
+    @PostMapping("/leave-review")
+    public String leaveReview(@ModelAttribute ReviewDTO reviewDTO, @ModelAttribute User user){
+        Doctor doctor = doctorService.findById(reviewDTO.getDoctorId());
+
+        Review review = new Review();
+        review.setDoctor(doctor);
+        review.setPatient(user);
+        review.setDate(new Date());
+        review.setText(reviewDTO.getText());
+        reviewService.save(review);
+
+        return "redirect:/doctor-info/" + doctor.getId();
+    }
+
+    @DeleteMapping("/delete-review")
+    public String deleteReview(@ModelAttribute ReviewDTO reviewDTO,
+                               @ModelAttribute User user,
+                               @RequestParam(name="reviewId") Long id){
+        Review review = reviewService.findById(id);
+        if (review.getPatient().equals(user) ||
+                user.getRoles().contains(roleService.getByName("ADMIN"))){
+            reviewService.delete(review);
+        }
+        return "redirect:/doctor-info/" + reviewDTO.getDoctorId();
+    }
+
+    @PostMapping("/edit-review")
+    public String editReview(@ModelAttribute ReviewDTO reviewDTO,
+                             @ModelAttribute User user,
+                             @RequestParam(name="reviewId") Long id){
+        Review review = reviewService.findById(id);
+        if (review.getPatient().equals(user)){
+            review.setText(reviewDTO.getText());
+            review.setDate(new Date());
+            reviewService.save(review);
+        }
+        return "redirect:/doctor-info/" + reviewDTO.getDoctorId();
+    }
+
+    @PostMapping("/leave-comment")
+    public String leaveComment(@ModelAttribute CommentDTO commentDTO,
+                               @ModelAttribute User user){
+        Comment comment = new Comment();
+        News news = newsService.findById(commentDTO.getNewsId());
+
+        comment.setNews(news);
+        comment.setText(commentDTO.getText());
+        comment.setUser(user);
+        comment.setDate(new Date());
+
+        commentService.save(comment);
+        return "redirect:/news/" + news.getId();
+    }
+
+    @DeleteMapping("/delete-comment")
+    public String deleteReview(@ModelAttribute CommentDTO commentDTO,
+                               @ModelAttribute User user,
+                               @RequestParam(name="commentId") Long id){
+        Comment comment = commentService.findById(id);
+
+        if (comment.getUser().equals(user) ||
+                user.getRoles().contains(roleService.getByName("ADMIN"))){
+            commentService.delete(comment);
+        }
+
+        return "redirect:/news/" + comment.getNews().getId();
+    }
+
+    @PostMapping("/edit-comment")
+    public String editReview(@ModelAttribute CommentDTO commentDTO,
+                             @ModelAttribute User user,
+                             @RequestParam(name="commentId") Long id){
+        Comment comment = commentService.findById(id);
+
+        if (comment.getUser().equals(user)){
+            comment.setText(commentDTO.getText());
+            comment.setDate(new Date());
+            commentService.save(comment);
+        }
+
+        return "redirect:/news/" + comment.getNews().getId();
+    }
+
+    @GetMapping("/passwordchange")
+    public String changePassword(Model model)
+    {
+        model.addAttribute("dtoPass", new PasswordCheckingDTO());
+        doctorService.addSearchOptions(model);
+        return "passwordchange";
+    }
+
+    @PostMapping("/savePassword")
+    public String savePassword(@ModelAttribute("user") User user, PasswordCheckingDTO passwordCheckingDTO,
+                               BindingResult bindingResult,
+                               Model model)
+    {
+        BCryptPasswordEncoder coder = new BCryptPasswordEncoder();
+
+        if(!coder.matches(passwordCheckingDTO.getPasswordOld(),user.getPassword()))
+        {
+            bindingResult.rejectValue("passwordOld",ERROR_CHANGED_PASSWORD);
+            model.addAttribute("dtoPass", passwordCheckingDTO);
+            return "redirect:/cabinet";
+        }
+        if(!passwordCheckingDTO.getPasswordRawFir().equals(passwordCheckingDTO.getPasswordRawSec())){
+            bindingResult.rejectValue("passwordRawSec",ERROR_CHANGED_PASSWORD2);
+            model.addAttribute("dtoPass", passwordCheckingDTO);
+            return "redirect:/cabinet";
+        }else{
+            user.setPassword(coder.encode(passwordCheckingDTO.getPasswordRawFir()));
+            userService.createUpdate(user);
+        }
+        return "redirect:/cabinet";
+    }
+
+    @PostMapping("/uploadPhoto")
+    public String uploadPhoto(@RequestParam("file") MultipartFile file,
+                              @ModelAttribute("user") User user
+    ) {
+        String uploadName = "userPhoto"+user.getId()+".jpg";
+
+        try {
+            File transferFile = new File(basePath +"/" + uploadName);
+            file.transferTo(transferFile);
+            user.setPhoto(uploadName);
+            userService.createUpdate(user);
+        } catch (IOException e) {
+            System.out.println("Error saving file");
+        }
+
+        return "redirect:/cabinet";
+    }
+
+    @PostMapping("/save")
+    public String saveUser(User user)
+    {
+        userService.createUpdate(user);
+        return "redirect:/logout";
     }
 }
