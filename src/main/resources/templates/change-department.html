@@ -16,13 +16,21 @@
     <div class="center">
 
         <form action="/admin/save-changed-doctor" method="post" th:object="${department}">
-            <b>Назва відділу</b>
+            <div><b>Назва відділу</b>
+                <div>
             <input type="hidden" th:value="*{id}" name="id"/>
             <input th:value="*{name}" name="name">
-            <b>Опис</b>
-            <input th:value="*{description}" name="description">
+                </div>
 
-            <button type="submit">Підтвердити</button>
+                <div style="margin-top: 10px;">
+            <b>Опис</b>
+                </div>
+                    <div>
+            <input th:value="*{description}" name="description">
+                </div>
+            </div>
+
+            <button style="margin-top:10px;" type="submit">Підтвердити</button>
 
         </form>
     </div>

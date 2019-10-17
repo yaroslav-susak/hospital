@@ -148,12 +148,20 @@
 </table>
 
     <form th:fragment="add-department-form" method="post"  action="/admin/save-changed-department" th:object="${department}">
-        <b>Назва відділу</b>
+        <div><b>Назва відділу</b>
+        <div>
         <input type="text" placeholder="Відділ" name="name">
-        <b>Опис відділу</b>
-        <input type="text" placeholder="Опис" name="description">
+        </div>
+        </div>
 
-        <button type="submit">Добавити відділ</button>
+        <div style="margin-top: 10px;">
+        <b>Опис відділу</b>
+        <div>
+        <input type="text" placeholder="Опис" name="description">
+        </div>
+        </div>
+
+        <button style="margin-top:10px;" syt type="submit">Добавити відділ</button>
     </form>
 
 
